@@ -14,6 +14,7 @@ public class ClassBean{
      */
 
     private int code;
+
     private DatasBean datas;
 
     public int getCode() {
