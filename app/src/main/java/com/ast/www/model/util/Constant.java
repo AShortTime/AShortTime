@@ -17,6 +17,7 @@ import java.util.HashMap;
 
 
 public class Constant {
+    
     public static String SYSTEM_SHARE_NAME="config";
     public static final String LINK_MAIN = "http://169.254.157.229/mobile/";
     public static SharedPreferences mSharedPreferences;
