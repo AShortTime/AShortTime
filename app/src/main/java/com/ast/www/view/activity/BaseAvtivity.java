@@ -12,6 +12,10 @@ import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.ast.www.model.bean.ClassBean;
+import com.ast.www.presenter.BasePresenter;
+import com.ast.www.view.iview.IBaseView;
+
 import java.util.Stack;
 
 /**
@@ -21,26 +25,23 @@ import java.util.Stack;
  * Text:
  */
 
-public abstract class BaseAvtivity extends AppCompatActivity{
+public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatActivity{
 
     /** 用来保存所有已打开的Activity */
     private static Stack<Activity> listActivity = new Stack<Activity>();
-
-    /** 提示信息 **/
-    private Toast mToast;
 
     /** 记录上次点击按钮的时间 **/
     private long lastClickTime;
     /** 按钮连续点击最低间隔时间 单位：毫秒 **/
     public final static int CLICK_TIME = 500;
-    private int layout;
-
+    protected   T mPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
         // 将activity推入栈中
         listActivity.push(this);
+        createmPresenter();
         // 初始化ui
         initUI();
         // 初始化数据
@@ -48,7 +49,10 @@ public abstract class BaseAvtivity extends AppCompatActivity{
         // 事件监听
         initListener();
 
+
     }
+
+    protected abstract void createmPresenter();
 
     /** 初始化ui **/
     protected abstract void initUI();
@@ -73,7 +77,6 @@ public abstract class BaseAvtivity extends AppCompatActivity{
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-
     }
 
     public void onBack(View v) {
@@ -93,8 +96,9 @@ public abstract class BaseAvtivity extends AppCompatActivity{
         if (listActivity.contains(this)) {
             listActivity.remove(this);
         }
-
     }
+    //展示布局
+    public abstract int getLayout();
 
     /********************** activity跳转 **********************************/
     public void openActivity(Class<?> targetActivityClass) {
@@ -200,5 +204,5 @@ public abstract class BaseAvtivity extends AppCompatActivity{
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
 
-    public abstract int getLayout();
+
 }
