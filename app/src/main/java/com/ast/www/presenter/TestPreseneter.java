@@ -12,6 +12,7 @@ import java.util.Map;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 
 /**
  * 作者:郭凯奇
@@ -24,23 +25,32 @@ public class TestPreseneter extends BasePresenter<IBaseView<ClassBean>>{
 
 
     public <T>void get(Map<String,String> map, final Class<T> cla) {
-        HttpUtil.get(new Observer<String>() {
+        HttpUtil.get(new Consumer<String>() {
             @Override
-            public void onSubscribe(Disposable d) {
-
-            }
-            @Override
-            public void onNext(String value) {
-                Log.e("json", value );
-                T t = Constant.GsonToBean(value, cla);
+            public void accept(String s) throws Exception {
+                Log.e("json", s );
+                T t = Constant.GsonToBean(s, cla);
                 getiBaseView().onData(t);
             }
+        }, new Consumer<Throwable>() {
             @Override
-            public void onError(Throwable e) {
-                getiBaseView().onError(e);
+            public void accept(Throwable throwable) throws Exception {
+                getiBaseView().onError(throwable);
             }
+        }, map);
+    }
+    public <T>void post(Map<String,String> map, final Class<T> cla) {
+        HttpUtil.post(new Consumer<String>() {
             @Override
-            public void onComplete() {
+            public void accept(String s) throws Exception {
+                Log.e("json", s );
+                T t = Constant.GsonToBean(s, cla);
+                getiBaseView().onData(t);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                getiBaseView().onError(throwable);
             }
         }, map);
     }

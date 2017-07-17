@@ -8,6 +8,7 @@ import java.util.Map;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -28,20 +29,20 @@ public class HttpUtil {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build();
     //get封装
-    public static void get(Observer<String> observer, Map<String,String> map){
+    public static void get(Consumer<String> onNext, Consumer<Throwable> onError, Map<String,String> map){
         Api api = retrofit.create(Api.class);
         Observable<String> observable = api.getTest(map);
         observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(observer);
+                .subscribe(onNext,onError);
     }
     //post封装
-    public static void post(Observer<String> observer, Map<String,String> map){
+    public static void post(Consumer<String> onNext, Consumer<Throwable> onError, Map<String,String> map){
         Api api = retrofit.create(Api.class);
         Observable<String> observable = api.postTest(map);
         observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe(observer);
+                .subscribe(onNext,onError);
     }
 
 }
