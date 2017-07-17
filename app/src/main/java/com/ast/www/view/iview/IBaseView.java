@@ -7,6 +7,7 @@ package com.ast.www.view.iview;
  * Text:
  */
 
+
 public interface IBaseView<T> {
     void onData(T t);
     void onError(Throwable throwable);
