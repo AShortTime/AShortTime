@@ -2,17 +2,20 @@ package com.ast.www.model.util;
 
 import com.ast.www.view.iview.Api;
 
-import java.util.HashMap;
+import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
+import io.reactivex.android.BuildConfig;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 /**
@@ -23,7 +26,10 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 
 public class HttpUtil {
+
+
    private static Retrofit retrofit = new Retrofit.Builder()
+            .client(Constant.getclient())
             .baseUrl(Constant.LINK_MAIN)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -44,5 +50,4 @@ public class HttpUtil {
                 .subscribeOn(Schedulers.io())
                 .subscribe(onNext,onError);
     }
-
 }
