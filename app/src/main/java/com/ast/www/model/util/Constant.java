@@ -36,6 +36,25 @@ public class Constant {
     public static SharedPreferences.Editor mSharedPreferencesEditor;
     public static Gson gson;
     private static final int DEFAULT_TIMEOUT = 20;
+
+    //初始化
+    public static void init(Context context) {
+        mSharedPreferences = context.getSharedPreferences(Constant.SYSTEM_SHARE_NAME, Activity.MODE_PRIVATE);
+        mSharedPreferencesEditor = mSharedPreferences.edit();
+        gson=new Gson();
+    }
+    //gson封装
+    public static <T> T GsonToBean(String gsonString, Class<T> cls) {
+        T t = null;
+        if (gson != null) {
+            t = gson.fromJson(gsonString, cls);
+        }
+        return t;
+    }
+
+    /**
+     * okhttp拦截器
+     */
     public static OkHttpClient getclient(){
 //       File httpCacheDirectory=new File(context.getCacheDir(),"cache");
 //       Cache cache = new Cache(httpCacheDirectory, 10 * 1024 * 1024);
@@ -51,19 +70,5 @@ public class Constant {
                 // 这里你可以根据自己的机型设置同时连接的个数和时间，我这里8个，和每个保持时间为10s
                 .build();
         return okHttpClient;
-    }
-    //初始化
-    public static void init(Context context) {
-        mSharedPreferences = context.getSharedPreferences(Constant.SYSTEM_SHARE_NAME, Activity.MODE_PRIVATE);
-        mSharedPreferencesEditor = mSharedPreferences.edit();
-        gson=new Gson();
-    }
-    //gson封装
-    public static <T> T GsonToBean(String gsonString, Class<T> cls) {
-        T t = null;
-        if (gson != null) {
-            t = gson.fromJson(gsonString, cls);
-        }
-        return t;
     }
 }
