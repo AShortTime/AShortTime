@@ -28,13 +28,14 @@ public class TestPreseneter extends BasePresenter<IBaseView<ClassBean>>{
         HttpUtil.get(new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-                Log.e("json", s );
+                Log.e("getjson", s );
                 T t = Constant.GsonToBean(s, cla);
                 getiBaseView().onData(t);
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
+                Log.e("throwable", throwable.toString() );
                 getiBaseView().onError(throwable);
             }
         }, map);
@@ -43,15 +44,32 @@ public class TestPreseneter extends BasePresenter<IBaseView<ClassBean>>{
         HttpUtil.post(new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-                Log.e("json", s );
+                Log.e("postjson", s );
                 T t = Constant.GsonToBean(s, cla);
                 getiBaseView().onData(t);
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                getiBaseView().onError(throwable);
+                Log.e("throwable", throwable.toString() );
+//                getiBaseView().onError(throwable);
             }
         }, map);
+    }
+    public <T>void upload() {
+        HttpUtil.upLoad(new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                Log.e("postjson", s );
+//                T t = Constant.GsonToBean(s, cla);
+//                getiBaseView().onData(t);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e("throwable", throwable.toString() );
+//                getiBaseView().onError(throwable);
+            }
+        });
     }
 }

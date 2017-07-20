@@ -4,6 +4,9 @@ package com.ast.www.view.activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
+
 import com.ast.www.R;
 import com.ast.www.model.bean.ClassBean;
 import com.ast.www.presenter.TestPreseneter;
@@ -12,6 +15,9 @@ import java.util.HashMap;
 
 public class MainActivity extends BaseAvtivity<TestPreseneter> implements IBaseView<ClassBean> {
 
+
+    private Button mget;
+    private Button mpost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,20 +32,43 @@ public class MainActivity extends BaseAvtivity<TestPreseneter> implements IBaseV
 
     @Override
     protected void initUI() {
+        mget = (Button) findViewById(R.id.get);
+        mpost = (Button) findViewById(R.id.post);
     }
 
     @Override
     protected void initData() {
-        HashMap<String, String> m = new HashMap<>();
-        m.put("act", "goods_class");
-        m.put("op", "goods_detail");
-        m.put("gc_id", "4");
-        mPresenter.get(m, ClassBean.class);
+
     }
 
     @Override
     protected void initListener() {
+        mget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
+        //userName	用户名	var char(20)
+//        userPassword	密码	var char(20)
+//        userPhone	电话	var char(11)
+//        userSex	性别	char(5)
+//        userHead	头像（待定）	var char(255)	存放用户头像地址
+
+        mpost.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                HashMap<String, String> m = new HashMap<>();
+                m.put("userName", "郭凯奇");
+                m.put("userPassword", "123456");
+                m.put("userPhone", "111111");
+                m.put("userSex", "男");
+                m.put("userHead", "123456");
+                mPresenter.post(m, ClassBean.class);
+               // mPresenter.upload();
+            }
+        });
     }
 
     @Override

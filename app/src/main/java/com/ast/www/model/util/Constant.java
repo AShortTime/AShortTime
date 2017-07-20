@@ -31,7 +31,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class Constant {
     public static String SYSTEM_SHARE_NAME="config";
-    public static final String LINK_MAIN = "http://169.254.157.229/mobile/";
+    public static final String LINK_MAIN = "http://169.254.234.3:8080/";
     public static SharedPreferences mSharedPreferences;
     public static SharedPreferences.Editor mSharedPreferencesEditor;
     public static Gson gson;

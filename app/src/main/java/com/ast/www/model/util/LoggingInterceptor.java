@@ -6,7 +6,9 @@ import java.io.IOException;
 
 import io.reactivex.android.BuildConfig;
 import okhttp3.Interceptor;
+import okhttp3.MultipartBody;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -21,8 +23,8 @@ public class LoggingInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
-
-        Log.e("拦截器", request.toString() );
+//        MultipartBody body = (MultipartBody) request.body();
+//        Log.e("拦截器", body.parts().size()+"");
 
         return chain.proceed(request);
     }
