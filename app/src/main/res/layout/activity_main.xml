@@ -2,22 +2,26 @@
 <LinearLayout
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.ast.www.view.activity.MainActivity">
 
-    <TextView
-        android:id="@+id/text1111"
+
+
+    <Button
+        android:text="get"
+        android:id="@+id/get"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
         />
     <Button
-        android:id="@+id/button"
+        android:text="post"
+        android:id="@+id/post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />
+
 
 </LinearLayout>
