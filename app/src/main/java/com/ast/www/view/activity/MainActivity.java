@@ -59,12 +59,15 @@ public class MainActivity extends BaseAvtivity<TestPreseneter> implements IBaseV
 
             @Override
             public void onClick(View v) {
+
+//                        "character_content": "string",
+//                        "character_dictionary_value": "string",
+//                        "character_user_id": "string",
+
                 HashMap<String, String> m = new HashMap<>();
-                m.put("userName", "郭凯奇");
-                m.put("userPassword", "123456");
-                m.put("userPhone", "111111");
-                m.put("userSex", "男");
-                m.put("userHead", "123456");
+                m.put("character_content", "我擦 大没了");
+                m.put("character_dictionary_value", "2");
+                m.put("character_user_id", "1");
                 mPresenter.post(m, ClassBean.class);
                // mPresenter.upload();
             }
