@@ -34,6 +34,8 @@ public class HttpUtil {
             .addConverterFactory(ScalarsConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build();
+
+
     //get封装
     public static void get(Consumer<String> onNext, Consumer<Throwable> onError, Map<String,String> map){
         Api api = retrofit.create(Api.class);
