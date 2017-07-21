@@ -3,6 +3,7 @@ package com.ast.www.presenter;
 import android.util.Log;
 
 import com.ast.www.model.bean.ClassBean;
+import com.ast.www.model.bean.UserLoginBean;
 import com.ast.www.model.util.Constant;
 import com.ast.www.model.util.HttpUtil;
 import com.ast.www.view.iview.IBaseView;
@@ -23,7 +24,7 @@ import io.reactivex.functions.Consumer;
  * Text:
  */
 
-public class TestPreseneter extends BasePresenter<IBaseView<ClassBean>> {
+public class TestPreseneter extends BasePresenter<IBaseView<UserLoginBean>> {
 
 //get请求
     public <T> void get(String url, Map<String, String> map, final Class<T> cla) {
@@ -48,8 +49,8 @@ public class TestPreseneter extends BasePresenter<IBaseView<ClassBean>> {
             @Override
             public void accept(String s) throws Exception {
                 Log.e("postjson", s);
-//                T t = Constant.GsonToBean(s, cla);
-//                getiBaseView().onData(t);
+                T t = Constant.GsonToBean(s, cla);
+                getiBaseView().onData(t);
             }
         }, new Consumer<Throwable>() {
             @Override

@@ -49,7 +49,7 @@ public class HttpUtil {
     //get封装
     public static void get(String url, Map<String, String> map,Consumer<String> onNext, Consumer<Throwable> onError) {
         Api api = retrofit.create(Api.class);
-        Observable<String> observable = api.getTest(url,map);
+        Observable<String> observable = api.get(url,map);
         observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(onNext, onError);
@@ -58,7 +58,7 @@ public class HttpUtil {
     //post封装
     public static void post(String url, Map<String, String> map,Consumer<String> onNext, Consumer<Throwable> onError) {
         Api api = retrofit.create(Api.class);
-        Observable<String> observable = api.postTest(url,map);
+        Observable<String> observable = api.post(url,map);
         observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
                 .subscribe(onNext, onError);

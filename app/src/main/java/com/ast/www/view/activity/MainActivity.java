@@ -9,11 +9,12 @@ import android.widget.Button;
 
 import com.ast.www.R;
 import com.ast.www.model.bean.ClassBean;
+import com.ast.www.model.bean.UserLoginBean;
 import com.ast.www.presenter.TestPreseneter;
 import com.ast.www.view.iview.IBaseView;
 import java.util.HashMap;
 
-public class MainActivity extends BaseAvtivity<TestPreseneter> implements IBaseView<ClassBean> {
+public class MainActivity extends BaseAvtivity<TestPreseneter> implements IBaseView<UserLoginBean> {
 
 
     private Button mget;
@@ -59,17 +60,32 @@ public class MainActivity extends BaseAvtivity<TestPreseneter> implements IBaseV
 
             @Override
             public void onClick(View v) {
+//
+//                http://169.254.234.3/user/addUser
+//
+//                "userHead": "string",（先随便写）
+//                "userName": "string",（用户名）
+//                "userPassword": "string",（密码）
+//                "userPhone": "string",（手机号）
+//                "userSex": "string"（男|女）
 
-//                        "character_content": "string",
-//                        "character_dictionary_value": "string",
-//                        "character_user_id": "string",
 
+//                HashMap<String, String> m = new HashMap<>();
+//                m.put("userHead", "emmm");
+//                m.put("userName", "郭凯奇");
+//                m.put("userPassword", "123456");
+//                m.put("userPhone", "17600887015");
+//                m.put("userSex", "男");
+//                mPresenter.post("user/addUser",m, ClassBean.class);
+//               // mPresenter.upload();
+//                http://169.254.234.3:8080/user/addLogin
+
+//                "userPhone" : String ;//用户注册用的手机号
+//                "userPassword" :  String ;//密码
                 HashMap<String, String> m = new HashMap<>();
-                m.put("character_content", "我擦 大没了");
-                m.put("character_dictionary_value", "2");
-                m.put("character_user_id", "1");
-                mPresenter.post(m, ClassBean.class);
-               // mPresenter.upload();
+                m.put("userPhone", "17600887015");
+                m.put("userPassword", "123456");
+                mPresenter.post("user/addLogin",m, UserLoginBean.class);
             }
         });
     }
@@ -81,8 +97,8 @@ public class MainActivity extends BaseAvtivity<TestPreseneter> implements IBaseV
 
 
     @Override
-    public void onData(ClassBean o) {
-
+    public void onData(UserLoginBean o) {
+        Log.e("ondata",o.toString() );
     }
 
     @Override

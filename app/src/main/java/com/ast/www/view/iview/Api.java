@@ -27,11 +27,11 @@ import retrofit2.http.Url;
 public interface Api {
 
     @GET()
-    Observable<String> getTest(@Url String url,@QueryMap Map<String,String> map);
+    Observable<String> get(@Url String url,@QueryMap Map<String,String> map);
 
     @FormUrlEncoded
     @POST()
-    Observable<String> postTest(@Url String url, @FieldMap Map<String,String> map);
+    Observable<String> post(@Url String url, @FieldMap Map<String,String> map);
 
     @Multipart
     @POST()
