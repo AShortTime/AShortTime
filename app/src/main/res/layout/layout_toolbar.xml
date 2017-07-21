@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/appBlue">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.ast.www.view.CircleImageView
+            android:id="@+id/home_circleView"
+            android:layout_centerVertical="true"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@mipmap/raw_1499936862"
+            />
+        <TextView
+            android:id="@+id/home_title"
+            android:textSize="20sp"
+            android:text="ssssss"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/home_edit"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="10dp"
+            android:src="@mipmap/raw_1500034665"
+            android:layout_width="35dp"
+            android:layout_height="35dp" />
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>
