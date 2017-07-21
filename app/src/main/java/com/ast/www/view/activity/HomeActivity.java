@@ -14,7 +14,9 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ast.www.R;
 import com.ast.www.view.CircleImageView;
 import com.ast.www.view.fragment.DrawerFragment;
-import com.ast.www.view.fragment.TestFragment;
+import com.ast.www.view.fragment.JokeFragment;
+import com.ast.www.view.fragment.RecommendFragment;
+import com.ast.www.view.fragment.VideoFragment;
 
 import java.util.ArrayList;
 
@@ -36,6 +38,9 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
     private ArrayList<Fragment> fragments;
     private DrawerLayout drawerLayout;
     private BottomNavigationBar homeBottombar;
+    private RecommendFragment mrecommendFragment;
+    private JokeFragment mjokeFragment;
+    private VideoFragment mvideoFragment;
 
     @Override
     protected void createmPresenter() {
@@ -54,7 +59,6 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
         homeTitle = (TextView) findViewById(R.id.home_title);
         homeCircleView = (CircleImageView) findViewById(R.id.home_circleView);
         homeBottombar = (BottomNavigationBar) findViewById(R.id.home_bottombar);
-
         homeCircleView.setOnClickListener(this);
 
     }
@@ -65,13 +69,36 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
     @Override
     protected void initData() {
         setSupportActionBar(homeToolbar);
-
         drawerLayout = (DrawerLayout) findViewById(R.id.layout_left_drawer);
-
+        mrecommendFragment = new RecommendFragment();
+        mjokeFragment = new JokeFragment();
+        mvideoFragment = new VideoFragment();
         fragments = new ArrayList<>();
-        fragments.add(new TestFragment());
-        fragments.add(new TestFragment());
-        fragments.add(new TestFragment());
+        fragments.add(mrecommendFragment);
+        fragments.add(mjokeFragment);
+        fragments.add(mvideoFragment);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
 
 
         /**
@@ -122,6 +149,11 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
         homeBottombar.initialise();
 
         homeTitle.setText("推荐");
+
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.home_rl_parentview,fragments.get(0))
+//                .commitAllowingStateLoss();
+
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.home_rl_parentview, fragments.get(0))
                 .add(R.id.home_rl_parentview, fragments.get(1))
@@ -151,7 +183,6 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
     }
 
     int tag=0;
-
     @Override
     public void onTabSelected(int position) {
         switch (position) {
@@ -165,6 +196,9 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
                 homeTitle.setText("视频");
                 break;
         }
+//        getSupportFragmentManager().beginTransaction()
+//                .replace(R.id.home_rl_parentview,fragments.get(position))
+//                .commitAllowingStateLoss();
         if (tag != position) {
             getSupportFragmentManager().beginTransaction()
                     .show(fragments.get(position))

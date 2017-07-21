@@ -3,11 +3,14 @@ package com.ast.www.presenter;
 import android.util.Log;
 
 import com.ast.www.model.bean.ClassBean;
+import com.ast.www.model.bean.UserLoginBean;
 import com.ast.www.model.util.Constant;
 import com.ast.www.model.util.HttpUtil;
 import com.ast.www.view.iview.IBaseView;
 import com.google.gson.Gson;
 
+import java.io.File;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observer;
@@ -21,53 +24,55 @@ import io.reactivex.functions.Consumer;
  * Text:
  */
 
-public class TestPreseneter extends BasePresenter<IBaseView<ClassBean>>{
+public class TestPreseneter extends BasePresenter<IBaseView<UserLoginBean>> {
 
-
-    public <T>void get(Map<String,String> map, final Class<T> cla) {
-        HttpUtil.get(new Consumer<String>() {
+//get请求
+    public <T> void get(String url, Map<String, String> map, final Class<T> cla) {
+        HttpUtil.get(url, map, new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-                Log.e("getjson", s );
-                T t = Constant.GsonToBean(s, cla);
-                getiBaseView().onData(t);
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Log.e("throwable", throwable.toString() );
-                getiBaseView().onError(throwable);
-            }
-        }, map);
-    }
-    public <T>void post(Map<String,String> map, final Class<T> cla) {
-        HttpUtil.post(new Consumer<String>() {
-            @Override
-            public void accept(String s) throws Exception {
-                Log.e("postjson", s );
-                T t = Constant.GsonToBean(s, cla);
-                getiBaseView().onData(t);
-            }
-        }, new Consumer<Throwable>() {
-            @Override
-            public void accept(Throwable throwable) throws Exception {
-                Log.e("throwable", throwable.toString() );
-//                getiBaseView().onError(throwable);
-            }
-        }, map);
-    }
-    public <T>void upload() {
-        HttpUtil.upLoad(new Consumer<String>() {
-            @Override
-            public void accept(String s) throws Exception {
-                Log.e("postjson", s );
+                Log.e("getjson", s);
 //                T t = Constant.GsonToBean(s, cla);
 //                getiBaseView().onData(t);
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.e("throwable", throwable.toString() );
+                Log.e("throwable", throwable.toString());
+                getiBaseView().onError(throwable);
+            }
+        });
+    }
+//post请求
+    public <T> void post(String url, Map<String, String> map, final Class<T> cla) {
+        HttpUtil.post(url, map, new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                Log.e("postjson", s);
+                T t = Constant.GsonToBean(s, cla);
+                getiBaseView().onData(t);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e("throwable", throwable.toString());
+//                getiBaseView().onError(throwable);
+            }
+        });
+    }
+//文件上传
+    public <T> void filePost(String url, List<File> pathList, Map<String, String> map) {
+        HttpUtil.filePost(url, pathList, map, new Consumer<String>() {
+            @Override
+            public void accept(String s) throws Exception {
+                Log.e("postjson", s);
+//                T t = Constant.GsonToBean(s, cla);
+//                getiBaseView().onData(t);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                Log.e("throwable", throwable.toString());
 //                getiBaseView().onError(throwable);
             }
         });
