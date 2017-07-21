@@ -183,7 +183,6 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
     }
 
     int tag=0;
-
     @Override
     public void onTabSelected(int position) {
         switch (position) {
