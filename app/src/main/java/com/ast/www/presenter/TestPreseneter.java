@@ -16,6 +16,7 @@ import java.util.Map;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import okhttp3.MultipartBody;
 
 /**
  * 作者:郭凯奇
@@ -61,8 +62,8 @@ public class TestPreseneter extends BasePresenter<IBaseView<UserLoginBean>> {
         });
     }
 //文件上传
-    public <T> void filePost(String url, List<File> pathList, Map<String, String> map) {
-        HttpUtil.filePost(url, pathList, map, new Consumer<String>() {
+    public <T> void filePost(String url, List<MultipartBody.Part> parts,final Class<T> cla) {
+        HttpUtil.filePost(url,parts, new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
                 Log.e("postjson", s);

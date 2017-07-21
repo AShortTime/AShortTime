@@ -10,8 +10,10 @@ import org.reactivestreams.Subscriber;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.Observable;
@@ -64,17 +66,7 @@ public class HttpUtil {
                 .subscribe(onNext, onError);
     }
 
-    public static void filePost(String url,List<File> pathList,Map<String,String> map,Consumer<String> onNext, Consumer<Throwable> onError) {
-
-
-
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM);
-        for (int i = 0; i < pathList.size(); i++) {
-            RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), pathList.get(i));
-            builder.addFormDataPart("file",pathList.get(i).getName(), imageBody);
-        }
-        List<MultipartBody.Part> parts = builder.build().parts();
+    public static void filePost(String url,List<MultipartBody.Part> parts,Consumer<String> onNext, Consumer<Throwable> onError) {
         Api api = retrofit.create(Api.class);
         Observable<String> observable = api.filePost(url,parts);
         observable.observeOn(AndroidSchedulers.mainThread())
