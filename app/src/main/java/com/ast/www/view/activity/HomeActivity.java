@@ -82,30 +82,6 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
 
         drawerLayout.setProhibitSideslip(true);
 
-//        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-//            @Override
-//            public void onDrawerSlide(View drawerView, float slideOffset) {
-//
-//            }
-//
-//            @Override
-//            public void onDrawerOpened(View drawerView) {
-//                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-//            }
-//
-//            @Override
-//            public void onDrawerClosed(View drawerView) {
-//                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-//            }
-//
-//            @Override
-//            public void onDrawerStateChanged(int newState) {
-//
-//            }
-//        });
-
-
         /**
          * 初始化 底部导航栏
          */
@@ -155,10 +131,6 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
 
         homeTitle.setText("推荐");
 
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.home_rl_parentview,fragments.get(0))
-//                .commitAllowingStateLoss();
-
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.home_rl_parentview, fragments.get(0))
                 .add(R.id.home_rl_parentview, fragments.get(1))
@@ -201,9 +173,7 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
                 homeTitle.setText("视频");
                 break;
         }
-//        getSupportFragmentManager().beginTransaction()
-//                .replace(R.id.home_rl_parentview,fragments.get(position))
-//                .commitAllowingStateLoss();
+
         if (tag != position) {
             getSupportFragmentManager().beginTransaction()
                     .show(fragments.get(position))
