@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ast.www.R;
+import com.ast.www.folding.FoldingPaneLayout;
 import com.ast.www.view.CircleImageView;
 import com.ast.www.view.fragment.DrawerFragment;
 import com.ast.www.view.fragment.JokeFragment;
@@ -36,7 +37,7 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
     private Toolbar homeToolbar;
     private RelativeLayout homeStartDrawerLayout;
     private ArrayList<Fragment> fragments;
-    private DrawerLayout drawerLayout;
+    private FoldingPaneLayout drawerLayout;
     private BottomNavigationBar homeBottombar;
     private RecommendFragment mrecommendFragment;
     private JokeFragment mjokeFragment;
@@ -69,7 +70,8 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
     @Override
     protected void initData() {
         setSupportActionBar(homeToolbar);
-        drawerLayout = (DrawerLayout) findViewById(R.id.layout_left_drawer);
+        drawerLayout = (FoldingPaneLayout) findViewById(R.id.layout_left_drawer);
+
         mrecommendFragment = new RecommendFragment();
         mjokeFragment = new JokeFragment();
         mvideoFragment = new VideoFragment();
@@ -77,28 +79,31 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
         fragments.add(mrecommendFragment);
         fragments.add(mjokeFragment);
         fragments.add(mvideoFragment);
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
 
-            }
+        drawerLayout.setProhibitSideslip(true);
 
-            @Override
-            public void onDrawerOpened(View drawerView) {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
-            }
-
-            @Override
-            public void onDrawerClosed(View drawerView) {
-                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
-            }
-
-            @Override
-            public void onDrawerStateChanged(int newState) {
-
-            }
-        });
+//        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+//            @Override
+//            public void onDrawerSlide(View drawerView, float slideOffset) {
+//
+//            }
+//
+//            @Override
+//            public void onDrawerOpened(View drawerView) {
+//                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+//            }
+//
+//            @Override
+//            public void onDrawerClosed(View drawerView) {
+//                drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+//            }
+//
+//            @Override
+//            public void onDrawerStateChanged(int newState) {
+//
+//            }
+//        });
 
 
         /**
@@ -222,10 +227,10 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.home_circleView:
-                if (drawerLayout.isDrawerOpen(Gravity.START)){
-                    drawerLayout.closeDrawers();
+                if (drawerLayout.isOpen()){
+                    drawerLayout.closePane();
                 }else {
-                    drawerLayout.openDrawer(Gravity.START);
+                    drawerLayout.openPane();
                 }
                 break;
         }

@@ -6,4 +6,10 @@
             <attr name="right_image" format="reference"/>
             <attr name="text" format="string" />
         </declare-styleable>
+
+
+
+    <declare-styleable name="FoldingMenu">
+        <attr name="foldNumber" format="integer" />
+    </declare-styleable>
 </resources>
