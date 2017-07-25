@@ -15,7 +15,7 @@ import com.ast.www.R;
 
 public class DrawerFragment extends BaseFragment{
 
-
+    
     /**
      * 该抽象方法就是 onCreateView中需要的layoutID
      *
