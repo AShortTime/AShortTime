@@ -60,7 +60,6 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
         homeCircleView = (CircleImageView) findViewById(R.id.home_circleView);
         homeBottombar = (BottomNavigationBar) findViewById(R.id.home_bottombar);
         homeCircleView.setOnClickListener(this);
-
     }
 
     /**
