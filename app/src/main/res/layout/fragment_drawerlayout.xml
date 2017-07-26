@@ -1,10 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:clickable="true"
-    android:background="#fff"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:orientation="vertical">
+
+<!--用户基本信息头部-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="165dp"
+        android:background="@mipmap/drawerlayout_background"
+        android:padding="20dp"
+        >
+
+        <com.ast.www.view.CircleImageView
+            android:layout_marginTop="35dp"
+            android:id="@+id/user_head"
+            android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@mipmap/raw_1499936862" />
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="椰果奶茶"
+            android:textSize="20sp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/user_text"
+            android:layout_toEndOf="@+id/user_text" />
+
+        <ImageView
+            android:id="@+id/user_sex"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/sex"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:id="@+id/user_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/user_head"
+            android:layout_marginTop="5dp"
+            android:text="编辑个性签名" />
+    </RelativeLayout>
+
+   <com.ast.www.view.UserDrawMoudle
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       app:text="我的关注"
+       app:left_image="@mipmap/user_look"
+       app:right_image="@mipmap/into_icon"
+       ></com.ast.www.view.UserDrawMoudle>
+    <com.ast.www.view.UserDrawMoudle
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:text="我的收藏"
+        app:left_image="@mipmap/user_favorite"
+        app:right_image="@mipmap/into_icon"
+        ></com.ast.www.view.UserDrawMoudle>
+    <com.ast.www.view.UserDrawMoudle
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:text="搜索好友"
+        app:left_image="@mipmap/user_found"
+        app:right_image="@mipmap/into_icon"
+        ></com.ast.www.view.UserDrawMoudle>
+    <com.ast.www.view.UserDrawMoudle
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:text="消息通知"
+        app:left_image="@mipmap/user_message"
+        app:right_image="@mipmap/into_icon"
+        ></com.ast.www.view.UserDrawMoudle>
+
 
 
 

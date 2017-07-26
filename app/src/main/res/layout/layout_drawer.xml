@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.DrawerLayout
+<com.ast.www.folding.FoldingPaneLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_left_drawer"
+    xmlns:sliding="http://schemas.android.com/apk/res-auto"
+    sliding:foldNumber="2"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <!--侧滑页面-->
+    <RelativeLayout
+        android:id="@+id/home_startDrawerLayout"
+        android:layout_gravity="start"
+        android:background="#ffffff"
+        android:layout_width="304dp"
+        android:layout_height="match_parent"/>
 
     <!--主页面-->
     <RelativeLayout
@@ -23,12 +33,6 @@
             android:layout_height="wrap_content"/>
     </RelativeLayout>
 
-    <!--侧滑页面-->
-    <RelativeLayout
-        android:id="@+id/home_startDrawerLayout"
-        android:layout_gravity="start"
-        android:background="#ffffff"
-        android:layout_width="304dp"
-        android:layout_height="match_parent"/>
 
-</android.support.v4.widget.DrawerLayout>
+
+</com.ast.www.folding.FoldingPaneLayout>
