@@ -3,6 +3,7 @@ package com.ast.www.view.application;
 import android.app.Application;
 
 import com.ast.www.model.util.Constant;
+import com.facebook.drawee.backends.pipeline.Fresco;
 
 /**
  * 作者:郭凯奇
@@ -17,5 +18,6 @@ public class MyApplication extends Application{
     public void onCreate() {
         super.onCreate();
         Constant.init(this);
+        Fresco.initialize(this);
     }
 }
