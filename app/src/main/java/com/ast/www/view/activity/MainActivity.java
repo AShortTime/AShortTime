@@ -71,7 +71,7 @@ public class MainActivity extends BaseAvtivity<TestPreseneter> implements IBaseV
 //                userPhone	电话号码	varchar
                 // userSex	性别	char
 //                m.put("userName","仇海涛");
-//                m.put("userSex","男");
+//                m.put("userSex","男");0
                 m.put("userPassword","123456");
                 m.put("userPhone","17600887015");
 
@@ -91,14 +91,15 @@ public class MainActivity extends BaseAvtivity<TestPreseneter> implements IBaseV
 ////“mediaDictionaryValue”： 1//视频为1，图片为3，文字为2
 ////“mediaUserId”： int（1，2，3挑一个）  //上传用户id（我这里有1，2，3）
 //                for (int i = 0; i < pathList.size(); i++) {
-//                    RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), pathList.get(i));
+//                    RequestBody    = RequestBody.create(MediaType.parse("multipart/form-data"), pathList.get(i));
 //                    builder.addFormDataPart("file", "guo.mp4", imageBody);
 //                }
 //                List<MultipartBody.Part> parts = builder.build().parts();
 //                //http://169.254.234.3:8080/media/uploadMedia
 //                mPresenter.filePost("media/uploadMedia", parts, UserLoginBean.class);
             }
-        });
+        }
+        );
     }
 
     @Override

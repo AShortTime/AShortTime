@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/user_info"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp">
+    <com.ast.www.constom.CircleImageView
+        android:id="@+id/user_head"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/raw_1499936862" />
+    <TextView
+        android:layout_marginBottom="5dp"
+        android:textColor="@color/tomato"
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="郭凯奇"
+        android:textSize="15sp"
+        android:layout_above="@+id/time"
+        android:layout_alignLeft="@+id/time"
+        android:layout_alignStart="@+id/time" />
+    <TextView
+        android:layout_marginLeft="5dp"
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2017-06-15  14:20"
+        android:textSize="15sp"
+        android:layout_alignBottom="@id/user_head"
+        android:layout_toRightOf="@+id/user_head"
+        android:layout_toEndOf="@+id/user_head" />
+
+</RelativeLayout>

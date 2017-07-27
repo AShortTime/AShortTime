@@ -47,6 +47,7 @@ public class Constant {
     public static <T> T GsonToBean(String gsonString, Class<T> cls) {
         T t = null;
         if (gson != null) {
+
             t = gson.fromJson(gsonString, cls);
         }
         return t;

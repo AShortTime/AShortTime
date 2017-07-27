@@ -1,4 +1,4 @@
-package com.ast.www.view;
+package com.ast.www.constom;
 
 import android.content.Context;
 import android.graphics.Bitmap;

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </RelativeLayout>
+   <com.ast.www.constom.Userinfoview
+       app:user_name="郭凯奇"
+       app:user_head="@mipmap/raw_1500034665"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"></com.ast.www.constom.Userinfoview>
 </LinearLayout>
