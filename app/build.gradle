@@ -60,4 +60,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.0.0'
     //底部导航栏
     compile 'com.ashokvarma.android:bottom-navigation-bar:2.0.2'
+    //SmartRefreshLayout 下拉刷新
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3-alpha-2'
 }
