@@ -49,8 +49,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment{
 
         createmPresenter();
         initView(getView(),savedInstanceState);
-        initListener();
         initData();
+        initListener();
     }
 
 

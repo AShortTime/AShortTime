@@ -1,9 +1,12 @@
 package com.ast.www.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.ast.www.R;
+import com.ast.www.view.CircleImageView;
+import com.ast.www.view.activity.LogInActivity;
 
 
 /**
@@ -16,9 +19,7 @@ import com.ast.www.R;
 public class DrawerFragment extends BaseFragment{
 
 
-
-
-
+    private CircleImageView circleImageView;
 
     /**
      * 该抽象方法就是 onCreateView中需要的layoutID
@@ -46,7 +47,7 @@ public class DrawerFragment extends BaseFragment{
      */
     @Override
     protected void initData() {
-
+        circleImageView = (CircleImageView) getActivity().findViewById(R.id.user_head);
 
     }
 
@@ -63,7 +64,13 @@ public class DrawerFragment extends BaseFragment{
      */
     @Override
     protected void initListener() {
-
+         circleImageView.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 Intent it=new Intent(getActivity(), LogInActivity.class);
+                 getActivity().startActivity(it);
+             }
+         });
     }
 
 
