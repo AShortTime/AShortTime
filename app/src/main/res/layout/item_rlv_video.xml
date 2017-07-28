@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <com.ast.www.constom.Userinfoview
+        android:id="@+id/video_user_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:user_head="@mipmap/raw_1500034665"
+        app:user_name="郭凯奇"></com.ast.www.constom.Userinfoview>
+
+    <TextView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="天气美美的,适合郊游"
+        android:textSize="16sp" />
+    <RelativeLayout
+        android:id="@+id/adapter_super_video_layout"
+        android:layout_width="match_parent"
+        android:layout_height="210dp">
+
+        <FrameLayout
+            android:id="@+id/adapter_super_video"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </FrameLayout>
+
+        <RelativeLayout
+            android:id="@+id/adapter_player_control"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#30000000"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/adapter_super_video_iv_cover"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_launcher"
+                android:scaleType="fitXY"
+                android:background="#30000000"/>
+
+            <com.superplayer.library.SuperPlayer
+                android:id="@+id/super_player"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"></com.superplayer.library.SuperPlayer>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:maxLines="2"
+                android:padding="8dp"
+                android:text="我只是个标题而已"
+                android:textColor="@android:color/white"
+                android:textSize="16sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>
