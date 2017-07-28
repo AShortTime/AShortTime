@@ -1,9 +1,7 @@
 package com.ast.www.view.activity;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -13,7 +11,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ast.www.R;
 import com.ast.www.folding.FoldingPaneLayout;
-import com.ast.www.view.CircleImageView;
+import com.ast.www.constom.CircleImageView;
 import com.ast.www.view.fragment.DrawerFragment;
 import com.ast.www.view.fragment.JokeFragment;
 import com.ast.www.view.fragment.RecommendFragment;

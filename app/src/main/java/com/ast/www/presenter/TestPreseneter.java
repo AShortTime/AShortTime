@@ -50,8 +50,8 @@ public class TestPreseneter extends BasePresenter<IBaseView<UserLoginBean>> {
             @Override
             public void accept(String s) throws Exception {
                 Log.e("postjson", s);
-                T t = Constant.GsonToBean(s, cla);
-                getiBaseView().onData(t);
+//                T t = Constant.GsonToBean(s, cla);
+//                getiBaseView().onData(t);
             }
         }, new Consumer<Throwable>() {
             @Override

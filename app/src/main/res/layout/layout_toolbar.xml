@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.ast.www.view.CircleImageView
+        <com.ast.www.constom.CircleImageView
             android:id="@+id/home_circleView"
             android:layout_centerVertical="true"
             android:layout_width="45dp"
