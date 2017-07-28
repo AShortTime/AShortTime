@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.ast.www.R;
 import com.ast.www.constom.Userinfoview;
-import com.superplayer.library.SuperPlayer;
+//import com.superplayer.library.SuperPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,7 +118,7 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public Userinfoview userinfoview;
         public TextView itemtext;
         public GridView gridView;
-        public SuperPlayer superPlayer;
+//        public SuperPlayer superPlayer;
 
         public ImageHolder(View itemView) {
             super(itemView);
@@ -134,7 +134,7 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     class VideoHolder extends RecyclerView.ViewHolder {
         public Userinfoview userinfoview;
         public TextView itemtext;
-        public SuperPlayer superPlayer;
+//        public SuperPlayer superPlayer;
 
         public VideoHolder(View itemView) {
             super(itemView);

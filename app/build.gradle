@@ -76,6 +76,6 @@ dependencies {
     compile files('libs/open_sdk_r5793.jar')
     //SmartRefreshLayout 下拉刷新
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3-alpha-2'
-    compile project(':superplayerlibrary')
+//    compile project(':superplayerlibrary')
 
 }

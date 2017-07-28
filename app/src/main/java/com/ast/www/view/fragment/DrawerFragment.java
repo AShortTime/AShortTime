@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.ast.www.R;
-import com.ast.www.view.CircleImageView;
+import com.ast.www.constom.CircleImageView;
 import com.ast.www.view.activity.LogInActivity;
 
 

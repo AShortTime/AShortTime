@@ -46,11 +46,11 @@
                 android:scaleType="fitXY"
                 android:background="#30000000"/>
 
-            <com.superplayer.library.SuperPlayer
-                android:id="@+id/super_player"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitXY"></com.superplayer.library.SuperPlayer>
+            <!--<com.superplayer.library.SuperPlayer-->
+                <!--android:id="@+id/super_player"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:scaleType="fitXY"></com.superplayer.library.SuperPlayer>-->
 
             <TextView
                 android:layout_width="match_parent"
