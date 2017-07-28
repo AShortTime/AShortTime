@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="5dp">
+    >
     <com.ast.www.constom.CircleImageView
         android:id="@+id/user_head"
         android:layout_width="50dp"
