@@ -76,13 +76,11 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		noScrollgridview.setAdapter(adapter);
 		noScrollgridview.setOnItemClickListener(new OnItemClickListener() {
 
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				if (arg2 == Bimp.bmp.size()) {
 					new PopupWindows(PublishedActivity.this, noScrollgridview);
 				} else {
-					Intent intent = new Intent(PublishedActivity.this,
-							PhotoActivity.class);
+					Intent intent = new Intent(PublishedActivity.this, PhotoActivity.class);
 					intent.putExtra("ID", arg2);
 					startActivity(intent);
 				}
@@ -92,9 +90,11 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		/**
 		 * 发表
 		 */
-		toolbar_titleRight.setOnClickListener(new OnClickListener() {
+		toolbar_titleRight.setOnClickListener(this);
 
-			public void onClick(View v) {
+//				.setOnClickListener(new OnClickListener() {
+//
+//			public void onClick(View v) {
 //				List<String> list = new ArrayList<String>();
 //				for (int i = 0; i < Bimp.drr.size(); i++) {
 //					String Str = Bimp.drr.get(i).substring(Bimp.drr.get(i).lastIndexOf("/") + 1,
@@ -106,8 +106,8 @@ public class PublishedActivity extends Activity implements OnClickListener {
 				// 完成上传服务器后 .........
 //				FileUtils.deleteDir();
 
-			}
-		});
+//			}
+//		});
 	}
 
 
@@ -203,6 +203,12 @@ public class PublishedActivity extends Activity implements OnClickListener {
 			new Thread(new Runnable() {
 				public void run() {
 					while (true) {
+						/**
+						 * true：
+						 * 如果图片长度与集合长度相等，更新适配器
+						 * false：
+						 *
+						 */
 						if (Bimp.max == Bimp.drr.size()) {
 							Message message = new Message();
 							message.what = 1;
@@ -284,8 +290,7 @@ public class PublishedActivity extends Activity implements OnClickListener {
 			});
 			bt2.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					Intent intent = new Intent(PublishedActivity.this,
-							TestPicActivity.class);
+					Intent intent = new Intent(PublishedActivity.this, TestPicActivity.class);
 					startActivity(intent);
 					dismiss();
 				}
@@ -301,6 +306,9 @@ public class PublishedActivity extends Activity implements OnClickListener {
 	}
 	private static final int TAKE_PICTURE = 0x000000;
 
+	/**
+	 * 拍照功能
+	 */
 	private String path = "";
 	public void photo() {
 		Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -330,8 +338,12 @@ public class PublishedActivity extends Activity implements OnClickListener {
 			case R.id.item_title_left:
 				cancleDialog();
 				break;
+			/**
+			 * 发表页面
+			 */
 			case R.id.item_title_right:
-
+				startActivity(new Intent(this,SubmitSuccesActivity.class));
+				finish();
 				break;
 		}
 
@@ -344,6 +356,10 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				Bimp.bmp.clear();
+				Bimp.drr.clear();
+				Bimp.max = 0;
+				FileUtils.deleteDir();
 				finish();
 			}
 		});

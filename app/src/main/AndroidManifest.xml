@@ -31,18 +31,26 @@
 
         <activity android:name=".view.activity.MainActivity"/>
 
-        <!-- Submit上传页 -->
+        <!-- 上传页选择 -->
         <activity android:name=".view.activity.SubmitActivity"/>
 
+        <!-- 文字上传页 -->
         <activity
             android:name=".submit.activity.PublishedActivity"
             android:configChanges="orientation|keyboardHidden"/>
 
+        <!-- 图片ViewPager页面 -->
         <activity android:name=".submit.activity.PhotoActivity"/>
 
+        <!-- Submit上传页 -->
         <activity android:name=".submit.activity.TestPicActivity"/>
 
         <activity android:name=".submit.activity.ImageGridActivity"/>
+
+        <!-- 文字上传成功 -->
+        <activity android:name=".submit.activity.SubmitSuccesActivity"/>
+
+
 
         <activity android:name=".view.activity.OtherLogInActivity"></activity>
         <activity android:name=".view.activity.ReGisterActivity"></activity>

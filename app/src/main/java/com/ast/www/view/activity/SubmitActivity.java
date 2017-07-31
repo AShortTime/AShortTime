@@ -77,6 +77,7 @@ public class SubmitActivity extends BaseAvtivity implements View.OnClickListener
                 break;
             case R.id.iv_submit_text:
                 startActivity(new Intent(this, PublishedActivity.class));
+                finish();
                 break;
         }
     }
