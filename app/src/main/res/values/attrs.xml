@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
         <!-- 自定义的属性-->
+        <!--我的关注等-->
         <declare-styleable name="UserDrawMoudle">
             <attr name="left_image" format="reference"/>
             <attr name="right_image" format="reference"/>
             <attr name="text" format="string" />
         </declare-styleable>
+
+
+    <!--用户信息-->
+    <declare-styleable name="Userinfoview">
+        <attr name="user_head" format="reference"/>
+        <attr name="user_name" format="string" />
+        <attr name="time" format="string" />
+    </declare-styleable>
 
 
 

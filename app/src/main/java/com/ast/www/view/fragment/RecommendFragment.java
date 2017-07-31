@@ -44,12 +44,12 @@ public class RecommendFragment extends BaseFragment {
         tab.setTabTextColors(Color.BLACK,Color.RED);
         //初始化tablayout
         tab.addTab(tab.newTab().setText("热门"));
-        tab.addTab(tab.newTab().setText("关注"));
+        tab.addTab(tab.newTab().setText("收藏"));
         FragmentVpAdapter recommendFVpAdapter = new FragmentVpAdapter(getChildFragmentManager());
        //热门与关注的Fragment集合
         List<Fragment> fragments=new ArrayList<>();
         fragments.add(new RecommendHotFragment());
-        fragments.add(new RecommendCareFragment());
+        fragments.add(new RecommendCollectFragment());
 //        添加到外层viewpager
         recommendFVpAdapter.setFragments(fragments);
         vp.setAdapter(recommendFVpAdapter);

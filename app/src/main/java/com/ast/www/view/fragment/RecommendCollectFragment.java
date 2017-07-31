@@ -12,7 +12,7 @@ import com.ast.www.R;
  * Time by 2017/7/20 0020
  */
 
-public class RecommendCareFragment extends BaseFragment {
+public class RecommendCollectFragment extends BaseFragment {
     /**
      * 该抽象方法就是 onCreateView中需要的layoutID
      *

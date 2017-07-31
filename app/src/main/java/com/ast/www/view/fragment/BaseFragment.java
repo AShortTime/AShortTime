@@ -46,11 +46,14 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         createmPresenter();
         initView(getView(),savedInstanceState);
-        initListener();
         initData();
+        initListener();
     }
+
+
 
     /**
      * 该抽象方法就是 onCreateView中需要的layoutID
