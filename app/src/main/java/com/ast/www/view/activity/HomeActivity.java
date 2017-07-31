@@ -1,5 +1,6 @@
 package com.ast.www.view.activity;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
@@ -13,6 +14,7 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ast.www.R;
 import com.ast.www.folding.FoldingPaneLayout;
+import com.ast.www.submit.activity.PublishedActivity;
 import com.ast.www.view.CircleImageView;
 import com.ast.www.view.fragment.DrawerFragment;
 import com.ast.www.view.fragment.JokeFragment;
@@ -61,6 +63,7 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
         homeCircleView = (CircleImageView) findViewById(R.id.home_circleView);
         homeBottombar = (BottomNavigationBar) findViewById(R.id.home_bottombar);
         homeCircleView.setOnClickListener(this);
+        homeEdit.setOnClickListener(this);
 
     }
 
@@ -80,7 +83,7 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
         fragments.add(mjokeFragment);
         fragments.add(mvideoFragment);
 
-        drawerLayout.setProhibitSideslip(true);
+        drawerLayout.setProhibitSideslip(false);
 
         /**
          * 初始化 底部导航栏
@@ -202,6 +205,9 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
                 }else {
                     drawerLayout.openPane();
                 }
+                break;
+            case R.id.home_edit:
+                startActivity(new Intent(this, SubmitActivity.class));
                 break;
         }
     }

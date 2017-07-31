@@ -153,7 +153,8 @@
     <color name="navy">#000080</color> <!--海军色 -->
     <color name="black">#000000</color> <!--黑色 -->
 
-
+    <color name="style_red">#ff4c41</color>
+    <color name="style_divider_color">#C9C7CD</color>
 
 
 </resources>

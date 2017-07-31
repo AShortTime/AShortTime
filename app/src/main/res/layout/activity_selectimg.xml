@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:orientation="vertical" >
+
+    <include android:id="@+id/toolbar_submittext" layout="@layout/layout_toolbar2" />
+
+    <EditText
+        android:layout_below="@+id/toolbar_submittext"
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:layout_margin="8dp"
+        android:gravity="left|top"
+        android:hint="分享您的那点新鲜事儿..."       
+        android:background="@null" >
+    </EditText>
+
+    <GridView
+        android:layout_alignParentBottom="true"
+        android:id="@+id/noScrollgridview"
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:horizontalSpacing="3dp"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:numColumns="3"
+        android:scrollbars="none"
+        android:verticalSpacing="5dp" >
+    </GridView>
+
+</RelativeLayout>
