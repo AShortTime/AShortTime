@@ -1,6 +1,7 @@
 package com.ast.www.view.activity;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -14,6 +15,7 @@ public class ReGisterActivity extends BaseAvtivity {
 
     private LinearLayout register_lay;
     private ImageView register_back;
+    private Button register_but_register;
 
     @Override
     protected void createmPresenter() {
@@ -24,6 +26,7 @@ public class ReGisterActivity extends BaseAvtivity {
     protected void initUI() {
         register_lay = (LinearLayout) findViewById(R.id.register_lay);
         register_back = (ImageView) findViewById(R.id.register_back);
+        register_but_register = (Button) findViewById(R.id.register_but_register);
     }
 
     @Override
@@ -41,6 +44,13 @@ public class ReGisterActivity extends BaseAvtivity {
               overridePendingTransition(R.anim.slide_in_from_left,R.anim.slide_out_from_right);
           }
       });
+        //注册
+        register_but_register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override

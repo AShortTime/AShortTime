@@ -44,6 +44,8 @@ public class TestPreseneter extends BasePresenter<IBaseView<UserLoginBean>> {
             }
         });
     }
+
+
 //post请求
     public <T> void post(String url, Map<String, String> map, final Class<T> cla) {
         HttpUtil.post(url, map, new Consumer<String>() {
@@ -61,6 +63,8 @@ public class TestPreseneter extends BasePresenter<IBaseView<UserLoginBean>> {
             }
         });
     }
+
+
 //文件上传
     public <T> void filePost(String url, List<MultipartBody.Part> parts,final Class<T> cla) {
         HttpUtil.filePost(url,parts, new Consumer<String>() {
