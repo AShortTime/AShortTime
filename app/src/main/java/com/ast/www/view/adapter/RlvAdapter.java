@@ -1,16 +1,19 @@
 package com.ast.www.view.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ast.www.R;
 import com.ast.www.constom.Userinfoview;
-//import com.superplayer.library.SuperPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,18 +80,16 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case TYPE_IMAGE:
-
                 onItemEventClick(holder);
                 ((ImageHolder) holder).userinfoview.setTime("图片");
-
                 break;
             case TYPE_VIDEO:
-
-
                 onItemEventClick(holder);
-                ((VideoHolder) holder).userinfoview.setTime("视频");
+                VideoHolder vh = (VideoHolder) holder;
+                vh.userinfoview.setTime("视频");
+                String s = Environment.getExternalStorageDirectory().getPath() + "/b.flv";
+                vh.update(position);
                 break;
-
         }
     }
 
@@ -118,31 +119,55 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public Userinfoview userinfoview;
         public TextView itemtext;
         public GridView gridView;
-//        public SuperPlayer superPlayer;
+
 
         public ImageHolder(View itemView) {
             super(itemView);
             this.userinfoview = (Userinfoview) itemView.findViewById(R.id.joke_user_info);
-           // this.gridView = (GridView) itemView.findViewById(R.id.gv);
+            this.gridView = (GridView) itemView.findViewById(R.id.gv);
             this.itemtext = (TextView) itemView.findViewById(R.id.content);
 
-
         }
-
     }
+
 
     class VideoHolder extends RecyclerView.ViewHolder {
         public Userinfoview userinfoview;
         public TextView itemtext;
-//        public SuperPlayer superPlayer;
+        public RelativeLayout rlayPlayerControl;
+        private RelativeLayout rlayPlayer;
 
         public VideoHolder(View itemView) {
             super(itemView);
             this.userinfoview = (Userinfoview) itemView.findViewById(R.id.video_user_info);
             this.itemtext = (TextView) itemView.findViewById(R.id.content);
-            //this.superPlayer = (SuperPlayer) itemView.findViewById(R.id.super_player);
+            rlayPlayerControl = (RelativeLayout) itemView.findViewById(R.id.adapter_player_control);
+            rlayPlayer = (RelativeLayout) itemView.findViewById(R.id.adapter_super_video_layout);
+//            if (rlayPlayer!=null){
+//                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rlayPlayer.getLayoutParams();
+//                layoutParams.height = (int) (SuperPlayerUtils.getScreenWidth((Activity) context) * 0.5652f);//这值是网上抄来的，我设置了这个之后就没有全屏回来拉伸的效果，具体为什么我也不太清楚
+//                rlayPlayer.setLayoutParams(layoutParams);
+//            }
         }
+        public void update(final int position) {
+            //点击回调 播放视频
+            rlayPlayerControl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (playclick != null)
+                        playclick.onPlayclick(position, rlayPlayerControl);
+                }
+            });
+        }
+    }
+    private onPlayClick playclick;
 
+    public void setPlayClick(onPlayClick playclick) {
+        this.playclick = playclick;
+    }
+
+    public interface onPlayClick {
+        void onPlayclick(int position, RelativeLayout image);
     }
 
     /**
@@ -158,4 +183,5 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         void OnItemLongClick(View view, int position);
     }
+
 }

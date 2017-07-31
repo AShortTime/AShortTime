@@ -6,13 +6,18 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import com.ast.www.R;
 import com.ast.www.model.bean.ClassBean;
 import com.ast.www.model.bean.UserLoginBean;
 import com.ast.www.presenter.TestPreseneter;
 import com.ast.www.view.iview.IBaseView;
+import com.superplayer.library.SuperPlayer;
+import com.superplayer.library.SuperPlayerManage;
+import com.superplayer.library.mediaplayer.IjkVideoView;
 
 import java.io.File;
 import java.util.AbstractList;
@@ -54,13 +59,20 @@ public class MainActivity extends BaseAvtivity<TestPreseneter> implements IBaseV
 
     @Override
     protected void initListener() {
+        get();
+        post();
+    }
+
+    private void get() {
         mget.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
             }
         });
+    }
 
+    private void post() {
         mpost.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -90,7 +102,7 @@ public class MainActivity extends BaseAvtivity<TestPreseneter> implements IBaseV
 //“mediaDictionaryValue”： 1//视频为1，图片为3，文字为2
 //“mediaUserId”： int（1，2，3挑一个）  //上传用户id（我这里有1，2，3）
                 for (int i = 0; i < pathList.size(); i++) {
-                    RequestBody  imageBody  = RequestBody.create(MediaType.parse("multipart/form-data"), pathList.get(i));
+                    RequestBody imageBody  = RequestBody.create(MediaType.parse("multipart/form-data"), pathList.get(i));
                     builder.addFormDataPart("file", "guo.mp4", imageBody);
                 }
                 List<MultipartBody.Part> parts = builder.build().parts();
@@ -124,5 +136,6 @@ public class MainActivity extends BaseAvtivity<TestPreseneter> implements IBaseV
         Log.e("dispatch", b + "");
         return b;
     }
+
 }
 
