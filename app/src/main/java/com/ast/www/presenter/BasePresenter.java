@@ -1,6 +1,11 @@
 package com.ast.www.presenter;
 
+import com.ast.www.model.bean.UserLoginBean;
 import com.ast.www.view.iview.IBaseView;
+
+import java.util.List;
+
+import okhttp3.MultipartBody;
 
 /**
  * 作者:郭凯奇
@@ -26,5 +31,4 @@ public class BasePresenter<T extends IBaseView>{
             t=null;
         }
     }
-
 }

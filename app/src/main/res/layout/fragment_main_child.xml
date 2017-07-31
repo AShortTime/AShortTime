@@ -3,7 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
     <android.support.v4.view.ViewPager
         android:id="@+id/recommend_vp"
         android:layout_width="match_parent"
@@ -31,6 +30,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <RelativeLayout
+        android:id="@+id/full_screen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000"
+        android:gravity="center"
+        android:visibility="gone" />
 
 
 </LinearLayout>
