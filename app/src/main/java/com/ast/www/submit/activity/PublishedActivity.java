@@ -5,17 +5,23 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,6 +39,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.ast.www.R;
@@ -43,6 +50,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.Manifest;
 
 public class PublishedActivity extends Activity implements OnClickListener {
 
@@ -284,7 +292,7 @@ public class PublishedActivity extends Activity implements OnClickListener {
 
 			bt1.setOnClickListener(new OnClickListener() {
 				public void onClick(View v) {
-					photo();
+					photo2();
 					dismiss();
 				}
 			});
@@ -306,19 +314,140 @@ public class PublishedActivity extends Activity implements OnClickListener {
 	}
 	private static final int TAKE_PICTURE = 0x000000;
 
+	//相机权限
+	private String[] permissions_camera= {android.Manifest.permission.CAMERA,android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
 	/**
 	 * 拍照功能
 	 */
 	private String path = "";
 	public void photo() {
+
+		//判断 版本 当系统大于23时，申请动态权限
+		if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+			//判断是否授权
+			int i = ContextCompat.checkSelfPermission(this, permissions_camera[0]);
+			//GRANTED 授权 DINIED 拒绝
+			if (i== PackageManager.PERMISSION_DENIED){
+				showDialogTipUserRequestPermission();
+				return;
+			}
+		}
+
 		Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		File file = new File(Environment.getExternalStorageDirectory()
 				+ "/myimage/", String.valueOf(System.currentTimeMillis())
 				+ ".jpg");
 		path = file.getPath();
 		Uri imageUri = Uri.fromFile(file);
+//		Uri imageUri = FileProvider.getUriForFile(this,getApplicationContext().getPackageName() + "" +
+//				".provider", file);
 		openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
 		startActivityForResult(openCameraIntent, TAKE_PICTURE);
+	}
+
+	public void photo2() {
+		//判断 版本 当系统大于23时，申请动态权限
+		if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+			//判断是否授权
+			int i = ContextCompat.checkSelfPermission(this, permissions_camera[0]);
+			//GRANTED 授权 DINIED 拒绝
+			if (i== PackageManager.PERMISSION_DENIED){
+				showDialogTipUserRequestPermission();
+				return;
+			}
+		}
+
+		Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		File file1 = new File(Environment.getExternalStorageDirectory()
+				+ "/myimage");
+		if (!file1.exists()) {
+			file1.mkdir();
+		}
+		File file = new File(file1, String.valueOf(System.currentTimeMillis()) + ".jpg");
+		path = file.getPath();
+		//Uri imageUri = Uri.fromFile(file);
+		Uri imageUri = FileProvider.getUriForFile(this,getPackageName() + "" +
+				".provider", file);
+		openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+		startActivityForResult(openCameraIntent, TAKE_PICTURE);
+	}
+
+
+	/**
+	 * 展示 设置相机权限Dialog
+	 */
+	private void showDialogTipUserRequestPermission() {
+		new AlertDialog.Builder(this)
+				.setTitle("相机权限不可用")
+				.setMessage("由于拍照需要获取摄像头，进行图片拍摄;\n否则，您将无法正常使用摄像头")
+				.setPositiveButton("立即开启", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						//请求权限 跳转到授权回调
+						ActivityCompat.requestPermissions(PublishedActivity.this,permissions_camera,0);
+					}
+				})
+				.setNegativeButton("取消授权", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				})
+				.setCancelable(false)
+				.show();
+	}
+
+	/**
+	 * 用户申请授权回调
+	 */
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+		if (requestCode==0){
+			if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
+				//如果授权失败
+				if (grantResults[0]!=PackageManager.PERMISSION_GRANTED){
+					//检测是否允许继续申请授权
+					//系统方法
+					boolean isP = shouldShowRequestPermissionRationale(permissions_camera[0]);
+					//是否被设置为不在申请
+					//false：继续要求用户自己手动申请
+					//true ：关闭页面
+					if (!isP){
+						//展示手动授权页面
+						showDialogToSettings();
+					}else {
+
+					}
+
+				}else {
+					Toast.makeText(this, "相机授权成功", Toast.LENGTH_SHORT).show();
+					photo2();
+				}
+			}
+		}
+	}
+
+	private void showDialogToSettings() {
+
+		new AlertDialog.Builder(this)
+				.setTitle("自动授权失败")
+				.setMessage("请在设置-应用-权限 中，允许应用使用摄像头权限")
+				.setPositiveButton("前去设置", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				})
+				.setNegativeButton("不，算了", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				})
+				.setCancelable(false)
+				.show();
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
