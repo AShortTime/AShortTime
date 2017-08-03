@@ -1,5 +1,6 @@
 package com.ast.www.view.activity;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -55,10 +56,12 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
         homeStartDrawerLayout = (RelativeLayout) findViewById(R.id.home_startDrawerLayout);
         homeToolbar = (Toolbar) findViewById(R.id.home_toolbar);
         homeEdit = (ImageView) findViewById(R.id.home_edit);
+        homeEdit.setOnClickListener(this);
         homeTitle = (TextView) findViewById(R.id.home_title);
         homeCircleView = (CircleImageView) findViewById(R.id.home_circleView);
         homeBottombar = (BottomNavigationBar) findViewById(R.id.home_bottombar);
         homeCircleView.setOnClickListener(this);
+
     }
 
     /**
@@ -199,6 +202,9 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
                 }else {
                     drawerLayout.openPane();
                 }
+                break;
+            case R.id.home_edit:
+                startActivity(new Intent(this,SubmitActivity.class));
                 break;
         }
     }

@@ -16,7 +16,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="160dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="80dp"
         android:src="@mipmap/ic_launcher" />
 
@@ -25,6 +25,7 @@
         android:id="@+id/login_but_wx"
         android:background="@drawable/shapefileweixin"
         style="@style/login_but_wx"
+        android:layout_gravity="center_horizontal"
         android:text="@string/login_but_wx"
     />
 
@@ -32,13 +33,14 @@
         android:id="@+id/login_but_qq"
         android:background="@drawable/shapefileqq"
         android:text="@string/login_but_qq"
+        android:layout_gravity="center_horizontal"
         style="@style/login_but_qq"/>
 
     <TextView
         android:id="@+id/login_text_qita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="140dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
         android:text="@string/login_text_qita"
         android:textColor="#ffff"

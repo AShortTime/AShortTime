@@ -2,11 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ast.www">
 
+
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 
     <application
@@ -27,9 +32,35 @@
         </activity>
 
         <activity android:name=".view.activity.MainActivity"/>
+
+        <!-- 上传页选择 -->
+        <activity android:name=".view.activity.SubmitActivity"/>
+
+        <!-- 文字上传页 -->
+        <activity
+            android:name=".submit.activity.PublishedActivity"
+            android:configChanges="orientation|keyboardHidden"/>
+
+        <!-- 图片ViewPager页面 -->
+        <activity android:name=".submit.activity.PhotoActivity"/>
+
+        <!-- Submit上传页 -->
+        <activity android:name=".submit.activity.TestPicActivity"/>
+
+        <activity android:name=".submit.activity.ImageGridActivity"/>
+
+        <!-- 文字上传成功 -->
+        <activity android:name=".submit.activity.SubmitSuccesActivity"/>
+
+
+
         <activity android:name=".view.activity.OtherLogInActivity"></activity>
         <activity android:name=".view.activity.ReGisterActivity"></activity>
         <activity android:name=".view.activity.LogInActivity"></activity>
+        <activity android:name=".view.activity.AttenTionActivity" />
+        <activity android:name=".view.activity.CollectionActivity"></activity>
+        <activity android:name=".view.activity.SearchForActivity"></activity>
+        <activity android:name=".view.activity.InformationActivity"></activity>
 
         <activity
             android:name="com.tencent.tauth.AuthActivity"
@@ -47,6 +78,17 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="orientation|keyboardHidden|screenSize"
             />
+
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths"/>
+        </provider>
 
     </application>
 
