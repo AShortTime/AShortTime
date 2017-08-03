@@ -43,6 +43,8 @@ import android.widget.Toast;
 
 
 import com.ast.www.R;
+import com.ast.www.submit.PublishedPersenter;
+import com.ast.www.submit.bean.CodeBean;
 import com.ast.www.submit.utils.Bimp;
 import com.ast.www.submit.utils.FileUtils;
 
@@ -52,10 +54,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.Manifest;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public class PublishedActivity extends Activity implements OnClickListener {
 
 	private GridView noScrollgridview;
 	private GridAdapter adapter;
+	private PublishedPersenter persenter;
 
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +74,9 @@ public class PublishedActivity extends Activity implements OnClickListener {
 	private TextView toolbar_title,toolbar_titleLeft,toolbar_titleRight;
 
 	public void Init() {
+
+		persenter = new PublishedPersenter(this);
+
 		toolbar_title = (TextView) findViewById(R.id.item_title);
 		toolbar_title.setText("发表文章");
 		toolbar_titleLeft= (TextView) findViewById(R.id.item_title_left);
@@ -99,23 +109,6 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		 * 发表
 		 */
 		toolbar_titleRight.setOnClickListener(this);
-
-//				.setOnClickListener(new OnClickListener() {
-//
-//			public void onClick(View v) {
-//				List<String> list = new ArrayList<String>();
-//				for (int i = 0; i < Bimp.drr.size(); i++) {
-//					String Str = Bimp.drr.get(i).substring(Bimp.drr.get(i).lastIndexOf("/") + 1,
-//							Bimp.drr.get(i).lastIndexOf("."));
-//					list.add(FileUtils.SDPATH+Str+".JPEG");
-//				}
-				// 高清的压缩图片全部就在  list 路径里面了
-				// 高清的压缩过的 bmp 对象  都在 Bimp.bmp里面
-				// 完成上传服务器后 .........
-//				FileUtils.deleteDir();
-
-//			}
-//		});
 	}
 
 
@@ -312,40 +305,19 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		}
 
 	}
+
+
 	private static final int TAKE_PICTURE = 0x000000;
 
 	//相机权限
 	private String[] permissions_camera= {android.Manifest.permission.CAMERA,android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+
+
+	String path;
 	/**
-	 * 拍照功能
+	 * 拍照方法
 	 */
-	private String path = "";
-	public void photo() {
-
-		//判断 版本 当系统大于23时，申请动态权限
-		if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-			//判断是否授权
-			int i = ContextCompat.checkSelfPermission(this, permissions_camera[0]);
-			//GRANTED 授权 DINIED 拒绝
-			if (i== PackageManager.PERMISSION_DENIED){
-				showDialogTipUserRequestPermission();
-				return;
-			}
-		}
-
-		Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		File file = new File(Environment.getExternalStorageDirectory()
-				+ "/myimage/", String.valueOf(System.currentTimeMillis())
-				+ ".jpg");
-		path = file.getPath();
-		Uri imageUri = Uri.fromFile(file);
-//		Uri imageUri = FileProvider.getUriForFile(this,getApplicationContext().getPackageName() + "" +
-//				".provider", file);
-		openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-		startActivityForResult(openCameraIntent, TAKE_PICTURE);
-	}
-
 	public void photo2() {
 		//判断 版本 当系统大于23时，申请动态权限
 		if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
@@ -374,28 +346,77 @@ public class PublishedActivity extends Activity implements OnClickListener {
 	}
 
 
+	@Override
+	public void onClick(View v) {
+
+		switch (v.getId()){
+			case R.id.item_title_left:
+				cancleDialog();
+				break;
+			/**
+			 * 发表页面
+			 */
+			case R.id.item_title_right:
+				submitContent();
+				break;
+		}
+
+	}
+
 	/**
-	 * 展示 设置相机权限Dialog
+	 * 上传数据
 	 */
-	private void showDialogTipUserRequestPermission() {
-		new AlertDialog.Builder(this)
-				.setTitle("相机权限不可用")
-				.setMessage("由于拍照需要获取摄像头，进行图片拍摄;\n否则，您将无法正常使用摄像头")
-				.setPositiveButton("立即开启", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						//请求权限 跳转到授权回调
-						ActivityCompat.requestPermissions(PublishedActivity.this,permissions_camera,0);
-					}
-				})
-				.setNegativeButton("取消授权", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				})
-				.setCancelable(false)
-				.show();
+	private void submitContent() {
+
+		List<String> list = new ArrayList<String>();
+		for (int i = 0; i < Bimp.drr.size(); i++) {
+			String Str = Bimp.drr.get(i).substring(
+					Bimp.drr.get(i).lastIndexOf("/") + 1,
+					Bimp.drr.get(i).lastIndexOf("."));
+			list.add(FileUtils.SDPATH + Str + ".JPEG");
+		}
+		uploadPic(list);
+	}
+
+	/**
+	 * 上传图片数据
+	 * @param list
+	 */
+	public void uploadPic(List<String> list) {
+		List<File> pathList = new ArrayList<>();
+		for (int x = 0; x < list.size(); x++) {
+			File file = new File(list.get(x));
+			pathList.add(file);
+		}
+		MultipartBody.Builder builder = new MultipartBody.Builder()
+				.setType(MultipartBody.FORM)
+				.addFormDataPart("description", "上传图片")
+				.addFormDataPart("dictionaryValue", 3+"")
+				.addFormDataPart("userId", 1+"");
+		for (int i = 0; i < pathList.size(); i++) {
+			RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), pathList.get(i));
+			builder.addFormDataPart("file", "wodepic", imageBody);
+		}
+		List<MultipartBody.Part> parts = builder.build().parts();
+		/**
+		 * 调用P层 上传方法
+		 */
+		persenter.uploadData("picture/picchaUpload",parts);
+	}
+
+	/**
+	 * 上传成功回调
+	 * @param uploadBean
+	 */
+	public void upLoad(CodeBean uploadBean){
+		Toast.makeText(this, "图片上传成功", Toast.LENGTH_SHORT).show();
+		FileUtils.deleteDir();
+		Bimp.max = 0;
+		Bimp.drr.clear();
+		Bimp.bmp.clear();
+
+		startActivity(new Intent(this,SubmitSuccesActivity.class));
+		finish();
 	}
 
 	/**
@@ -429,8 +450,34 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		}
 	}
 
-	private void showDialogToSettings() {
+	/**
+	 * 展示 设置相机权限Dialog
+	 */
+	private void showDialogTipUserRequestPermission() {
+		new AlertDialog.Builder(this)
+				.setTitle("相机权限不可用")
+				.setMessage("由于拍照需要获取摄像头，进行图片拍摄;\n否则，您将无法正常使用摄像头")
+				.setPositiveButton("立即开启", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						//请求权限 跳转到授权回调
+						ActivityCompat.requestPermissions(PublishedActivity.this,permissions_camera,0);
+					}
+				})
+				.setNegativeButton("取消授权", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				})
+				.setCancelable(false)
+				.show();
+	}
 
+	/**
+	 * 展示 Dialog 跳转至 设置
+	 */
+	private void showDialogToSettings() {
 		new AlertDialog.Builder(this)
 				.setTitle("自动授权失败")
 				.setMessage("请在设置-应用-权限 中，允许应用使用摄像头权限")
@@ -450,34 +497,10 @@ public class PublishedActivity extends Activity implements OnClickListener {
 				.show();
 	}
 
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-		case TAKE_PICTURE:
-			if (Bimp.drr.size() < 9 && resultCode == -1) {
-				Bimp.drr.add(path);
-			}
-			break;
-		}
-	}
 
-	@Override
-	public void onClick(View v) {
-
-		switch (v.getId()){
-			case R.id.item_title_left:
-				cancleDialog();
-				break;
-			/**
-			 * 发表页面
-			 */
-			case R.id.item_title_right:
-				startActivity(new Intent(this,SubmitSuccesActivity.class));
-				finish();
-				break;
-		}
-
-	}
-
+	/**
+	 * 取消编辑Dialog
+	 */
 	public void cancleDialog(){
 		AlertDialog.Builder builder=new AlertDialog.Builder(this);
 		builder.setTitle("提示");
@@ -500,6 +523,23 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		});
 		builder.create();
 		builder.show();
+	}
+
+
+	/**
+	 * 页面销毁回调
+	 * @param requestCode
+	 * @param resultCode
+	 * @param data
+	 */
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case TAKE_PICTURE:
+				if (Bimp.drr.size() < 9 && resultCode == -1) {
+					Bimp.drr.add(path);
+				}
+				break;
+		}
 	}
 
 }
