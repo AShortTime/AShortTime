@@ -1,20 +1,14 @@
-package com.ast.www.submit;
+package com.ast.www.submit.persenter;
 
-import android.os.ParcelUuid;
 import android.util.Log;
-
 import com.ast.www.model.util.HttpUtil;
 import com.ast.www.submit.activity.PublishedActivity;
 import com.ast.www.submit.bean.CodeBean;
 import com.google.gson.Gson;
-
 import java.util.List;
-
-import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import okhttp3.MultipartBody;
 
-import static android.content.ContentValues.TAG;
 
 /**
  * Effect :submit页面Persenter
@@ -36,6 +30,8 @@ public class PublishedPersenter {
 
 
     public void uploadData(String url, List<MultipartBody.Part> part) {
+
+        Log.i(TAG, "uploadPic: ");
 
         HttpUtil.filePost(url, part, new Consumer<String>() {
             @Override

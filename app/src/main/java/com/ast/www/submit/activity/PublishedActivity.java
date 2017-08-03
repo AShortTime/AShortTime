@@ -23,6 +23,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -44,7 +46,7 @@ import android.widget.Toast;
 
 
 import com.ast.www.R;
-import com.ast.www.submit.PublishedPersenter;
+import com.ast.www.submit.persenter.PublishedPersenter;
 import com.ast.www.submit.bean.CodeBean;
 import com.ast.www.submit.utils.Bimp;
 import com.ast.www.submit.utils.FileUtils;
@@ -53,13 +55,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.jar.Manifest;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-
-import static android.content.ContentValues.TAG;
 
 public class PublishedActivity extends Activity implements OnClickListener {
 
@@ -74,6 +73,7 @@ public class PublishedActivity extends Activity implements OnClickListener {
 	private TextView toolbar_title,toolbar_titleLeft,toolbar_titleRight;
 
 	String path;
+	private EditText editContent;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -84,7 +84,7 @@ public class PublishedActivity extends Activity implements OnClickListener {
 	public void Init() {
 
 		persenter = new PublishedPersenter(this);
-
+		editContent = (EditText) findViewById(R.id.selectimg_edit);
 		toolbar_title = (TextView) findViewById(R.id.item_title);
 		toolbar_title.setText("发表文章");
 		toolbar_titleLeft= (TextView) findViewById(R.id.item_title_left);
@@ -328,7 +328,7 @@ public class PublishedActivity extends Activity implements OnClickListener {
 			 * 发表页面
 			 */
 			case R.id.item_title_right:
-				submitContent();
+				uploadPic();
 				break;
 		}
 	}
@@ -357,48 +357,64 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		}
 		File file = new File(file1, String.valueOf(System.currentTimeMillis()) + ".jpg");
 		path = file.getPath();
-		//Uri imageUri = Uri.fromFile(file);
-		Uri imageUri = FileProvider.getUriForFile(this,getPackageName() + "" +
-				".provider", file);
+		Uri imageUri = FileProvider.getUriForFile(this,getPackageName() + ".provider", file);
 		openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
 		startActivityForResult(openCameraIntent, TAKE_PICTURE);
 	}
 
-	/**
-	 * 上传数据
-	 */
-	private void submitContent() {
-		Log.i(TAG, "submitContent: ");
-
-		List<String> list = new ArrayList<String>();
-		for (int i = 0; i < Bimp.drr.size(); i++) {
-			String Str = Bimp.drr.get(i).substring(
-					Bimp.drr.get(i).lastIndexOf("/") + 1,
-					Bimp.drr.get(i).lastIndexOf("."));
-			list.add(FileUtils.SDPATH + Str + ".JPEG");
-		}
-		uploadPic(list);
-	}
 
 	/**
 	 * 上传图片数据
-	 * @param list
 	 */
-	public void uploadPic(List<String> list) {
+	public void uploadPic() {
+
+		Log.i(TAG, "uploadPic: 上传文字图片数据");
+
 		List<File> pathList = new ArrayList<>();
-		for (int x = 0; x < list.size(); x++) {
-			File file = new File(list.get(x));
-			pathList.add(file);
+		/**
+		 * 获取图片资源
+		 */
+		for (int i = 0; i < Bimp.drr.size(); i++) {
+			String Str = Bimp.drr.get(i).substring(Bimp.drr.get(i).lastIndexOf("/") + 1, Bimp.drr.get(i).lastIndexOf("."));
+			pathList.add(new File(FileUtils.SDPATH + Str + ".JPEG"));
 		}
-		MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM)
-				.addFormDataPart("description", "上传图片")
-				.addFormDataPart("dictionaryValue", 3+"")
-				.addFormDataPart("userId", 1+"");
-		for (int i = 0; i < pathList.size(); i++) {
-			RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), pathList.get(i));
-			builder.addFormDataPart("file", "wodepic", imageBody);
+
+		MultipartBody.Builder setType = new MultipartBody.Builder().setType(MultipartBody.FORM);
+		//上传用户
+		setType.addFormDataPart("userId","1");
+		/**
+		 * 图片非Null 状态
+		 * 数据类型：图片 3
+		 * 则 文字数据作为图片描述传输
+		 */
+		if (pathList.size()!=0){
+			setType.addFormDataPart("description",editContent.getText().toString().trim());//图片描述
+			setType.addFormDataPart("dictionaryValue","3");//资源类型
+
+			for (int i = 0; i < pathList.size(); i++) {
+				RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), pathList.get(i));
+				setType.addFormDataPart("file", "wodepic", imageBody);
+			}
+
 		}
-		List<MultipartBody.Part> parts = builder.build().parts();
+		/**
+		 * 图片为Null 状态
+		 * 数据类型：段子 2
+		 * 则 文字数据作为段子数据传输
+		 */
+		else {
+			String content = editContent.getText().toString().trim();
+			setType.addFormDataPart("description","图片描述");//图片描述
+			setType.addFormDataPart("dictionaryValue","2");//资源类型
+			if (!TextUtils.isEmpty(content)){
+				setType.addFormDataPart("content",content);//资源类型
+			}else {
+				Toast.makeText(this, "你没有上传数据呦！~", Toast.LENGTH_SHORT).show();
+				return;
+			}
+		}
+
+		List<MultipartBody.Part> parts = setType.build().parts();
 		/**
 		 * 调用P层 上传方法
 		 */
@@ -410,7 +426,8 @@ public class PublishedActivity extends Activity implements OnClickListener {
 	 * @param uploadBean
 	 */
 	public void upLoad(CodeBean uploadBean){
-		Toast.makeText(this, "图片上传成功", Toast.LENGTH_SHORT).show();
+		Toast.makeText(this, "上传成功", Toast.LENGTH_SHORT).show();
+
 		FileUtils.deleteDir();
 		Bimp.max = 0;
 		Bimp.drr.clear();

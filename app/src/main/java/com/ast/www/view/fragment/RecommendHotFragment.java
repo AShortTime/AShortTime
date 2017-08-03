@@ -187,51 +187,6 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
         });
     }
 
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        if (player != null) {
-//            player.onConfigurationChanged(newConfig);
-//            if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-//                fullScreen.setVisibility(View.GONE);
-//                fullScreen.removeAllViews();
-//                mrlv.setVisibility(View.VISIBLE);
-//                if (postion <= llm.findLastVisibleItemPosition()
-//                        && postion >= llm.findFirstVisibleItemPosition()) {
-//                    View view = mrlv.findViewHolderForAdapterPosition(postion).itemView;
-//                    FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.adapter_super_video);
-//                    frameLayout.removeAllViews();
-//                    ViewGroup last = (ViewGroup) player.getParent();//找到videoitemview的父类，然后remove
-//                    if (last != null) {
-//                        last.removeAllViews();
-//                    }
-//                    frameLayout.addView(player);
-//                }
-//                int mShowFlags =
-//                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-//                fullScreen.setSystemUiVisibility(mShowFlags);
-//            } else {
-//                ViewGroup viewGroup = (ViewGroup) player.getParent();
-//                if (viewGroup == null)
-//                    return;
-//                viewGroup.removeAllViews();
-//                fullScreen.addView(player);
-//                fullScreen.setVisibility(View.VISIBLE);
-//                int mHideFlags =
-//                        View.SYSTEM_UI_FLAG_LOW_PROFILE
-//                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                                | View.SYSTEM_UI_FLAG_FULLSCREEN
-//                                | View.SYSTEM_UI_FLAG_IMMERSIVE
-//                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-//                fullScreen.setSystemUiVisibility(mHideFlags);
-//            }
-//        } else {
-//            fullScreen.setVisibility(View.GONE);
-//        }
-//    }
 
     /**
      * 执行数据的加载

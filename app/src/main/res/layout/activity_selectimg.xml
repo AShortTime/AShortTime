@@ -9,6 +9,7 @@
     <include android:id="@+id/toolbar_submittext" layout="@layout/layout_toolbar2" />
 
     <EditText
+        android:id="@+id/selectimg_edit"
         android:layout_below="@+id/toolbar_submittext"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
