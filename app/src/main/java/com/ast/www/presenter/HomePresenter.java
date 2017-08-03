@@ -2,21 +2,15 @@ package com.ast.www.presenter;
 
 import android.util.Log;
 
-import com.ast.www.model.bean.ClassBean;
-import com.ast.www.model.bean.UserLoginBean;
 import com.ast.www.model.util.Constant;
 import com.ast.www.model.util.HttpUtil;
 import com.ast.www.view.iview.IBaseView;
-import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
-import java.io.File;
 import java.util.List;
 import java.util.Map;
 
-import io.reactivex.Observer;
-import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import okhttp3.MultipartBody;
 
@@ -27,7 +21,7 @@ import okhttp3.MultipartBody;
  * Text:
  */
 
-public class TestPreseneter extends BasePresenter<IBaseView> {
+public class HomePresenter extends BasePresenter<IBaseView> {
 
 //get请求
     public <T> void get(String url, Map<String, String> map, final Class<T> cla) {
@@ -35,9 +29,9 @@ public class TestPreseneter extends BasePresenter<IBaseView> {
             @Override
             public void accept(String s) throws Exception {
                 Log.e("getjson", s);
-                getiBaseView().onData(s);
-//                T t = Constant.GsonToBean(s, cla);
-//                getiBaseView().onData(t);
+//                getiBaseView().onData(s);
+                T t = Constant.GsonToBean(s, cla);
+                getiBaseView().onData(t);
             }
         }, new Consumer<Throwable>() {
             @Override

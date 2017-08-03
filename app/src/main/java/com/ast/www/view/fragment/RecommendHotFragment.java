@@ -2,7 +2,6 @@ package com.ast.www.view.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 import com.ast.www.R;
 import com.ast.www.model.bean.RecommendHotBean;
-import com.ast.www.presenter.TestPreseneter;
+import com.ast.www.presenter.HomePresenter;
 import com.ast.www.view.adapter.RlvAdapter;
 import com.ast.www.view.iview.IBaseView;
 import com.superplayer.library.SuperPlayer;
@@ -32,7 +31,7 @@ import java.util.List;
  * Time by 2017/7/20 0020
  */
 
-public class RecommendHotFragment extends BaseFragment<TestPreseneter>{
+public class RecommendHotFragment extends BaseFragment<HomePresenter>{
 
     private RecyclerView mrlv;
     private SuperPlayer player;
@@ -250,7 +249,7 @@ public class RecommendHotFragment extends BaseFragment<TestPreseneter>{
      */
     @Override
     protected void createmPresenter() {
-        mPresenter = new TestPreseneter();
+        mPresenter=new HomePresenter();
         mPresenter.attach(new IBaseView<RecommendHotBean>() {
             @Override
             public void onData(RecommendHotBean recommendHotBean) {
