@@ -33,8 +33,8 @@ public class TestPreseneter extends BasePresenter<IBaseView> {
             @Override
             public void accept(String s) throws Exception {
                 Log.e("getjson", s);
-//                T t = Constant.GsonToBean(s, cla);
-//                getiBaseView().onData(t);
+                T t = Constant.GsonToBean(s, cla);
+                getiBaseView().onData(t);
             }
         }, new Consumer<Throwable>() {
             @Override
