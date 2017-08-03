@@ -35,15 +35,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="60dp"
-        android:layout_marginLeft="180dp"/>
+       />
 
 
     <LinearLayout
         android:id="@+id/register_lay"
         android:layout_width="280dp"
         android:layout_height="120dp"
-        android:layout_marginLeft="65dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="30dp"
         android:background="@drawable/shapefileregister"
         android:orientation="vertical">
@@ -62,8 +63,9 @@
             android:id="@+id/register_edText_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:background="@null"
-            android:hint="输入大小写和数字,密码不能超过8位"
+            android:hint="请输入密码不能少于六位奥"
             style="@style/register"/>
         <View
             android:layout_width="match_parent"
@@ -73,6 +75,7 @@
             android:id="@+id/register_edText_phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="number"
             android:background="@null"
             android:hint="请输入电话号码"
             style="@style/register"/>
@@ -93,7 +96,7 @@
         android:id="@+id/register_but_register"
         android:layout_width="280dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="65dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:text="注册"
         android:textColor="#ffff"
@@ -106,7 +109,7 @@
         android:layout_height="wrap_content"
         android:text="游客登录"
         android:textColor="#ABA9AB"
-        android:layout_marginLeft="180dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:textSize="15sp"/>
 

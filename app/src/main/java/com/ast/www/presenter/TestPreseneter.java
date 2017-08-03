@@ -9,6 +9,8 @@ import com.ast.www.model.util.HttpUtil;
 import com.ast.www.view.iview.IBaseView;
 import com.google.gson.Gson;
 
+import org.json.JSONObject;
+
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,7 @@ public class TestPreseneter extends BasePresenter<IBaseView> {
             @Override
             public void accept(String s) throws Exception {
                 Log.e("getjson", s);
+                getiBaseView().onData(s);
 //                T t = Constant.GsonToBean(s, cla);
 //                getiBaseView().onData(t);
             }
@@ -44,14 +47,19 @@ public class TestPreseneter extends BasePresenter<IBaseView> {
             }
         });
     }
+
+
 //post请求
     public <T> void post(String url, Map<String, String> map, final Class<T> cla) {
         HttpUtil.post(url, map, new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-                Log.e("postjson", s);
-//                T t = Constant.GsonToBean(s, cla);
-//                getiBaseView().onData(t);
+//                    JSONObject jsonObject=new JSONObject(s);
+//                    String code = jsonObject.getString("code");
+                    Log.e("postjson", s+"");
+//                    T t = Constant.GsonToBean(s, cla);
+                    getiBaseView().onData(s);
+
             }
         }, new Consumer<Throwable>() {
             @Override
@@ -61,12 +69,16 @@ public class TestPreseneter extends BasePresenter<IBaseView> {
             }
         });
     }
+
+
 //文件上传
     public <T> void filePost(String url, List<MultipartBody.Part> parts,final Class<T> cla) {
         HttpUtil.filePost(url,parts, new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-                Log.e("postjson", s);
+                JSONObject jsonObject=new JSONObject(s);
+                String code = jsonObject.getString("code");
+                Log.e("postjson", s+code);
 //                T t = Constant.GsonToBean(s, cla);
 //                getiBaseView().onData(t);
             }

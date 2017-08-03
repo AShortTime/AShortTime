@@ -181,6 +181,8 @@ public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatAct
         }
     }
 
+
+
     /***************** 双击退出程序 ************************************************/
     private long exitTime = 0;
 
