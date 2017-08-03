@@ -1,1 +1,1 @@
-include ':app', ':ijkplayerlibrary', ':superplayerlibrary', 'button', ':floatingmusicmenu'
+include ':app', ':ijkplayerlibrary', ':superplayerlibrary'

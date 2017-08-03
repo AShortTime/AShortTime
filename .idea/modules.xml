@@ -5,8 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/AShortTime.iml" filepath="$PROJECT_DIR$/AShortTime.iml" />
       <module fileurl="file://$PROJECT_DIR$/ShortTime.iml" filepath="$PROJECT_DIR$/ShortTime.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/button/button.iml" filepath="$PROJECT_DIR$/button/button.iml" />
-      <module fileurl="file://$PROJECT_DIR$/floatingmusicmenu/floatingmusicmenu.iml" filepath="$PROJECT_DIR$/floatingmusicmenu/floatingmusicmenu.iml" />
       <module fileurl="file://$PROJECT_DIR$/ijkplayerlibrary/ijkplayerlibrary.iml" filepath="$PROJECT_DIR$/ijkplayerlibrary/ijkplayerlibrary.iml" />
       <module fileurl="file://$PROJECT_DIR$/superplayerlibrary/superplayerlibrary.iml" filepath="$PROJECT_DIR$/superplayerlibrary/superplayerlibrary.iml" />
     </modules>
