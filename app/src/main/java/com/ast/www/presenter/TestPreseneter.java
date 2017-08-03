@@ -25,7 +25,7 @@ import okhttp3.MultipartBody;
  * Text:
  */
 
-public class TestPreseneter extends BasePresenter<IBaseView<UserLoginBean>> {
+public class TestPreseneter extends BasePresenter<IBaseView> {
 
 //get请求
     public <T> void get(String url, Map<String, String> map, final Class<T> cla) {
