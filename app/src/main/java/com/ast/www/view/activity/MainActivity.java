@@ -3,6 +3,9 @@ package com.ast.www.view.activity;
 
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Looper;
+import android.os.Message;
+import android.os.MessageQueue;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,6 +47,7 @@ public class MainActivity extends BaseAvtivity<TestPreseneter> implements IBaseV
     protected void createmPresenter() {
         mPresenter = new TestPreseneter();
         mPresenter.attach(this);
+
     }
 
     @Override

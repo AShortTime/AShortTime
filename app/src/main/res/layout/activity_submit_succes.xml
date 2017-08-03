@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/toolbar_submit_succes"
+        layout="@layout/layout_toolbar3"/>
+
+    <ImageView
+        android:layout_below="@+id/toolbar_submit_succes"
+        android:id="@+id/iv_submit_succes"
+        android:src="@mipmap/submit_succes"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="70dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+    <TextView
+        android:id="@+id/tv_submit_message"
+        android:text="发表成功，快分享给好友捧场吧~！"
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:layout_below="@+id/iv_submit_succes"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:id="@+id/ll_submit_succes_icon"
+        android:layout_below="@+id/tv_submit_message"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:layout_alignLeft="@+id/tv_submit_message"
+        android:layout_alignRight="@+id/tv_submit_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/rl_submit_succes_icon01"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_submit_succes_icon01"
+                android:background="#fff"
+                android:src="@mipmap/share_icon01"
+                android:padding="5dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+            <TextView
+                android:layout_below="@+id/iv_submit_succes_icon01"
+                android:id="@+id/iv_submit_succes_tv01"
+                android:text="QQ好友"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_submit_succes_icon02"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_submit_succes_icon02"
+                android:background="#fff"
+                android:src="@mipmap/share_icon02"
+                android:padding="5dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+            <TextView
+                android:layout_below="@+id/iv_submit_succes_icon02"
+                android:id="@+id/iv_submit_succes_tv02"
+                android:text="QQ空间"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_submit_succes_icon03"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_submit_succes_icon03"
+                android:background="#fff"
+                android:src="@mipmap/share_icon03"
+                android:padding="5dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+            <TextView
+                android:layout_below="@+id/iv_submit_succes_icon03"
+                android:id="@+id/iv_submit_succes_tv03"
+                android:text="朋友圈"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_submit_succes_icon04"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/iv_submit_succes_icon04"
+                android:background="#fff"
+                android:src="@mipmap/share_icon04"
+                android:padding="5dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp" />
+            <TextView
+                android:layout_below="@+id/iv_submit_succes_icon04"
+                android:id="@+id/iv_submit_succes_tv04"
+                android:text="  微信"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+
+
+</RelativeLayout>

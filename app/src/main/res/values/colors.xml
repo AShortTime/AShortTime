@@ -155,7 +155,8 @@
     <color name="appdimgray">#EBEBEB</color> <!--黑色 -->
     <color name="appgr">#C7C6C7</color> <!--黑色 -->
 
-
+    <color name="style_red">#ff4c41</color>
+    <color name="style_divider_color">#C9C7CD</color>
 
 
 </resources>
