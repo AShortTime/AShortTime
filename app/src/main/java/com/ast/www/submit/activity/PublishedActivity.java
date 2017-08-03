@@ -23,6 +23,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,20 +59,27 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
+import static android.content.ContentValues.TAG;
+
 public class PublishedActivity extends Activity implements OnClickListener {
 
+	public static final String TAG=PublishedActivity.class.getSimpleName();
 	private GridView noScrollgridview;
 	private GridAdapter adapter;
 	private PublishedPersenter persenter;
+	private static final int TAKE_PICTURE = 0x000000;
+	//相机权限
+	private String[] permissions_camera= {android.Manifest.permission.CAMERA,android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+	private TextView toolbar_title,toolbar_titleLeft,toolbar_titleRight;
+
+	String path;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_selectimg);
 		Init();
 	}
-
-	private TextView toolbar_title,toolbar_titleLeft,toolbar_titleRight;
 
 	public void Init() {
 
@@ -81,11 +89,8 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		toolbar_title.setText("发表文章");
 		toolbar_titleLeft= (TextView) findViewById(R.id.item_title_left);
 		toolbar_titleLeft.setText("取消");
-		toolbar_titleLeft.setOnClickListener(this);
 		toolbar_titleRight= (TextView) findViewById(R.id.item_title_right);
 		toolbar_titleRight.setText("发表");
-		toolbar_titleRight.setOnClickListener(this);
-
 
 		noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
 		noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
@@ -106,7 +111,11 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		});
 
 		/**
-		 * 发表
+		 * 取消编辑
+		 */
+		toolbar_titleLeft.setOnClickListener(this);
+		/**
+		 * 发表图片
 		 */
 		toolbar_titleRight.setOnClickListener(this);
 	}
@@ -307,14 +316,24 @@ public class PublishedActivity extends Activity implements OnClickListener {
 	}
 
 
-	private static final int TAKE_PICTURE = 0x000000;
 
-	//相机权限
-	private String[] permissions_camera= {android.Manifest.permission.CAMERA,android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
+	@Override
+	public void onClick(View v) {
+
+		switch (v.getId()){
+			case R.id.item_title_left:
+				cancleDialog();
+				break;
+			/**
+			 * 发表页面
+			 */
+			case R.id.item_title_right:
+				submitContent();
+				break;
+		}
+	}
 
 
-
-	String path;
 	/**
 	 * 拍照方法
 	 */
@@ -345,28 +364,11 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		startActivityForResult(openCameraIntent, TAKE_PICTURE);
 	}
 
-
-	@Override
-	public void onClick(View v) {
-
-		switch (v.getId()){
-			case R.id.item_title_left:
-				cancleDialog();
-				break;
-			/**
-			 * 发表页面
-			 */
-			case R.id.item_title_right:
-				submitContent();
-				break;
-		}
-
-	}
-
 	/**
 	 * 上传数据
 	 */
 	private void submitContent() {
+		Log.i(TAG, "submitContent: ");
 
 		List<String> list = new ArrayList<String>();
 		for (int i = 0; i < Bimp.drr.size(); i++) {
@@ -388,8 +390,7 @@ public class PublishedActivity extends Activity implements OnClickListener {
 			File file = new File(list.get(x));
 			pathList.add(file);
 		}
-		MultipartBody.Builder builder = new MultipartBody.Builder()
-				.setType(MultipartBody.FORM)
+		MultipartBody.Builder builder = new MultipartBody.Builder().setType(MultipartBody.FORM)
 				.addFormDataPart("description", "上传图片")
 				.addFormDataPart("dictionaryValue", 3+"")
 				.addFormDataPart("userId", 1+"");
