@@ -58,14 +58,14 @@
        app:right_image="@mipmap/into_icon"
        ></com.ast.www.constom.UserDrawMoudle>
 
-    <com.ast.www.constom.UserDrawMoudle
-        android:id="@+id/drawer_Collection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:text="我的收藏"
-        app:left_image="@mipmap/user_favorite"
-        app:right_image="@mipmap/into_icon"
-        ></com.ast.www.constom.UserDrawMoudle>
+    <!--<com.ast.www.constom.UserDrawMoudle-->
+        <!--android:id="@+id/drawer_Collection"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:text="我的收藏"-->
+        <!--app:left_image="@mipmap/user_favorite"-->
+        <!--app:right_image="@mipmap/into_icon"-->
+        <!--&gt;</com.ast.www.constom.UserDrawMoudle>-->
 
     <com.ast.www.constom.UserDrawMoudle
         android:id="@+id/drawer_searchfor"

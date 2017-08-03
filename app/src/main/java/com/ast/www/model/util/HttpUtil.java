@@ -12,6 +12,8 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 
+import static com.ast.www.model.util.Constant.LINK_MAIN;
+
 /**
  * 作者:郭凯奇
  * 时间: 2017/7/12 19:24
@@ -23,7 +25,7 @@ public class HttpUtil {
 
     private static Retrofit retrofit = new Retrofit.Builder()
             .client(Constant.getclient())
-            .baseUrl(Constant.LINK_MAIN)
+            .baseUrl(LINK_MAIN)
             .addConverterFactory(ScalarsConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build();

@@ -60,7 +60,7 @@ public class DrawerFragment extends BaseFragment{
         drawer_folder = (LinearLayout) getActivity().findViewById(R.id.drawer_folder);
         drawer_setup = (LinearLayout) getActivity().findViewById(R.id.drawer_setup);
         drawer_attention= (UserDrawMoudle) getActivity().findViewById(R.id.drawer_attention);
-        drawer_Collection= (UserDrawMoudle) getActivity().findViewById(R.id.drawer_Collection);
+//        drawer_Collection= (UserDrawMoudle) getActivity().findViewById(R.id.drawer_Collection);
         drawer_searchfor= (UserDrawMoudle) getActivity().findViewById(R.id.drawer_searchfor);
         drawer_information= (UserDrawMoudle) getActivity().findViewById(R.id.drawer_information);
     }
@@ -95,14 +95,14 @@ public class DrawerFragment extends BaseFragment{
                 getActivity().startActivity(it);
             }
         });
-        //收藏
-        drawer_Collection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it=new Intent(getActivity(), CollectionActivity.class);
-                getActivity().startActivity(it);
-            }
-        });
+//        //收藏
+//        drawer_Collection.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent it=new Intent(getActivity(), CollectionActivity.class);
+//                getActivity().startActivity(it);
+//            }
+//        });
         //搜索
         drawer_searchfor.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -2,70 +2,97 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginTop="25dp">
+    android:layout_marginTop="25dp"
+    android:orientation="vertical">
 
     <include
         layout="@layout/head_layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        ></include>
+        android:layout_height="60dp"></include>
 
-
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:layout_height="50dp"
-       android:background="@color/appdimgray">
-
-
-       <EditText
-           android:layout_width="360dp"
-           android:layout_height="45dp"
-           android:hint="请输入ID或者钟友名"
-           android:textColorHint="@color/appgr"
-           android:drawableLeft="@mipmap/sousuo"
-           android:paddingLeft="20dp"
-           android:drawablePadding="5dp"
-           android:background="@drawable/sousuo"
-           android:layout_marginLeft="30dp"
-           android:layout_marginTop="2dp"
-           />
-   </LinearLayout>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="80dp">
-    </ListView>
-
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:layout_width="0px"
+        android:layout_height="0px"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="@color/appdimgray">
-         <TextView
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:text="你可能感兴趣的用户"
-             android:layout_marginLeft="120dp"
-             android:layout_marginTop="5dp"
-             android:textColor="@color/appgr"/>
+        android:layout_height="50dp"
+        android:background="@color/appdimgray"
+        android:orientation="horizontal">
+        <EditText
+            android:id="@+id/search_for_edtext"
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:background="@drawable/sousuo"
+            android:drawableLeft="@mipmap/sousuo"
+            android:drawablePadding="5dp"
+            android:hint="请输入ID或者钟友名"
+            android:paddingLeft="20dp"
+            android:textColorHint="@color/appgr"
+            />
         <ImageView
+            android:id="@+id/search_for_sousuo"
+            android:layout_weight="1"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@mipmap/jiazai"
-            android:layout_marginLeft="50dp"/>
+            android:src="@mipmap/sousuo"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/search_for_list"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:visibility="gone"></ListView>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/appdimgray">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="换一批"
-            android:textColor="@color/appBlue"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:layout_marginLeft="2dp"/>
-    </LinearLayout>
+            android:text="你可能感兴趣的用户"
+            android:textColor="@color/appgr" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true">
+
+            <ImageView
+                android:id="@+id/search_for_image"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="5dp"
+                android:src="@mipmap/jiazai" />
+
+            <TextView
+                android:id="@+id/search_for_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/search_for_image"
+                android:text="换一批"
+                android:textColor="@color/appBlue" />
+        </RelativeLayout>
+    </RelativeLayout>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_for_recy"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#ffff">
     </android.support.v7.widget.RecyclerView>
 
 

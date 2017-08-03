@@ -78,7 +78,8 @@ public class LogInActivity extends BaseAvtivity {
         login_text_qita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LogInActivity.this,OtherLogInActivity.class));
+                startActivityForResult(new Intent(LogInActivity.this,OtherLogInActivity.class),0);
+//                startActivity();
                 //启动结束动画
                 overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_from_left);
             }
@@ -92,6 +93,10 @@ public class LogInActivity extends BaseAvtivity {
             }
         });
     }
+
+
+
+
 
 
     @Override
@@ -147,6 +152,9 @@ public class LogInActivity extends BaseAvtivity {
 
     }
 
+
+
+
     /**
      * QQ登录
      * 在调用Login的Activity或者Fragment中重写onActivityResult方法
@@ -156,9 +164,13 @@ public class LogInActivity extends BaseAvtivity {
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult: "+requestCode+"  ---------------  "+resultCode);
         if(requestCode == Constants.REQUEST_LOGIN){
             Tencent.onActivityResultData(requestCode,resultCode,data,mIUiListener);
         }
+         else if(resultCode==1){
+             finish();
+         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
