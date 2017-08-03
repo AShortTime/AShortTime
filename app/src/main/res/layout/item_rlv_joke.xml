@@ -1,28 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp">
 
-    <com.ast.www.constom.Userinfoview
-        android:id="@+id/joke_user_info"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:user_head="@mipmap/raw_1500034665"
-        app:user_name="郭凯奇"></com.ast.www.constom.Userinfoview>
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        >
+
+        <com.ast.www.constom.Userinfoview
+
+            android:id="@+id/joke_user_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:user_head="@mipmap/user_head"
+            app:user_name="郭凯奇"></com.ast.www.constom.Userinfoview>
+
+        <include
+            layout="@layout/item_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></include>
+
+    </LinearLayout>
+
 
     <TextView
+        android:layout_marginBottom="10dp"
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:text="天气美美的,适合郊游"
         android:textSize="16sp" />
-    <GridView
-        android:numColumns="3"
-        android:id="@+id/gv"
+    <!--<GridView-->
+    <!--android:visibility="visible"-->
+    <!--android:numColumns="3"-->
+    <!--android:id="@+id/gv"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iamge_fffff"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="300dp"
+        android:background="#30000000"
+        android:scaleType="fitXY"
+        fresco:placeholderImage="@mipmap/ic_launcher" />
+
+    <include
+        android:id="@+id/tf"
+        layout="@layout/item_top_foot" />
+
 </LinearLayout>

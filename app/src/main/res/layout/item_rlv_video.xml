@@ -1,25 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="10dp">
 
-    <com.ast.www.constom.Userinfoview
-        android:id="@+id/video_user_info"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:user_head="@mipmap/raw_1500034665"
-        app:user_name="郭凯奇"></com.ast.www.constom.Userinfoview>
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp"
+        >
+
+        <com.ast.www.constom.Userinfoview
+            android:id="@+id/video_user_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:user_head="@mipmap/user_head"
+            app:user_name="郭凯奇"></com.ast.www.constom.Userinfoview>
+
+        <include
+            layout="@layout/item_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></include>
+
+    </LinearLayout>
 
     <TextView
+        android:layout_marginBottom="10dp"
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:text="天气美美的,适合郊游"
         android:textSize="16sp" />
+
     <RelativeLayout
         android:id="@+id/adapter_super_video_layout"
         android:layout_width="match_parent"
@@ -39,13 +56,20 @@
             android:background="#30000000"
             android:visibility="visible">
 
-            <ImageView
+            <!--<ImageView-->
+            <!--android:id="@+id/adapter_super_video_iv_cover"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:src="@mipmap/bg_super_video_cover"-->
+            <!--android:scaleType="fitXY"-->
+            <!--android:background="#30000000"/>-->
+            <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/adapter_super_video_iv_cover"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@mipmap/bg_super_video_cover"
+                android:background="#30000000"
                 android:scaleType="fitXY"
-                android:background="#30000000"/>
+                fresco:placeholderImage="@mipmap/ic_launcher" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -77,8 +101,14 @@
                 android:text="04:33"
                 android:textColor="@android:color/white"
                 android:textSize="10sp" />
+            <include   layout="@layout/item_top_foot2" android:id="@+id/aaa"/>
         </RelativeLayout>
     </RelativeLayout>
 
+    <include
+        android:visibility="gone"
+        android:id="@+id/tf"
+        layout="@layout/item_top_foot" />
+    <include layout="@layout/item_god"/>
 
 </LinearLayout>
