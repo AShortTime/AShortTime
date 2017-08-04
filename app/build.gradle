@@ -82,4 +82,6 @@ dependencies {
     //SmartRefreshLayout 下拉刷新
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3-alpha-2'
     compile project(':superplayerlibrary')
+
+    compile 'ch.ielse:switchbutton:1.0.0'
 }

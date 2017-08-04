@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clickable="true"
     android:orientation="vertical">
 
-<!--用户基本信息头部-->
+    <!--用户基本信息头部-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="165dp"
         android:background="@mipmap/drawerlayout_background"
-        android:padding="20dp"
-        >
+        android:padding="20dp">
 
         <com.ast.www.constom.CircleImageView
-            android:layout_marginTop="35dp"
             android:id="@+id/user_head"
             android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@mipmap/raw_1499936862" />
+            android:layout_height="60dp"
+            android:layout_marginTop="35dp"
+            android:src="@mipmap/raw_1499936862" />
 
         <TextView
             android:id="@+id/user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="椰果奶茶"
-            android:textSize="20sp"
             android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/user_text"
             android:layout_toRightOf="@+id/user_text"
-            android:layout_toEndOf="@+id/user_text" />
+            android:text="椰果奶茶"
+            android:textSize="20sp" />
 
         <ImageView
             android:id="@+id/user_sex"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@mipmap/sex"
-            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_centerVertical="true"
+            android:src="@mipmap/sex" />
 
         <TextView
             android:id="@+id/user_text"
@@ -49,82 +48,112 @@
             android:text="编辑个性签名" />
     </RelativeLayout>
 
-   <com.ast.www.constom.UserDrawMoudle
-       android:id="@+id/drawer_attention"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       app:text="我的关注"
-       app:left_image="@mipmap/user_look"
-       app:right_image="@mipmap/into_icon"
-       ></com.ast.www.constom.UserDrawMoudle>
+    <com.ast.www.constom.UserDrawMoudle
+        android:id="@+id/drawer_attention"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:left_image="@mipmap/user_look"
+        app:right_image="@mipmap/into_icon"
+        app:text="我的关注"></com.ast.www.constom.UserDrawMoudle>
 
     <!--<com.ast.www.constom.UserDrawMoudle-->
-        <!--android:id="@+id/drawer_Collection"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--app:text="我的收藏"-->
-        <!--app:left_image="@mipmap/user_favorite"-->
-        <!--app:right_image="@mipmap/into_icon"-->
-        <!--&gt;</com.ast.www.constom.UserDrawMoudle>-->
+    <!--android:id="@+id/drawer_Collection"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--app:text="我的收藏"-->
+    <!--app:left_image="@mipmap/user_favorite"-->
+    <!--app:right_image="@mipmap/into_icon"-->
+    <!--&gt;</com.ast.www.constom.UserDrawMoudle>-->
 
     <com.ast.www.constom.UserDrawMoudle
         android:id="@+id/drawer_searchfor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:text="搜索好友"
         app:left_image="@mipmap/user_found"
         app:right_image="@mipmap/into_icon"
-        ></com.ast.www.constom.UserDrawMoudle>
+        app:text="搜索好友"></com.ast.www.constom.UserDrawMoudle>
 
     <com.ast.www.constom.UserDrawMoudle
         android:id="@+id/drawer_information"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:text="消息通知"
         app:left_image="@mipmap/user_message"
         app:right_image="@mipmap/into_icon"
-        ></com.ast.www.constom.UserDrawMoudle>
+        app:text="消息通知"></com.ast.www.constom.UserDrawMoudle>
 
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-           <LinearLayout
-               android:id="@+id/drawer_folder"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        >
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginLeft="20dp"
+            android:src="@mipmap/yueliang"
+            android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:text="夜间模式"
+            android:textColor="#000"
+            android:textSize="15sp"
+            />
+
+           <ch.ielse.view.SwitchView
+               android:id="@+id/drawer_swit"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:orientation="vertical">
-               <ImageView
-                   style="@style/drawerlayout_folder"
-                   android:src="@mipmap/wenjianjia"/>
-               <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginTop="5dp"
-                   android:text="@string/wnjianjia"
-                   android:layout_marginLeft="40dp"
-                   android:textColor="#000"
-                   />
-           </LinearLayout>
-            <LinearLayout
-                android:id="@+id/drawer_setup"
+               android:layout_marginLeft="100dp"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/drawer_folder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/drawerlayout_folder"
+                android:src="@mipmap/wenjianjia" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginLeft="80dp">
-                <ImageView
-                   style="@style/drawerlayout_folder"
-                    android:src="@mipmap/shezhi"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/shezhi"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginLeft="53dp"
-                    android:textColor="#000"
-                    />
-            </LinearLayout>
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/wnjianjia"
+                android:textColor="#000" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/drawer_setup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="90dp"
+            android:orientation="vertical">
+
+            <ImageView
+                style="@style/drawerlayout_folder"
+                android:src="@mipmap/shezhi" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="53dp"
+                android:layout_marginTop="5dp"
+                android:text="@string/shezhi"
+                android:textColor="#000" />
+        </LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>
