@@ -4,19 +4,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.ast.www.model.bean.ClassBean;
 import com.ast.www.presenter.BasePresenter;
-import com.ast.www.view.iview.IBaseView;
 
 import java.util.Stack;
 
@@ -28,7 +23,6 @@ import java.util.Stack;
  */
 
 public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatActivity{
-
     /** 用来保存所有已打开的Activity */
     private static Stack<Activity> listActivity = new Stack<Activity>();
 

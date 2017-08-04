@@ -37,6 +37,7 @@ public class OtherLogInActivity extends BaseAvtivity<TestPreseneter> {
     private TextView register_register;
     private Button otherlogin_but_login;
     private EditText otherlogin_edtext_phone,otherlogin_edtext_password;
+    private TextView otherlogin_text_tourists;
 
     @Override
     protected void createmPresenter() {
@@ -92,6 +93,7 @@ public class OtherLogInActivity extends BaseAvtivity<TestPreseneter> {
         otherlogin_but_login = (Button) findViewById(R.id.otherlogin_but_login);
         otherlogin_edtext_phone= (EditText) findViewById(R.id.otherlogin_edtext_phone);
         otherlogin_edtext_password= (EditText) findViewById(R.id.otherlogin_edtext_password);
+        otherlogin_text_tourists = (TextView) findViewById(R.id.otherlogin_text_Tourists);
     }
 
     @Override
@@ -113,7 +115,7 @@ public class OtherLogInActivity extends BaseAvtivity<TestPreseneter> {
         register_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(OtherLogInActivity.this,ReGisterActivity.class));
+                startActivityForResult(new Intent(OtherLogInActivity.this,ReGisterActivity.class),0);
                 //启动动画
                 overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_from_left);
             }
@@ -134,6 +136,22 @@ public class OtherLogInActivity extends BaseAvtivity<TestPreseneter> {
                 }
             }
         });
+        otherlogin_text_tourists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(1,getIntent());
+                finish();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==1){
+            setResult(1,getIntent());
+            finish();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

@@ -9,10 +9,11 @@ import com.ast.www.R;
 import com.ast.www.constom.CircleImageView;
 import com.ast.www.constom.UserDrawMoudle;
 import com.ast.www.view.activity.AttenTionActivity;
-import com.ast.www.view.activity.CollectionActivity;
 import com.ast.www.view.activity.InformationActivity;
 import com.ast.www.view.activity.LogInActivity;
 import com.ast.www.view.activity.SearchForActivity;
+
+import ch.ielse.view.SwitchView;
 
 
 /**
@@ -29,6 +30,7 @@ public class DrawerFragment extends BaseFragment{
     private LinearLayout drawer_folder;
     private LinearLayout drawer_setup;
     private UserDrawMoudle drawer_attention,drawer_Collection,drawer_searchfor,drawer_information;
+    private SwitchView drawer_swit;
 
     /**
      * 该抽象方法就是 onCreateView中需要的layoutID
@@ -63,6 +65,7 @@ public class DrawerFragment extends BaseFragment{
 //        drawer_Collection= (UserDrawMoudle) getActivity().findViewById(R.id.drawer_Collection);
         drawer_searchfor= (UserDrawMoudle) getActivity().findViewById(R.id.drawer_searchfor);
         drawer_information= (UserDrawMoudle) getActivity().findViewById(R.id.drawer_information);
+        drawer_swit = (SwitchView) getActivity().findViewById(R.id.drawer_swit);
     }
 
     /**
@@ -133,7 +136,16 @@ public class DrawerFragment extends BaseFragment{
 
             }
         });
+        drawer_swit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+
+        });
     }
+
+
 
 
 }
