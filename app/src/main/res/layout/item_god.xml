@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="10dp">
+        <TextView
+            android:id="@+id/god_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="厉害了我的666"
+            android:textColor="@color/appBlue"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textColor="@color/appBlue"
+            android:layout_marginRight="5dp"
+            />
+        <TextView
+            android:id="@+id/god_context"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我被人杀害了,抛尸大海,三年没有被打捞起来,知道为什么么,因为我尸体都不浮,就服你"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/god_user_name2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="厉害了我的999"
+            android:textColor="@color/appBlue"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textColor="@color/appBlue"
+            android:layout_marginRight="5dp"
+            />
+        <TextView
+            android:id="@+id/god_context2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="我两年前把一楼打捞了上来"
+            />
+    </LinearLayout>
+</LinearLayout>

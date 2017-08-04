@@ -1,8 +1,8 @@
 package com.ast.www.view.fragment;
 
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -11,23 +11,18 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.ast.www.R;
-import com.ast.www.model.bean.UserLoginBean;
-import com.ast.www.presenter.TestPreseneter;
+import com.ast.www.model.bean.RecommendHotBean;
+import com.ast.www.presenter.HomePresenter;
 import com.ast.www.view.adapter.RlvAdapter;
 import com.ast.www.view.iview.IBaseView;
 import com.superplayer.library.SuperPlayer;
 import com.superplayer.library.SuperPlayerManage;
 import com.superplayer.library.mediaplayer.IjkVideoView;
 
-import java.io.File;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 /**
  * Effect :
@@ -36,13 +31,14 @@ import okhttp3.RequestBody;
  * Time by 2017/7/20 0020
  */
 
-public class RecommendHotFragment extends BaseFragment<TestPreseneter>{
+public class RecommendHotFragment extends BaseFragment<HomePresenter>{
 
     private RecyclerView mrlv;
     private SuperPlayer player;
     private int lastPostion = -1;
     private int postion = -1;
     private LinearLayoutManager llm;
+    private RlvAdapter adapter;
 
     /**
      * 该抽象方法就是 onCreateView中需要的layoutID
@@ -70,22 +66,19 @@ public class RecommendHotFragment extends BaseFragment<TestPreseneter>{
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-
+        player = SuperPlayerManage.getSuperManage().initialize(getActivity());
+        player.setShowTopControl(false).setSupportGesture(false);
+        player.setShowTopControl(false);
+        player.setgkq(false);
 
         mrlv = (RecyclerView) view.findViewById(R.id.rlv);
         llm = new LinearLayoutManager(getActivity());
         mrlv.setLayoutManager(llm);
-        RlvAdapter adapter = new RlvAdapter(getActivity());
-        List<String> l = new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            l.add(i + "");
-        }
-        adapter.setList(l);
+        adapter = new RlvAdapter(getActivity());
         mrlv.setAdapter(adapter);
-//        设置条目监听
-        setItemOnclick(adapter);
-        //设置播放器播放
-        setSuperplayer(adapter);
+
+        mrlv.addItemDecoration( new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+
     }
 
     private void setItemOnclick(RlvAdapter adapter) {
@@ -103,13 +96,15 @@ public class RecommendHotFragment extends BaseFragment<TestPreseneter>{
     }
 
     private void setSuperplayer(RlvAdapter adapter) {
-        player = SuperPlayerManage.getSuperManage().initialize(getActivity());
-        player.setShowTopControl(false);
-     player.setgkq(false);
+//        player = SuperPlayerManage.getSuperManage().initialize(getActivity());
+//        player = SuperPlayerManage.getSuperManage().initialize(getActivity());
+        //player.setShowTopControl(false).setSupportGesture(false);
+//        player.setShowTopControl(false);
+//        player.setgkq(false);
 //        player.setFullScreenOnly(false);
         adapter.setPlayClick(new RlvAdapter.onPlayClick() {
             @Override
-            public void onPlayclick(int position, RelativeLayout image) {
+            public void onPlayclick(int position, RelativeLayout image, String videosrc) {
                 image.setVisibility(View.GONE);
                 if (player.isPlaying() && lastPostion == position) {
                     return;
@@ -132,7 +127,8 @@ public class RecommendHotFragment extends BaseFragment<TestPreseneter>{
                 player.showView(R.id.adapter_player_control);
                 //player.release();
                 frameLayout.addView(player);
-                player.play(Environment.getExternalStorageDirectory().getPath() + "/oppo.mp4");
+//                player.play(Environment.getExternalStorageDirectory().getPath() + "/oppo.mp4");
+                player.play("http://169.254.1.100/a.flv");
                 Toast.makeText(getActivity(), "position:" + position, Toast.LENGTH_SHORT).show();
                 lastPostion = position;
             }
@@ -191,57 +187,15 @@ public class RecommendHotFragment extends BaseFragment<TestPreseneter>{
         });
     }
 
-//    @Override
-//    public void onConfigurationChanged(Configuration newConfig) {
-//        super.onConfigurationChanged(newConfig);
-//        if (player != null) {
-//            player.onConfigurationChanged(newConfig);
-//            if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-//                fullScreen.setVisibility(View.GONE);
-//                fullScreen.removeAllViews();
-//                mrlv.setVisibility(View.VISIBLE);
-//                if (postion <= llm.findLastVisibleItemPosition()
-//                        && postion >= llm.findFirstVisibleItemPosition()) {
-//                    View view = mrlv.findViewHolderForAdapterPosition(postion).itemView;
-//                    FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.adapter_super_video);
-//                    frameLayout.removeAllViews();
-//                    ViewGroup last = (ViewGroup) player.getParent();//找到videoitemview的父类，然后remove
-//                    if (last != null) {
-//                        last.removeAllViews();
-//                    }
-//                    frameLayout.addView(player);
-//                }
-//                int mShowFlags =
-//                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-//                fullScreen.setSystemUiVisibility(mShowFlags);
-//            } else {
-//                ViewGroup viewGroup = (ViewGroup) player.getParent();
-//                if (viewGroup == null)
-//                    return;
-//                viewGroup.removeAllViews();
-//                fullScreen.addView(player);
-//                fullScreen.setVisibility(View.VISIBLE);
-//                int mHideFlags =
-//                        View.SYSTEM_UI_FLAG_LOW_PROFILE
-//                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//                                | View.SYSTEM_UI_FLAG_FULLSCREEN
-//                                | View.SYSTEM_UI_FLAG_IMMERSIVE
-//                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-//                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-//                fullScreen.setSystemUiVisibility(mHideFlags);
-//            }
-//        } else {
-//            fullScreen.setVisibility(View.GONE);
-//        }
-//    }
 
     /**
      * 执行数据的加载
      */
     @Override
     protected void initData() {
+//        http://169.254.1.100/quarter/user/findHot;
+        HashMap<String, String> map = new HashMap<>();
+        mPresenter.get("user/findHot",map,RecommendHotBean.class);
 
     }
 
@@ -250,13 +204,16 @@ public class RecommendHotFragment extends BaseFragment<TestPreseneter>{
      */
     @Override
     protected void createmPresenter() {
-        mPresenter = new TestPreseneter();
-        mPresenter.attach(new IBaseView() {
+        mPresenter=new HomePresenter();
+        mPresenter.attach(new IBaseView<RecommendHotBean>() {
             @Override
-            public void onData(Object o) {
-
+            public void onData(RecommendHotBean recommendHotBean) {
+                boolean b = recommendHotBean.getCode().equals("200");
+                if(b){
+                    List<RecommendHotBean.ResourceBean> data = recommendHotBean.getResource();
+                    adapter.setList(data);
+                }
             }
-
             @Override
             public void onError(Throwable throwable) {
 
@@ -269,30 +226,11 @@ public class RecommendHotFragment extends BaseFragment<TestPreseneter>{
      */
     @Override
     protected void initListener() {
-
+        //设置条目监听
+        setItemOnclick(adapter);
+        //设置播放器播放
+        setSuperplayer(adapter);
     }
-
-
-    private void post() {
-
-        List<File> pathList = new ArrayList<>();
-        pathList.add(new File(Environment.getExternalStorageDirectory() + "/oppo.mp4"));
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("mediaDescription", "一个视频")
-                .addFormDataPart("mediaDictionaryValue", "1")
-                .addFormDataPart("mediaUserId", "1");
-
-//“mediaDictionaryValue”： 1//视频为1，图片为3，文字为2
-        for (int i = 0; i < pathList.size(); i++) {
-            RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), pathList.get(i));
-            builder.addFormDataPart("file", "guo.mp4", imageBody);
-        }
-        List<MultipartBody.Part> parts = builder.build().parts();
-        //http://169.254.234.3:8080/media/uploadMedia
-        mPresenter.filePost("media/uploadMedia", parts, UserLoginBean.class);
-    }
-
 
     @Override
     public void onPause() {
@@ -309,8 +247,9 @@ public class RecommendHotFragment extends BaseFragment<TestPreseneter>{
         if (player != null) {
             player.onResume();
         }
+
         super.onResume();
-    }
+}
 
     @Override
     public void onDestroy() {
@@ -322,5 +261,4 @@ public class RecommendHotFragment extends BaseFragment<TestPreseneter>{
         }
         super.onDestroy();
     }
-
 }

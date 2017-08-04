@@ -4,6 +4,8 @@ import android.app.Application;
 
 import com.ast.www.model.util.Constant;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.superplayer.library.SuperPlayer;
+import com.superplayer.library.SuperPlayerManage;
 
 /**
  * 作者:郭凯奇

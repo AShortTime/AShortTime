@@ -3,7 +3,9 @@ package com.ast.www.view.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,8 @@ import android.widget.TextView;
 
 import com.ast.www.R;
 import com.ast.www.constom.Userinfoview;
+import com.ast.www.model.bean.RecommendHotBean;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +32,15 @@ import java.util.List;
 public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     //图片类型
-    public final static int TYPE_IMAGE = 0;
+    public final static int TYPE_IMAGE = 3;
     //视频类型
-    public final static int TYPE_VIDEO = 1;
+    public final static int TYPE_VIDEO = 2;
+
+    public final static int TYPE_JOKE = 1;
 
     private OnItemClickListener onItemClickListener;
     private Context context;
-    private List<String> list;
+    private List<RecommendHotBean.ResourceBean> list;
 
     public RlvAdapter(Context context) {
         this.context = context;
@@ -42,21 +48,26 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
 
-    public List<String> getList() {
+    public List<RecommendHotBean.ResourceBean> getList() {
         return list;
     }
 
-    public void setList(List<String> list) {
+    public void setList(List<RecommendHotBean.ResourceBean> list) {
         this.list = list;
+        notifyDataSetChanged();
     }
 
 
     @Override
     public int getItemViewType(int position) {
-        if (position%2!=0) {
+        if (list.get(position).getDictionaryValue().equals(TYPE_IMAGE + "")) {
             return TYPE_IMAGE;
+        } else if (list.get(position).getDictionaryValue().equals(TYPE_VIDEO + "")) {
+            return TYPE_VIDEO;
+        } else if (list.get(position).getDictionaryValue().equals(TYPE_JOKE + "")) {
+            return TYPE_JOKE;
         }
-        return TYPE_VIDEO;
+        return TYPE_JOKE;
     }
 
     @Override
@@ -72,6 +83,12 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 view = LayoutInflater.from(context).inflate(R.layout.item_rlv_video, parent, false);
                 holder = new VideoHolder(view);
                 break;
+            case TYPE_JOKE:
+                view = LayoutInflater.from(context).inflate(R.layout.item_rlv_joke, parent, false);
+//                view.findViewById(R.id.gv).setVisibility(View.GONE);
+                view.findViewById(R.id.iamge_fffff).setVisibility(View.GONE);
+                holder = new ImageHolder(view);
+                break;
         }
         return holder;
     }
@@ -81,14 +98,28 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         switch (getItemViewType(position)) {
             case TYPE_IMAGE:
                 onItemEventClick(holder);
-                ((ImageHolder) holder).userinfoview.setTime("图片");
+                ImageHolder imageh = (ImageHolder) holder;
+//                imageh.userinfoview.setTime("段子");
+                RecommendHotBean.ResourceBean.UserBean user1 = list.get(position).getUser();
+                imageh.userinfoview.setUsername(user1.getUserName());
+                imageh.image.setImageURI(list.get(position).getPictureSrc());
                 break;
             case TYPE_VIDEO:
                 onItemEventClick(holder);
                 VideoHolder vh = (VideoHolder) holder;
-                vh.userinfoview.setTime("视频");
-                String s = Environment.getExternalStorageDirectory().getPath() + "/b.flv";
-                vh.update(position);
+//                vh.userinfoview.setTime("视频");
+                if (!list.get(position).getPictureSrc().equals("")) {
+                    SimpleDraweeView draweeView = (SimpleDraweeView) vh.rlayPlayerControl.findViewById(R.id.adapter_super_video_iv_cover);
+                    draweeView.setImageURI(list.get(position).getPictureSrc());
+                }
+                vh.update(position, list.get(position).getSrc());
+                vh.initListiner(position);
+                break;
+            case TYPE_JOKE:
+                onItemEventClick(holder);
+                ImageHolder jokeh = (ImageHolder) holder;
+//                jokeh.userinfoview.setTime("段子");
+                jokeh.image.setVisibility(View.GONE);
                 break;
         }
     }
@@ -118,16 +149,25 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     class ImageHolder extends RecyclerView.ViewHolder {
         public Userinfoview userinfoview;
         public TextView itemtext;
-        public GridView gridView;
+        //        public GridView gridView;
+        public SimpleDraweeView image;
+
+        //悬浮按钮
+        FloatingActionButton mshare;
+        FloatingActionButton mdelete;
 
 
         public ImageHolder(View itemView) {
             super(itemView);
             this.userinfoview = (Userinfoview) itemView.findViewById(R.id.joke_user_info);
-            this.gridView = (GridView) itemView.findViewById(R.id.gv);
+//                this.gridView = (GridView) itemView.findViewById(R.id.gv);
             this.itemtext = (TextView) itemView.findViewById(R.id.content);
+            this.image = (SimpleDraweeView) itemView.findViewById(R.id.iamge_fffff);
 
+            this.mshare = (FloatingActionButton) itemView.findViewById(R.id.share);
+            this.mdelete = (FloatingActionButton) itemView.findViewById(R.id.delete);
         }
+
     }
 
 
@@ -135,31 +175,51 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public Userinfoview userinfoview;
         public TextView itemtext;
         public RelativeLayout rlayPlayerControl;
-        private RelativeLayout rlayPlayer;
+
+        //悬浮按钮
+        FloatingActionButton mshare;
+        FloatingActionButton mdelete;
 
         public VideoHolder(View itemView) {
             super(itemView);
+            this.mshare = (FloatingActionButton) itemView.findViewById(R.id.share);
+            this.mdelete = (FloatingActionButton) itemView.findViewById(R.id.delete);
+
+
             this.userinfoview = (Userinfoview) itemView.findViewById(R.id.video_user_info);
             this.itemtext = (TextView) itemView.findViewById(R.id.content);
-            rlayPlayerControl = (RelativeLayout) itemView.findViewById(R.id.adapter_player_control);
-            rlayPlayer = (RelativeLayout) itemView.findViewById(R.id.adapter_super_video_layout);
-//            if (rlayPlayer!=null){
-//                RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) rlayPlayer.getLayoutParams();
-//                layoutParams.height = (int) (SuperPlayerUtils.getScreenWidth((Activity) context) * 0.5652f);//这值是网上抄来的，我设置了这个之后就没有全屏回来拉伸的效果，具体为什么我也不太清楚
-//                rlayPlayer.setLayoutParams(layoutParams);
-//            }
+            this.rlayPlayerControl = (RelativeLayout) itemView.findViewById(R.id.adapter_player_control);
+
         }
-        public void update(final int position) {
+
+        public void update(final int position, final String videosrc) {
             //点击回调 播放视频
             rlayPlayerControl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (playclick != null)
-                        playclick.onPlayclick(position, rlayPlayerControl);
+                        playclick.onPlayclick(position, rlayPlayerControl, videosrc);
                 }
             });
         }
+
+        public void initListiner(final int postion) {
+            mshare.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.e("分享__RlvAdapter", "分享" + postion);
+                }
+            });
+            mdelete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.e("删除__RlvAdapter", "删除" + postion);
+                }
+            });
+
+        }
     }
+
     private onPlayClick playclick;
 
     public void setPlayClick(onPlayClick playclick) {
@@ -167,7 +227,7 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public interface onPlayClick {
-        void onPlayclick(int position, RelativeLayout image);
+        void onPlayclick(int position, RelativeLayout image, String videosrc);
     }
 
     /**
@@ -177,7 +237,7 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         this.onItemClickListener = onItemClickListener;
     }
 
-
+//条目监听
     public interface OnItemClickListener {
         void OnItemClick(View view, int position);
 

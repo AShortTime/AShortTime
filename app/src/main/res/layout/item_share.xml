@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.cpacm.FloatingMusicMenu
+        android:id="@+id/fmm"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        app:fmm_button_interval="5dp"
+        app:fmm_floating_direction="left"
+        app:fmm_cover="@drawable/sclect_float"
+        app:fmm_backgroundTint="#fff"
+        >
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/share"
+            app:backgroundTint="@color/appBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/share"
+            app:fabSize="mini" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/delete"
+            app:backgroundTint="@color/appBlue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/delete"
+            app:fabSize="mini" />
+
+    </com.cpacm.FloatingMusicMenu>
+</RelativeLayout>

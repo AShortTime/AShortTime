@@ -84,4 +84,5 @@ dependencies {
     compile project(':superplayerlibrary')
 
     compile 'ch.ielse:switchbutton:1.0.0'
+    compile 'com.cpacm:floatingmusicmenu:1.0.0'
 }
