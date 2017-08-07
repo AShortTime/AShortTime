@@ -35,7 +35,7 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="天气美美的,适合郊游"
+        android:text="近日，山东德州一男子对理发师做的头型不满意，双方发生争吵。然后，该男子每天往理发店门口扔一坨大便。店老板忍无可忍选择报警。男子被行政拘留9天，并处500元罚款。"
         android:textSize="16sp" />
     <!--<GridView-->
     <!--android:visibility="visible"-->
@@ -49,7 +49,7 @@
         android:layout_height="300dp"
         android:background="#30000000"
         android:scaleType="fitXY"
-        fresco:placeholderImage="@mipmap/ic_launcher" />
+        fresco:placeholderImage="@mipmap/running" />
 
     <include
         android:id="@+id/tf"

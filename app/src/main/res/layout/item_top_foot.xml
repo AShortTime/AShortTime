@@ -19,11 +19,11 @@
             android:layout_weight="1"
             android:button="@drawable/sclect_top"
             android:gravity="center"
-            android:padding="10dp"
+            android:padding="3dp"
             android:text="123" />
         <View
             android:layout_width="1dp"
-            android:layout_height="35dp"
+            android:layout_height="23dp"
             android:background="@color/gray" />
 
         <RadioButton
@@ -34,12 +34,12 @@
             android:layout_weight="1"
             android:button="@drawable/sclect_foot"
             android:gravity="center"
-            android:padding="10dp"
+            android:padding="3dp"
             android:text="123" />
 
         <View
             android:layout_width="1dp"
-            android:layout_height="35dp"
+            android:layout_height="23dp"
             android:background="@color/gray" />
 
         <TextView

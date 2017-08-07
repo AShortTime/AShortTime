@@ -34,9 +34,9 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //图片类型
     public final static int TYPE_IMAGE = 3;
     //视频类型
-    public final static int TYPE_VIDEO = 2;
+    public final static int TYPE_VIDEO = 1;
 
-    public final static int TYPE_JOKE = 1;
+    public final static int TYPE_JOKE = 2;
 
     private OnItemClickListener onItemClickListener;
     private Context context;
@@ -95,6 +95,8 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        int itemViewType = getItemViewType(position);
+        Log.e("itemViewType", itemViewType+"11111" );
         switch (getItemViewType(position)) {
             case TYPE_IMAGE:
                 onItemEventClick(holder);
@@ -111,8 +113,12 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if (!list.get(position).getPictureSrc().equals("")) {
                     SimpleDraweeView draweeView = (SimpleDraweeView) vh.rlayPlayerControl.findViewById(R.id.adapter_super_video_iv_cover);
                     draweeView.setImageURI(list.get(position).getPictureSrc());
+
                 }
-                vh.update(position, list.get(position).getSrc());
+                String src = list.get(position).getSrc();
+
+
+                vh.update(position,src );
                 vh.initListiner(position);
                 break;
             case TYPE_JOKE:
@@ -129,7 +135,8 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.OnItemClick(v, position);
+                RecommendHotBean.ResourceBean resourceBean = list.get(position);
+                onItemClickListener.OnItemClick(v, position,resourceBean);
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -180,10 +187,13 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         FloatingActionButton mshare;
         FloatingActionButton mdelete;
 
+        View foot;
+
         public VideoHolder(View itemView) {
             super(itemView);
             this.mshare = (FloatingActionButton) itemView.findViewById(R.id.share);
             this.mdelete = (FloatingActionButton) itemView.findViewById(R.id.delete);
+            this.foot = itemView.findViewById(R.id.delete);
 
 
             this.userinfoview = (Userinfoview) itemView.findViewById(R.id.video_user_info);
@@ -239,7 +249,7 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 //条目监听
     public interface OnItemClickListener {
-        void OnItemClick(View view, int position);
+        void OnItemClick(View view, int position,RecommendHotBean.ResourceBean resourceBean);
 
         void OnItemLongClick(View view, int position);
     }

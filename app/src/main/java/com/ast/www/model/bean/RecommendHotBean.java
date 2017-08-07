@@ -1,5 +1,6 @@
 package com.ast.www.model.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -9,7 +10,7 @@ import java.util.List;
  * Text:
  */
 
-public class RecommendHotBean {
+public class RecommendHotBean implements Serializable{
 
     /**
      * code : 200
@@ -35,7 +36,7 @@ public class RecommendHotBean {
         this.resource = resource;
     }
 
-    public static class ResourceBean {
+    public static class ResourceBean implements Serializable{
         /**
          * badKey : M4154071s220654F7o4s74a2sF1a4f26
          * badNum : 434
@@ -250,7 +251,7 @@ public class RecommendHotBean {
             this.commentList = commentList;
         }
 
-        public static class UserBean {
+        public static class UserBean implements Serializable{
             /**
              * userHead : http://169.254.1.100/ic_ss.jpg
              * userId : 32
@@ -316,7 +317,7 @@ public class RecommendHotBean {
             }
         }
 
-        public static class CommentListBean {
+        public static class CommentListBean implements Serializable{
             /**
              * commentCharacterPictureMediaId : 2
              * commentContent : 图片好看
@@ -421,7 +422,7 @@ public class RecommendHotBean {
                 this.user = user;
             }
 
-            public static class UserBeanX {
+            public static class UserBeanX implements Serializable{
                 /**
                  * userHead :
                  * userId : 3
