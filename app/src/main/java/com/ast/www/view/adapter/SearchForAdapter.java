@@ -56,11 +56,11 @@ public class SearchForAdapter extends BaseAdapter {
         }else{
             viewHolder= (ViewHolder) convertView.getTag();
         }
-        if(list.get(0).getUser().get(position).getUserHead().length()>8) {
-            viewHolder.it_attention_image.setImageURI(list.get(0).getUser().get(position).getUserHead());
-        }
+//        if(list.get(0).getUser().get(position).getUserSignature().length()>0) {
+//            viewHolder.it_attention_image.setImageURI(list.get(0).getUser().get(position).getUserSignature());
+//        }
         viewHolder.it_searchfor_text1.setText(list.get(0).getUser().get(position).getUserName());
-        viewHolder.it_searchfor_text2.setText(list.get(0).getUser().get(position).getUserPhone());
+        viewHolder.it_searchfor_text2.setText(list.get(0).getUser().get(position).getUserSignature());
         viewHolder.it_searchfor_but_guanzhu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

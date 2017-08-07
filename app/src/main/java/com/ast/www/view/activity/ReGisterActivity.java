@@ -5,6 +5,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ast.www.R;
 import com.ast.www.model.bean.ClassBean;
@@ -32,6 +33,7 @@ public class ReGisterActivity extends BaseAvtivity<TestPreseneter> {
     private ImageView register_back;
     private Button register_but_register;
     private EditText register_edText_username, register_edText_password, register_edText_phone_number, register_edText_gender;
+    private TextView register_text_tourists;
 
     @Override
     protected void createmPresenter() {
@@ -72,6 +74,7 @@ public class ReGisterActivity extends BaseAvtivity<TestPreseneter> {
         register_edText_password = (EditText) findViewById(R.id.register_edText_password);
         register_edText_phone_number = (EditText) findViewById(R.id.register_edText_phone_number);
         register_edText_gender = (EditText) findViewById(R.id.register_edText_gender);
+        register_text_tourists = (TextView) findViewById(R.id.register_text_Tourists);
     }
 
     @Override
@@ -119,6 +122,13 @@ public class ReGisterActivity extends BaseAvtivity<TestPreseneter> {
                 } else {
                     IsUtils.Tos(ReGisterActivity.this, "请补充完整信息!");
                 }
+            }
+        });
+        register_text_tourists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    setResult(1,getIntent());
+                    finish();
             }
         });
     }

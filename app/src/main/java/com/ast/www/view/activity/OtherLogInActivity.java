@@ -13,11 +13,13 @@ import com.ast.www.R;
 import com.ast.www.model.bean.ClassBean;
 import com.ast.www.model.bean.RegisteredBean;
 import com.ast.www.model.util.Constant;
+import com.ast.www.model.util.FirstEvent;
 import com.ast.www.model.util.IsUtils;
 import com.ast.www.model.util.Utils;
 import com.ast.www.presenter.TestPreseneter;
 import com.ast.www.view.iview.IBaseView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,6 +39,7 @@ public class OtherLogInActivity extends BaseAvtivity<TestPreseneter> {
     private TextView register_register;
     private Button otherlogin_but_login;
     private EditText otherlogin_edtext_phone,otherlogin_edtext_password;
+    private TextView otherlogin_text_tourists;
 
     @Override
     protected void createmPresenter() {
@@ -49,7 +52,7 @@ public class OtherLogInActivity extends BaseAvtivity<TestPreseneter> {
                   JSONObject jsonObject=new JSONObject(s);
                   String code = jsonObject.getString("code");
                   if(code.equals("200")){
-
+                      Log.d("TAG", "onData: "+s);
                       RegisteredBean registeredBean = Constant.GsonToBean(s, RegisteredBean.class);
                       IsUtils.Tos(OtherLogInActivity.this,"登录成功");
 
@@ -61,10 +64,13 @@ public class OtherLogInActivity extends BaseAvtivity<TestPreseneter> {
                       //将用户信息存入SharedPreferences中
                       Utils.getEdit(OtherLogInActivity.this)
                               .putString("userName",registeredBean.getUser().getUserName())
+                              .putString("userHead",registeredBean.getUser().getUserHead())
                               .putString("userId",registeredBean.getUser().getUserId()+"")
                               .putString("userSex",registeredBean.getUser().getUserSex())
+                              .putString("userSignature",registeredBean.getUser().getUserSignature())
                               .putString("strDate",strDate)
                               .commit();
+                      EventBus.getDefault().post(new FirstEvent("FirstEvent btn clicked"));
 
                       setResult(1,getIntent());
 
@@ -92,6 +98,7 @@ public class OtherLogInActivity extends BaseAvtivity<TestPreseneter> {
         otherlogin_but_login = (Button) findViewById(R.id.otherlogin_but_login);
         otherlogin_edtext_phone= (EditText) findViewById(R.id.otherlogin_edtext_phone);
         otherlogin_edtext_password= (EditText) findViewById(R.id.otherlogin_edtext_password);
+        otherlogin_text_tourists = (TextView) findViewById(R.id.otherlogin_text_Tourists);
     }
 
     @Override
@@ -113,7 +120,7 @@ public class OtherLogInActivity extends BaseAvtivity<TestPreseneter> {
         register_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(OtherLogInActivity.this,ReGisterActivity.class));
+                startActivityForResult(new Intent(OtherLogInActivity.this,ReGisterActivity.class),0);
                 //启动动画
                 overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_from_left);
             }
@@ -134,6 +141,23 @@ public class OtherLogInActivity extends BaseAvtivity<TestPreseneter> {
                 }
             }
         });
+        //游客
+        otherlogin_text_tourists.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(1,getIntent());
+                finish();
+            }
+        });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==1){
+            setResult(1,getIntent());
+            finish();
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

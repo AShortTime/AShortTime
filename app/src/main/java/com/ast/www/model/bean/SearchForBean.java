@@ -8,9 +8,10 @@ import java.util.List;
 
 public class SearchForBean {
 
+
     /**
      * code : 200
-     * user : [{"userHead":"","userId":0,"userName":"aa","userPhone":"123456","userSex":"男"},{"userHead":"","userId":0,"userName":"bb","userPhone":"12345","userSex":"女"},{"userHead":"","userId":0,"userName":"zhang","userPhone":"123456","userSex":"男"},{"userHead":"","userId":0,"userName":"a123456","userPhone":"18410177108","userSex":"123"},{"userHead":"","userId":0,"userName":"123","userPhone":"15910488411","userSex":"男"},{"userHead":"","userId":0,"userName":"123","userPhone":"15910488415","userSex":"女"}]
+     * user : [{"userId":99,"userName":"wd","userPhone":"15711470934","userSex":"男","userSignature":"编辑个性签名"}]
      */
 
     private String code;
@@ -34,26 +35,18 @@ public class SearchForBean {
 
     public static class UserBean {
         /**
-         * userHead :
-         * userId : 0
-         * userName : aa
-         * userPhone : 123456
+         * userId : 99
+         * userName : wd
+         * userPhone : 15711470934
          * userSex : 男
+         * userSignature : 编辑个性签名
          */
 
-        private String userHead;
         private int userId;
         private String userName;
         private String userPhone;
         private String userSex;
-
-        public String getUserHead() {
-            return userHead;
-        }
-
-        public void setUserHead(String userHead) {
-            this.userHead = userHead;
-        }
+        private String userSignature;
 
         public int getUserId() {
             return userId;
@@ -85,6 +78,14 @@ public class SearchForBean {
 
         public void setUserSex(String userSex) {
             this.userSex = userSex;
+        }
+
+        public String getUserSignature() {
+            return userSignature;
+        }
+
+        public void setUserSignature(String userSignature) {
+            this.userSignature = userSignature;
         }
     }
 }

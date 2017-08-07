@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:layout_marginTop="25dp">
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true">
 
     <include
         layout="@layout/head_layout"
