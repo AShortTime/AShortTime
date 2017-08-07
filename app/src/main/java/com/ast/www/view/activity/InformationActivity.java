@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ast.www.R;
+import com.ast.www.model.util.IsUtils;
+import com.ast.www.model.util.Utils;
 import com.ast.www.view.adapter.InformationAdapter;
 import com.ast.www.view.fragment.InformationFragment;
 
@@ -30,6 +32,9 @@ public class InformationActivity extends BaseAvtivity {
     @Override
     protected void createmPresenter() {
 
+        if(Utils.getSharedPrefers(this).getString("userName","").equals("")){
+
+        }
     }
 
     @Override

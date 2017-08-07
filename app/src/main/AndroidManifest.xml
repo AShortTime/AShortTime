@@ -59,6 +59,7 @@
         <activity android:name=".view.activity.CollectionActivity"></activity>
         <activity android:name=".view.activity.SearchForActivity"></activity>
         <activity android:name=".view.activity.InformationActivity"></activity>
+        <activity android:name=".view.activity.SetUpActivity"></activity>
 
         <activity
             android:name="com.tencent.tauth.AuthActivity"

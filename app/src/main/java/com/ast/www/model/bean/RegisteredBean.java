@@ -6,9 +6,10 @@ package com.ast.www.model.bean;
 
 public class RegisteredBean {
 
+
     /**
      * code : 200
-     * user : {"userId":90,"userName":"a123456","userPassword":"123456","userPhone":"18410177108","userSex":"123"}
+     * user : {"userHead":"","userId":90,"userName":"a123456","userPassword":"123456","userPhone":"18410177108","userSex":"男","userSignature":"编辑个性签名"}
      */
 
     private String code;
@@ -32,18 +33,30 @@ public class RegisteredBean {
 
     public static class UserBean {
         /**
+         * userHead :
          * userId : 90
          * userName : a123456
          * userPassword : 123456
          * userPhone : 18410177108
-         * userSex : 123
+         * userSex : 男
+         * userSignature : 编辑个性签名
          */
 
+        private String userHead;
         private int userId;
         private String userName;
         private String userPassword;
         private String userPhone;
         private String userSex;
+        private String userSignature;
+
+        public String getUserHead() {
+            return userHead;
+        }
+
+        public void setUserHead(String userHead) {
+            this.userHead = userHead;
+        }
 
         public int getUserId() {
             return userId;
@@ -83,6 +96,14 @@ public class RegisteredBean {
 
         public void setUserSex(String userSex) {
             this.userSex = userSex;
+        }
+
+        public String getUserSignature() {
+            return userSignature;
+        }
+
+        public void setUserSignature(String userSignature) {
+            this.userSignature = userSignature;
         }
     }
 }

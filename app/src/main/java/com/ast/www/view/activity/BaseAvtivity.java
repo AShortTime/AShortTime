@@ -23,6 +23,7 @@ import java.util.Stack;
  */
 
 public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatActivity{
+
     /** 用来保存所有已打开的Activity */
     private static Stack<Activity> listActivity = new Stack<Activity>();
 
@@ -33,6 +34,7 @@ public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatAct
     protected   T mPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
         if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.KITKAT){

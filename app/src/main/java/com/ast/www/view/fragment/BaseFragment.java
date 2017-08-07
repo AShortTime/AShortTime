@@ -81,4 +81,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment{
      */
     protected abstract void initListener();
 
+    
+
 }

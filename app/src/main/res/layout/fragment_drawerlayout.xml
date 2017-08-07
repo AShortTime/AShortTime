@@ -18,7 +18,9 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="35dp"
-            android:src="@mipmap/raw_1499936862" />
+            android:src="@mipmap/raw_1499936862"
+            android:visibility="gone"
+            />
 
         <TextView
             android:id="@+id/user_name"
@@ -28,7 +30,8 @@
             android:layout_toEndOf="@+id/user_text"
             android:layout_toRightOf="@+id/user_text"
             android:text="椰果奶茶"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/user_sex"
@@ -37,7 +40,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/sex" />
+            android:background="@mipmap/sex"
+            />
 
         <TextView
             android:id="@+id/user_text"
@@ -45,7 +49,31 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/user_head"
             android:layout_marginTop="5dp"
-            android:text="编辑个性签名" />
+            android:text="编辑个性签名"
+            android:visibility="gone"/>
+       <RelativeLayout
+           android:id="@+id/drawer_Not_logged_in_rela"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_centerHorizontal="true">
+           <ImageView
+               android:id="@+id/drawer_Not_logged_in_image"
+               android:layout_width="50dp"
+               android:layout_height="50dp"
+               android:src="@mipmap/weidneglu"
+               android:layout_centerHorizontal="true"/>
+           <TextView
+               android:id="@+id/drawer_Not_logged_in_text"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_centerVertical="true"
+               android:layout_centerHorizontal="true"
+               android:text="请登录"
+               android:textColor="#000"
+               android:layout_marginTop="20dp"
+               android:layout_below="@id/drawer_Not_logged_in_image"
+               android:textSize="20sp"/>
+       </RelativeLayout>
     </RelativeLayout>
 
     <com.ast.www.constom.UserDrawMoudle

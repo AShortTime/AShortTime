@@ -13,11 +13,13 @@ import com.ast.www.R;
 import com.ast.www.model.bean.ClassBean;
 import com.ast.www.model.bean.RegisteredBean;
 import com.ast.www.model.util.Constant;
+import com.ast.www.model.util.FirstEvent;
 import com.ast.www.model.util.IsUtils;
 import com.ast.www.model.util.Utils;
 import com.ast.www.presenter.TestPreseneter;
 import com.ast.www.view.iview.IBaseView;
 
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -50,7 +52,7 @@ public class OtherLogInActivity extends BaseAvtivity<TestPreseneter> {
                   JSONObject jsonObject=new JSONObject(s);
                   String code = jsonObject.getString("code");
                   if(code.equals("200")){
-
+                      Log.d("TAG", "onData: "+s);
                       RegisteredBean registeredBean = Constant.GsonToBean(s, RegisteredBean.class);
                       IsUtils.Tos(OtherLogInActivity.this,"登录成功");
 
@@ -62,10 +64,13 @@ public class OtherLogInActivity extends BaseAvtivity<TestPreseneter> {
                       //将用户信息存入SharedPreferences中
                       Utils.getEdit(OtherLogInActivity.this)
                               .putString("userName",registeredBean.getUser().getUserName())
+                              .putString("userHead",registeredBean.getUser().getUserHead())
                               .putString("userId",registeredBean.getUser().getUserId()+"")
                               .putString("userSex",registeredBean.getUser().getUserSex())
+                              .putString("userSignature",registeredBean.getUser().getUserSignature())
                               .putString("strDate",strDate)
                               .commit();
+                      EventBus.getDefault().post(new FirstEvent("FirstEvent btn clicked"));
 
                       setResult(1,getIntent());
 
@@ -136,6 +141,7 @@ public class OtherLogInActivity extends BaseAvtivity<TestPreseneter> {
                 }
             }
         });
+        //游客
         otherlogin_text_tourists.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
