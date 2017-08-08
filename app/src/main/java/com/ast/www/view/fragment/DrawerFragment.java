@@ -19,6 +19,7 @@ import com.ast.www.model.util.Utils;
 import com.ast.www.view.activity.AttenTionActivity;
 import com.ast.www.view.activity.InformationActivity;
 import com.ast.www.view.activity.LogInActivity;
+import com.ast.www.view.activity.MyFileActivity;
 import com.ast.www.view.activity.SearchForActivity;
 import com.ast.www.view.activity.SetUpActivity;
 import com.bumptech.glide.Glide;
@@ -197,7 +198,8 @@ public class DrawerFragment extends BaseFragment{
         drawer_folder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent it=new Intent(getActivity(), MyFileActivity.class);
+                getActivity().startActivity(it);
             }
         });
         //设置
