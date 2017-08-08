@@ -6,6 +6,7 @@ import android.support.annotation.IdRes;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -88,9 +89,7 @@ public class DetailActivity extends BaseAvtivity<HomePresenter> implements View.
         detailusername = (TextView) findViewById(R.id.user_name_detail);
         detailusername.setText(resourceBean.getUser().getUserName());
         detailuserhead = (SimpleDraweeView) findViewById(R.id.user_head_detail);
-        if (resourceBean.getUser().getUserHead().equals("")) {
-            detailuserhead.setImageResource(R.mipmap.user_head);
-        } else {
+        if (!TextUtils.isEmpty(resourceBean.getUser().getUserHead())) {
             detailuserhead.setImageURI(resourceBean.getUser().getUserHead());
         }
 
@@ -115,7 +114,6 @@ public class DetailActivity extends BaseAvtivity<HomePresenter> implements View.
         //发表评论
         detailedit = (EditText) findViewById(R.id.detail_edit);
         detailcommit = (TextView) findViewById(R.id.detail_commit);
-
     }
 
     @Override
@@ -134,7 +132,7 @@ public class DetailActivity extends BaseAvtivity<HomePresenter> implements View.
             break;
             //发表评论
             case R.id.detail_commit: {
-                if(!detailedit.getText().equals("")){
+                if(!TextUtils.isEmpty(detailedit.getText())){
                     HomePresenter commit = new HomePresenter();
                     commit.attach(new IBaseView() {
                         @Override
@@ -178,6 +176,7 @@ public class DetailActivity extends BaseAvtivity<HomePresenter> implements View.
             public void onData(DetailCommentBean detailCommentBean) {
                if(detailCommentBean.getCode()==200){
                    adapter.setList(detailCommentBean.getComment());
+                   adapter.notifyDataSetChanged();
                }else {
                    showShort("评论显示未知错误");
                }

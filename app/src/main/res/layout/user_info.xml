@@ -4,12 +4,18 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     >
-    <com.ast.www.constom.CircleImageView
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_marginRight="8dp"
+        fresco:placeholderImage="@mipmap/user_head"
         android:id="@+id/user_head"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@mipmap/user_head" />
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        fresco:actualImageScaleType="centerInside"
+        fresco:roundAsCircle="true"
+        fresco:roundingBorderColor="@color/lightslategray"
+        fresco:roundingBorderWidth="1dp" />
     <TextView
         android:layout_marginBottom="5dp"
         android:textColor="@color/tomato"
@@ -17,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="郭凯奇"
-        android:textSize="15sp"
+        android:textSize="16sp"
         android:layout_above="@+id/time"
         android:layout_alignLeft="@+id/time"
         android:layout_alignStart="@+id/time" />
@@ -26,8 +32,8 @@
         android:id="@+id/time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="2017-06-15  14:20"
-        android:textSize="15sp"
+        android:text="2017-06-15 14:20"
+        android:textSize="10sp"
         android:layout_alignBottom="@id/user_head"
         android:layout_toRightOf="@+id/user_head"
         android:layout_toEndOf="@+id/user_head" />

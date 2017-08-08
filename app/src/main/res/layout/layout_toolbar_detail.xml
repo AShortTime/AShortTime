@@ -9,6 +9,7 @@
     android:fitsSystemWindows="true">
 
     <RelativeLayout
+        android:background="@color/gray"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -19,6 +20,7 @@
             android:layout_centerVertical="true"
             android:src="@mipmap/left_back" />
         <RadioGroup
+            android:layout_marginLeft="8dp"
             android:id="@+id/detail_rg"
             android:gravity="center_vertical"
             android:layout_toRightOf="@+id/item_detail_back"
@@ -27,16 +29,16 @@
             android:orientation="horizontal"
             >
             <RadioButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:button="@drawable/sclect_detail_top"
                 android:id="@+id/detail_top"
                 android:layout_marginRight="8dp"
                 />
             <RadioButton
                 android:layout_marginRight="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
                 android:button="@drawable/sclect_detail_foot"
                 android:id="@+id/detail_foot"
                 />
@@ -53,6 +55,7 @@
 
 
         <TextView
+            android:textSize="14sp"
             android:text="郭凯奇"
             android:layout_toLeftOf="@+id/user_head_detail"
             android:id="@+id/user_name_detail"
@@ -64,14 +67,18 @@
              />
 
         <com.facebook.drawee.view.SimpleDraweeView
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            fresco:placeholderImage="@mipmap/user_head"
             android:id="@+id/user_head_detail"
-            android:layout_width="60dp"
-            android:layout_height="match_parent"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             fresco:actualImageScaleType="centerInside"
             fresco:roundAsCircle="true"
             fresco:roundingBorderColor="@color/lightslategray"
-            fresco:roundingBorderWidth="1dp" />
+            fresco:roundingBorderWidth="1dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 
 </android.support.v7.widget.Toolbar>

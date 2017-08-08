@@ -78,9 +78,9 @@
             android:id="@+id/detail_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="8dp"
             android:text="标题"
-            android:textSize="15sp" />
+            android:textSize="16sp" />
 
         <LinearLayout
 
@@ -89,23 +89,25 @@
             android:orientation="horizontal">
 
             <TextView
+                android:textSize="12sp"
                 android:id="@+id/detail_looknum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="8dp"
                 android:text="6565" />
 
             <TextView
-
+                android:textSize="12sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="次播放" />
 
             <TextView
+                android:textSize="12sp"
                 android:id="@+id/detail_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="8dp"
                 android:text="2017-08-04 14:36" />
 
         </LinearLayout>
@@ -122,6 +124,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
     <EditText
+        android:textSize="14sp"
         android:text=""
         android:id="@+id/detail_edit"
         android:layout_weight="1"
@@ -129,10 +132,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="写评论"
-        android:drawablePadding="5dp"/>
+        android:drawablePadding="8dp"/>
     <TextView
+        android:textSize="14sp"
         android:id="@+id/detail_commit"
-        android:padding="5dp"
+        android:padding="8dp"
         android:textColor="@color/appBlue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
