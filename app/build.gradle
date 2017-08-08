@@ -40,11 +40,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:support-v4:25.3.0'
-
     compile 'com.android.support:appcompat-v7:25.0.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
@@ -84,11 +81,13 @@ dependencies {
     compile project(':superplayerlibrary')
     //黑夜间切换按钮的依赖
     compile 'ch.ielse:switchbutton:1.0.0'
-
     compile 'com.cpacm:floatingmusicmenu:1.0.0'
-
     compile 'com.github.bumptech.glide:glide:3.6.1'
-
     //EventBus
     compile 'org.greenrobot:eventbus:3.0.0'
+
+    //沉浸式状态栏
+    compile 'org.zackratos:ultimatebar:1.0.3'
+
+    compile project(':camera')
 }

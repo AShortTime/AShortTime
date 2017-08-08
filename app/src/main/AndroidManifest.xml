@@ -10,7 +10,8 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
         android:name=".view.application.MyApplication"
@@ -88,6 +89,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             />
 
+        <activity android:name=".view.activity.CameraActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

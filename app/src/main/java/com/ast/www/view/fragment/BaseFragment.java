@@ -5,11 +5,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ast.www.R;
 import com.ast.www.presenter.BasePresenter;
+
+import org.zackratos.ultimatebar.UltimateBar;
 
 /**
  * 作者:郭凯奇
@@ -38,14 +42,16 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container
             , Bundle savedInstanceState) {
 
-        View view = LayoutInflater.from(mActivity)
-                .inflate(getLayoutId(), container, false);
+        View view = LayoutInflater.from(mActivity).inflate(getLayoutId(), container, false);
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        UltimateBar ultimateBar = new UltimateBar(getActivity());
+        ultimateBar.setColorBar(ContextCompat.getColor(getActivity(), R.color.appBlue));
 
         createmPresenter();
         initView(getView(),savedInstanceState);

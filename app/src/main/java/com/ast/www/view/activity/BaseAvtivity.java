@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -11,7 +12,10 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.ast.www.R;
 import com.ast.www.presenter.BasePresenter;
+
+import org.zackratos.ultimatebar.UltimateBar;
 
 import java.util.Stack;
 
@@ -40,6 +44,10 @@ public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatAct
         if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.KITKAT){
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
+
+
+        UltimateBar ultimateBar = new UltimateBar(this);
+        ultimateBar.setColorBar(ContextCompat.getColor(this, R.color.appBlue));
 
         // 将activity推入栈中
         listActivity.push(this);

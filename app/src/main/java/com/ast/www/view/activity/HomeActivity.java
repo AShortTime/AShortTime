@@ -2,7 +2,9 @@ package com.ast.www.view.activity;
 
 import android.content.Intent;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -36,7 +38,7 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
     private Toolbar homeToolbar;
     private RelativeLayout homeStartDrawerLayout;
     private ArrayList<Fragment> fragments;
-    private FoldingPaneLayout drawerLayout;
+    private DrawerLayout drawerLayout;
     private BottomNavigationBar homeBottombar;
     private RecommendFragment mrecommendFragment;
     private JokeFragment mjokeFragment;
@@ -70,7 +72,7 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
     @Override
     protected void initData() {
         setSupportActionBar(homeToolbar);
-        drawerLayout = (FoldingPaneLayout) findViewById(R.id.layout_left_drawer);
+        drawerLayout = (DrawerLayout) findViewById(R.id.layout_left_drawer);
 
         mrecommendFragment = new RecommendFragment();
         mjokeFragment = new JokeFragment();
@@ -80,7 +82,7 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
         fragments.add(mjokeFragment);
         fragments.add(mvideoFragment);
 
-        drawerLayout.setProhibitSideslip(true);
+        drawerLayout.setDrawerLockMode(Gravity.START);
 
         /**
          * 初始化 底部导航栏
@@ -197,10 +199,10 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.home_circleView:
-                if (drawerLayout.isOpen()){
-                    drawerLayout.closePane();
+                if (drawerLayout.isDrawerOpen(Gravity.START)){
+                    drawerLayout.closeDrawers();
                 }else {
-                    drawerLayout.openPane();
+                    drawerLayout.openDrawer(Gravity.START);
                 }
                 break;
             case R.id.home_edit:

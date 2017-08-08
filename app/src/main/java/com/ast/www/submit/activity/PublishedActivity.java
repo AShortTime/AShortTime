@@ -26,6 +26,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -51,6 +52,8 @@ import com.ast.www.submit.bean.CodeBean;
 import com.ast.www.submit.utils.Bimp;
 import com.ast.www.submit.utils.FileUtils;
 
+import org.zackratos.ultimatebar.UltimateBar;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -66,18 +69,22 @@ public class PublishedActivity extends Activity implements OnClickListener {
 	private GridView noScrollgridview;
 	private GridAdapter adapter;
 	private PublishedPersenter persenter;
+	/**
+	 * 拍照回调
+	 */
 	private static final int TAKE_PICTURE = 0x000000;
-	//相机权限
-	private String[] permissions_camera= {android.Manifest.permission.CAMERA,android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 	private TextView toolbar_title,toolbar_titleLeft,toolbar_titleRight;
 
 	String path;
 	private EditText editContent;
+	private PopupWindows popupWindows;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_selectimg);
+		UltimateBar ultimateBar = new UltimateBar(this);
+		ultimateBar.setColorBar(ContextCompat.getColor(this, R.color.appBlue));
 		Init();
 	}
 
@@ -101,7 +108,7 @@ public class PublishedActivity extends Activity implements OnClickListener {
 
 			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 				if (arg2 == Bimp.bmp.size()) {
-					new PopupWindows(PublishedActivity.this, noScrollgridview);
+					popupWindows = new PopupWindows(PublishedActivity.this, noScrollgridview);
 				} else {
 					Intent intent = new Intent(PublishedActivity.this, PhotoActivity.class);
 					intent.putExtra("ID", arg2);
@@ -201,9 +208,9 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		Handler handler = new Handler() {
 			public void handleMessage(Message msg) {
 				switch (msg.what) {
-				case 1:
-					adapter.notifyDataSetChanged();
-					break;
+					case 1:
+						adapter.notifyDataSetChanged();
+						break;
 				}
 				super.handleMessage(msg);
 			}
@@ -338,16 +345,6 @@ public class PublishedActivity extends Activity implements OnClickListener {
 	 * 拍照方法
 	 */
 	public void photo2() {
-		//判断 版本 当系统大于23时，申请动态权限
-		if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-			//判断是否授权
-			int i = ContextCompat.checkSelfPermission(this, permissions_camera[0]);
-			//GRANTED 授权 DINIED 拒绝
-			if (i== PackageManager.PERMISSION_DENIED){
-				showDialogTipUserRequestPermission();
-				return;
-			}
-		}
 
 		Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		File file1 = new File(Environment.getExternalStorageDirectory()
@@ -437,83 +434,7 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		finish();
 	}
 
-	/**
-	 * 用户申请授权回调
-	 */
-	@Override
-	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		if (requestCode==0){
-			if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-				//如果授权失败
-				if (grantResults[0]!=PackageManager.PERMISSION_GRANTED){
-					//检测是否允许继续申请授权
-					//系统方法
-					boolean isP = shouldShowRequestPermissionRationale(permissions_camera[0]);
-					//是否被设置为不在申请
-					//false：继续要求用户自己手动申请
-					//true ：关闭页面
-					if (!isP){
-						//展示手动授权页面
-						showDialogToSettings();
-					}else {
 
-					}
-
-				}else {
-					Toast.makeText(this, "相机授权成功", Toast.LENGTH_SHORT).show();
-					photo2();
-				}
-			}
-		}
-	}
-
-	/**
-	 * 展示 设置相机权限Dialog
-	 */
-	private void showDialogTipUserRequestPermission() {
-		new AlertDialog.Builder(this)
-				.setTitle("相机权限不可用")
-				.setMessage("由于拍照需要获取摄像头，进行图片拍摄;\n否则，您将无法正常使用摄像头")
-				.setPositiveButton("立即开启", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						//请求权限 跳转到授权回调
-						ActivityCompat.requestPermissions(PublishedActivity.this,permissions_camera,0);
-					}
-				})
-				.setNegativeButton("取消授权", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				})
-				.setCancelable(false)
-				.show();
-	}
-
-	/**
-	 * 展示 Dialog 跳转至 设置
-	 */
-	private void showDialogToSettings() {
-		new AlertDialog.Builder(this)
-				.setTitle("自动授权失败")
-				.setMessage("请在设置-应用-权限 中，允许应用使用摄像头权限")
-				.setPositiveButton("前去设置", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				})
-				.setNegativeButton("不，算了", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				})
-				.setCancelable(false)
-				.show();
-	}
 
 
 	/**
@@ -560,4 +481,18 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		}
 	}
 
+	/**
+	 * 返回键点击监听
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (popupWindows.isShowing()){
+			popupWindows.dismiss();
+		}else {
+			cancleDialog();
+		}
+
+		return false;
+	}
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -16,6 +17,8 @@ import com.ast.www.R;
 import com.ast.www.submit.adapter.ImageBucketAdapter;
 import com.ast.www.submit.bean.ImageBucket;
 import com.ast.www.submit.utils.AlbumHelper;
+
+import org.zackratos.ultimatebar.UltimateBar;
 
 import java.io.Serializable;
 import java.util.List;
@@ -34,6 +37,9 @@ public class TestPicActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_image_bucket);
+
+		UltimateBar ultimateBar = new UltimateBar(this);
+		ultimateBar.setColorBar(ContextCompat.getColor(this, R.color.appBlue));
 
 		helper = AlbumHelper.getHelper();
 		helper.init(getApplicationContext());

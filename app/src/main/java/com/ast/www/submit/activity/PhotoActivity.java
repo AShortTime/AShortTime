@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
@@ -16,6 +17,8 @@ import android.widget.RelativeLayout;
 import com.ast.www.R;
 import com.ast.www.submit.utils.Bimp;
 import com.ast.www.submit.utils.FileUtils;
+
+import org.zackratos.ultimatebar.UltimateBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +40,9 @@ public class PhotoActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_photo);
+
+		UltimateBar ultimateBar = new UltimateBar(this);
+		ultimateBar.setColorBar(ContextCompat.getColor(this, R.color.appBlue));
 
 		photo_relativeLayout = (RelativeLayout) findViewById(R.id.photo_relativeLayout);
 		photo_relativeLayout.setBackgroundColor(0x70000000);

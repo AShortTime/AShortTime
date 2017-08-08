@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -22,6 +23,8 @@ import com.ast.www.submit.adapter.ImageGridAdapter;
 import com.ast.www.submit.bean.ImageItem;
 import com.ast.www.submit.utils.AlbumHelper;
 import com.ast.www.submit.utils.Bimp;
+
+import org.zackratos.ultimatebar.UltimateBar;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -58,6 +61,8 @@ public class ImageGridActivity extends Activity {
 
 		setContentView(R.layout.activity_image_grid);
 
+		UltimateBar ultimateBar = new UltimateBar(this);
+		ultimateBar.setColorBar(ContextCompat.getColor(this, R.color.appBlue));
 		helper = AlbumHelper.getHelper();
 		helper.init(getApplicationContext());
 
