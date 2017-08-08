@@ -14,6 +14,7 @@ import com.ast.www.model.bean.ClassBean;
 import com.ast.www.model.bean.SearchForBean;
 import com.ast.www.model.util.Constant;
 import com.ast.www.model.util.IsUtils;
+import com.ast.www.model.util.Utils;
 import com.ast.www.presenter.TestPreseneter;
 import com.ast.www.view.adapter.SearchForAdapter;
 import com.ast.www.view.iview.IBaseView;
@@ -21,6 +22,8 @@ import com.ast.www.view.iview.IBaseView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,10 +42,41 @@ public class SearchForActivity extends BaseAvtivity<TestPreseneter> {
     private ListView search_for_list;
     private RecyclerView search_for_recy;
     private ArrayList<SearchForBean> list;
+    private TestPreseneter testPreseneter;
 
     @Override
     protected void createmPresenter() {
         mPresenter = new TestPreseneter();
+        testPreseneter=new TestPreseneter();
+
+        testPreseneter.attach(new IBaseView() {
+            @Override
+            public void onData(Object o) {
+                String s = (String) o;
+
+                JSONObject jsonObject = null;
+                try {
+                    jsonObject = new JSONObject(s);
+                    String code = jsonObject.getString("code");
+
+                    if(code.equals("200")){
+                        Log.d("TAG", "on: "+s);
+                        IsUtils.Tos(SearchForActivity.this,"关注成功");
+                    }else{
+                        IsUtils.Tos(SearchForActivity.this,"关注失败");
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+
+            }
+        });
+
         mPresenter.attach(new IBaseView() {
             @Override
             public void onData(Object o) {
@@ -56,7 +90,20 @@ public class SearchForActivity extends BaseAvtivity<TestPreseneter> {
                         list.add(searchForBean);
                         if (list!=null&&list.get(0).getUser().size()>=1) {
                             search_for_list.setVisibility(View.VISIBLE);
-                            SearchForAdapter searchForAdapter=new SearchForAdapter(SearchForActivity.this,list);
+                            SearchForAdapter searchForAdapter=new SearchForAdapter(SearchForActivity.this, list, new SearchForAdapter.Onattention() {
+                                @Override
+                                public void ok(int bo) {
+                                   if(!Utils.getSharedPrefers(SearchForActivity.this).getString("userName","").equals("")){
+                                       Map<String,String> maps=new HashMap<String, String>();
+                                       maps.put("UserId",""+Utils.getSharedPrefers(SearchForActivity.this).getString("userId",""));
+                                       maps.put("Beuserid",""+bo);
+                                       Log.d("TAH", "ok: "+bo+Utils.getSharedPrefers(SearchForActivity.this).getString("userId",""));
+                                       testPreseneter.post("user/addConcern",maps,ClassBean.class);
+                                   }else{
+                                       IsUtils.Tos(SearchForActivity.this,"请登录!");
+                                   }
+                                }
+                            });
                             search_for_list.setAdapter(searchForAdapter);
                         }else{
                             IsUtils.Tos(SearchForActivity.this,"无此用户信息");
@@ -107,8 +154,14 @@ public class SearchForActivity extends BaseAvtivity<TestPreseneter> {
             public void onClick(View v) {
                 if (IsUtils.isNull(search_for_edtext.getText().toString())) {
                     Map<String, String> maps = new HashMap<String, String>();
-                    maps.put("value", search_for_edtext.getText().toString());
-                    mPresenter.get("user/findUserBy", maps, ClassBean.class);
+                    try {
+                        String strUTF8 = URLDecoder.decode(search_for_edtext.getText().toString(), "UTF-8");
+                        maps.put("value",strUTF8);
+                        mPresenter.post("user/findUserBy", maps, ClassBean.class);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+
                 } else {
                     IsUtils.Tos(SearchForActivity.this, "请输入搜索信息");
                 }

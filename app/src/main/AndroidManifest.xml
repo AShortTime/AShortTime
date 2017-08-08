@@ -57,14 +57,25 @@
             android:name=".view.activity.DetailActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|layoutDirection"
             android:screenOrientation="portrait"></activity>
+         <!-- 登录页面 -->
         <activity android:name=".view.activity.OtherLogInActivity"></activity>
+        <!-- 注册页面 -->
         <activity android:name=".view.activity.ReGisterActivity"></activity>
+        <!-- 登录主界面页面 -->
         <activity android:name=".view.activity.LogInActivity"></activity>
+        <!-- 我的关注页面 -->
         <activity android:name=".view.activity.AttenTionActivity" />
+        <!-- 我的收藏页面 -->
         <activity android:name=".view.activity.CollectionActivity"></activity>
+        <!-- 搜索页面 -->
         <activity android:name=".view.activity.SearchForActivity"></activity>
+        <!-- 信息页面 -->
         <activity android:name=".view.activity.InformationActivity"></activity>
+        <!-- 设置页面 -->
         <activity android:name=".view.activity.SetUpActivity"></activity>
+        <!-- 我的文件页面 -->
+        <activity android:name=".view.activity.MyFileActivity"></activity>
+
 
         <activity
             android:name="com.tencent.tauth.AuthActivity"

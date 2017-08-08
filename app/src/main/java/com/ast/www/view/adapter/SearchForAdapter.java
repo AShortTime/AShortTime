@@ -1,6 +1,7 @@
 package com.ast.www.view.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,12 @@ import java.util.ArrayList;
 public class SearchForAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<SearchForBean> list;
+    private Onattention onattention;
 
-    public SearchForAdapter(Context context, ArrayList<SearchForBean> list) {
+    public SearchForAdapter(Context context, ArrayList<SearchForBean> list, Onattention onattention) {
         this.context = context;
         this.list = list;
+        this.onattention = onattention;
     }
 
     @Override
@@ -43,7 +46,7 @@ public class SearchForAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
         if(convertView==null){
             convertView = LayoutInflater.from(context).inflate(R.layout.item_scf_searchfor, null);
@@ -64,7 +67,8 @@ public class SearchForAdapter extends BaseAdapter {
         viewHolder.it_searchfor_but_guanzhu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Log.d("TAH", "onClick: "+list.get(0).getUser().get(position).getUserId()+list.get(0).getUser().get(position).getUserName());
+                 onattention.ok(list.get(0).getUser().get(position).getUserId());
             }
         });
         return convertView;
@@ -74,5 +78,8 @@ public class SearchForAdapter extends BaseAdapter {
         TextView it_searchfor_text1;
         TextView it_searchfor_text2;
         Button it_searchfor_but_guanzhu;
+    }
+    public interface Onattention{
+        void ok(int bo);
     }
 }
