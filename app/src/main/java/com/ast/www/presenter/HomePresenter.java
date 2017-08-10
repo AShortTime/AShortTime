@@ -28,15 +28,17 @@ public class HomePresenter extends BasePresenter<IBaseView> {
         HttpUtil.get(url, map, new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-                Log.e("getjson", s);
-//                getiBaseView().onData(s);
-                T t = Constant.GsonToBean(s, cla);
-                getiBaseView().onData(t);
+                Log.e("评论", s);
+                if(cla!=null){
+                    T t = Constant.GsonToBean(s, cla);
+                    getiBaseView().onData(t);
+                }
+
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.e("throwable", throwable.toString());
+                Log.e("评论错误", throwable.toString());
                 getiBaseView().onError(throwable);
             }
         });
@@ -48,18 +50,20 @@ public class HomePresenter extends BasePresenter<IBaseView> {
         HttpUtil.post(url, map, new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-//                    JSONObject jsonObject=new JSONObject(s);
-//                    String code = jsonObject.getString("code");
                     Log.e("postjson", s+"");
-//                    T t = Constant.GsonToBean(s, cla);
-                    getiBaseView().onData(s);
+                if(cla!=null){
+                    T t = Constant.GsonToBean(s, cla);
+                    getiBaseView().onData(t);
+                }else{
+                    getiBaseView().onData(null);
+                }
 
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.e("throwable", throwable.toString());
-//                getiBaseView().onError(throwable);
+                    Log.e("throwable", throwable.toString());
+                    getiBaseView().onError(throwable);
             }
         });
     }

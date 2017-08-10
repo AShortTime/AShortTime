@@ -3,10 +3,11 @@
     package="com.ast.www">
 
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.CAMERA" />
@@ -20,7 +21,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.HomeActivity"
+        <activity
+            android:name=".view.activity.HomeActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppTheme">
             <intent-filter>
@@ -29,28 +31,32 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.activity.MainActivity"/>
+        <activity android:name=".view.activity.MainActivity" />
 
         <!-- 上传页选择 -->
-        <activity android:name=".view.activity.SubmitActivity"/>
+        <activity android:name=".view.activity.SubmitActivity" />
 
         <!-- 文字上传页 -->
         <activity
             android:name=".submit.activity.PublishedActivity"
-            android:configChanges="orientation|keyboardHidden"/>
+            android:configChanges="orientation|keyboardHidden" />
 
         <!-- 图片ViewPager页面 -->
-        <activity android:name=".submit.activity.PhotoActivity"/>
+        <activity android:name=".submit.activity.PhotoActivity" />
 
         <!-- Submit上传页 -->
-        <activity android:name=".submit.activity.TestPicActivity"/>
+        <activity android:name=".submit.activity.TestPicActivity" />
 
-        <activity android:name=".submit.activity.ImageGridActivity"/>
+        <activity android:name=".submit.activity.ImageGridActivity" />
 
         <!-- 文字上传成功 -->
-        <activity android:name=".submit.activity.SubmitSuccesActivity"/>
+        <activity android:name=".submit.activity.SubmitSuccesActivity" />
 
 
+        <activity
+            android:name=".view.activity.DetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|layoutDirection"
+            android:screenOrientation="portrait"></activity>
          <!-- 登录页面 -->
         <activity android:name=".view.activity.OtherLogInActivity"></activity>
         <!-- 注册页面 -->
@@ -73,20 +79,22 @@
 
         <activity
             android:name="com.tencent.tauth.AuthActivity"
-            android:noHistory="true"
-            android:launchMode="singleTask" >
+            android:launchMode="singleTask"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="tencent1106161846.data" />
             </intent-filter>
         </activity>
 
-        <activity android:name="com.tencent.connect.common.AssistActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            />
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
 
         <provider
@@ -96,7 +104,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
 
     </application>

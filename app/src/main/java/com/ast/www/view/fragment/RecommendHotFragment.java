@@ -1,6 +1,8 @@
 package com.ast.www.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.ast.www.R;
 import com.ast.www.model.bean.RecommendHotBean;
 import com.ast.www.presenter.HomePresenter;
+import com.ast.www.view.activity.DetailActivity;
 import com.ast.www.view.adapter.RlvAdapter;
 import com.ast.www.view.iview.IBaseView;
 import com.superplayer.library.SuperPlayer;
@@ -68,7 +71,6 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
     protected void initView(View view, Bundle savedInstanceState) {
         player = SuperPlayerManage.getSuperManage().initialize(getActivity());
         player.setShowTopControl(false).setSupportGesture(false);
-        player.setShowTopControl(false);
         player.setgkq(false);
 
         mrlv = (RecyclerView) view.findViewById(R.id.rlv);
@@ -77,15 +79,17 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
         adapter = new RlvAdapter(getActivity());
         mrlv.setAdapter(adapter);
 
-        mrlv.addItemDecoration( new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        mrlv.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
     }
 
     private void setItemOnclick(RlvAdapter adapter) {
         adapter.setOnItemClickListener(new RlvAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClick(View view, int position) {
-
+            public void OnItemClick(View view, int position, RecommendHotBean.ResourceBean resourceBean) {
+                Intent intent=new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra("detail",resourceBean);
+                startActivity(intent);
             }
 
             @Override
@@ -100,11 +104,12 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
 //        player = SuperPlayerManage.getSuperManage().initialize(getActivity());
         //player.setShowTopControl(false).setSupportGesture(false);
 //        player.setShowTopControl(false);
-//        player.setgkq(false);
+          player.setgkq(false);
 //        player.setFullScreenOnly(false);
         adapter.setPlayClick(new RlvAdapter.onPlayClick() {
             @Override
             public void onPlayclick(int position, RelativeLayout image, String videosrc) {
+
                 image.setVisibility(View.GONE);
                 if (player.isPlaying() && lastPostion == position) {
                     return;
@@ -127,8 +132,9 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
                 player.showView(R.id.adapter_player_control);
                 //player.release();
                 frameLayout.addView(player);
+                Log.e("videosrc", videosrc +"11111");
 //                player.play(Environment.getExternalStorageDirectory().getPath() + "/oppo.mp4");
-                player.play("http://169.254.1.100/a.flv");
+                player.play(Environment.getExternalStorageDirectory().getPath() + "/oppo.mp4");
                 Toast.makeText(getActivity(), "position:" + position, Toast.LENGTH_SHORT).show();
                 lastPostion = position;
             }
@@ -212,6 +218,7 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
                 if(b){
                     List<RecommendHotBean.ResourceBean> data = recommendHotBean.getResource();
                     adapter.setList(data);
+
                 }
             }
             @Override
