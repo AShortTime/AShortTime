@@ -49,7 +49,6 @@ public class AttenTionActivity extends BaseAvtivity<TestPreseneter> {
                         JSONObject jsonObject=new JSONObject(s);
                         String code = jsonObject.getString("code");
                         if(code.equals("200")){
-                            Log.d("TAG", "onData: 200"+s);
                             AttenTionBean attenTionBean = Constant.GsonToBean(s, AttenTionBean.class);
                             list=new ArrayList<AttenTionBean>();
                             list.add(attenTionBean);
@@ -75,6 +74,8 @@ public class AttenTionActivity extends BaseAvtivity<TestPreseneter> {
 
     }
 
+
+
     @Override
     protected void initUI() {
         attention_text_tishi = (TextView) findViewById(R.id.attention_text_tishi);
@@ -87,7 +88,6 @@ public class AttenTionActivity extends BaseAvtivity<TestPreseneter> {
     protected void initData() {
         Map<String,String> maps=new HashMap<String,String>();
         maps.put("Userid", Utils.getSharedPrefers(AttenTionActivity.this).getString("userId",""));
-        Log.d("TAG", "initData: "+Utils.getSharedPrefers(AttenTionActivity.this).getString("userId",""));
         mPresenter.get("user/myFollow",maps, AttenTionBean.class);
 
     }

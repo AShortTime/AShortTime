@@ -58,9 +58,7 @@ public class SearchForActivity extends BaseAvtivity<TestPreseneter> {
                 try {
                     jsonObject = new JSONObject(s);
                     String code = jsonObject.getString("code");
-
                     if(code.equals("200")){
-                        Log.d("TAG", "on: "+s);
                         IsUtils.Tos(SearchForActivity.this,"关注成功");
                     }else{
                         IsUtils.Tos(SearchForActivity.this,"关注失败");
@@ -68,7 +66,6 @@ public class SearchForActivity extends BaseAvtivity<TestPreseneter> {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
 
             @Override
@@ -97,7 +94,6 @@ public class SearchForActivity extends BaseAvtivity<TestPreseneter> {
                                        Map<String,String> maps=new HashMap<String, String>();
                                        maps.put("UserId",""+Utils.getSharedPrefers(SearchForActivity.this).getString("userId",""));
                                        maps.put("Beuserid",""+bo);
-                                       Log.d("TAH", "ok: "+bo+Utils.getSharedPrefers(SearchForActivity.this).getString("userId",""));
                                        testPreseneter.post("user/addConcern",maps,ClassBean.class);
                                    }else{
                                        IsUtils.Tos(SearchForActivity.this,"请登录!");

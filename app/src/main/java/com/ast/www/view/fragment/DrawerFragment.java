@@ -105,7 +105,6 @@ public class DrawerFragment extends BaseFragment{
         String userSex = sharedPrefers.getString("userSex","男");
         String userSignature = sharedPrefers.getString("userSignature","编辑个性签名");
         String userHead = sharedPrefers.getString("userHead","");
-        Log.d("tag", "InItLogged: "+userName);
         if(!userName.equals("")&&userName!=null){
             drawer_not_logged_in_rela.setVisibility(View.GONE);
 
@@ -141,6 +140,10 @@ public class DrawerFragment extends BaseFragment{
 
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+    }
 
     /**
      * 控件的监听

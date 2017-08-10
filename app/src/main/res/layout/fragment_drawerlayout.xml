@@ -82,7 +82,8 @@
         android:layout_height="wrap_content"
         app:left_image="@mipmap/user_look"
         app:right_image="@mipmap/into_icon"
-        app:text="我的关注"></com.ast.www.constom.UserDrawMoudle>
+        app:text="我的关注"
+        ></com.ast.www.constom.UserDrawMoudle>
 
     <!--<com.ast.www.constom.UserDrawMoudle-->
     <!--android:id="@+id/drawer_Collection"-->

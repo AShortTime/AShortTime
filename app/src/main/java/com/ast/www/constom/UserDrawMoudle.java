@@ -2,6 +2,7 @@ package com.ast.www.constom;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -75,6 +76,7 @@ public class UserDrawMoudle extends RelativeLayout {
      */
     public void setText(String text) {
         mTextView.setText(text);
+        mTextView.setTextColor(Color.BLACK);
     }
 
     /**
