@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_toolbar"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/gray"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:background="@color/gray"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/item_detail_back"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/left_back" />
+        <RadioGroup
+            android:layout_marginLeft="8dp"
+            android:id="@+id/detail_rg"
+            android:gravity="center_vertical"
+            android:layout_toRightOf="@+id/item_detail_back"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:button="@drawable/sclect_detail_top"
+                android:id="@+id/detail_top"
+                android:layout_marginRight="8dp"
+                />
+            <RadioButton
+                android:layout_marginRight="8dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:button="@drawable/sclect_detail_foot"
+                android:id="@+id/detail_foot"
+                />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/share"
+                android:id="@+id/detail_share"
+                />
+
+        </RadioGroup>
+
+
+
+
+        <TextView
+            android:textSize="14sp"
+            android:text="郭凯奇"
+            android:layout_toLeftOf="@+id/user_head_detail"
+            android:id="@+id/user_name_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+             />
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            fresco:placeholderImage="@mipmap/user_head"
+            android:id="@+id/user_head_detail"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            fresco:actualImageScaleType="centerInside"
+            fresco:roundAsCircle="true"
+            fresco:roundingBorderColor="@color/lightslategray"
+            fresco:roundingBorderWidth="1dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
+</android.support.v7.widget.Toolbar>

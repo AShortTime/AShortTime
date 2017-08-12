@@ -38,7 +38,6 @@ public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatAct
     protected   T mPresenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
         if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.KITKAT){
@@ -187,25 +186,7 @@ public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatAct
 
 
 
-    /***************** 双击退出程序 ************************************************/
-    private long exitTime = 0;
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-        if (KeyEvent.KEYCODE_BACK == keyCode) {
-            // 判断是否在两秒之内连续点击返回键，是则退出，否则不退出
-            if (System.currentTimeMillis() - exitTime > 2000) {
-                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
-                // 将系统当前的时间赋值给exitTime
-                exitTime = System.currentTimeMillis();
-            } else {
-                finishAll();
-            }
-            return true;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
     // short吐司
     public void showShort(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();

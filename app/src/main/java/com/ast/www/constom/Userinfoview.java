@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ast.www.R;
+import com.facebook.drawee.view.SimpleDraweeView;
 
 /**
  * 作者:郭凯奇
@@ -23,7 +24,7 @@ public class Userinfoview extends RelativeLayout {
     private TextView time_;
     private TextView user_name;
     private RelativeLayout user_info;
-    private ImageView user_head;
+    private SimpleDraweeView user_head;
     private int userhead;
     private String time;
     private String username;
@@ -59,7 +60,7 @@ public class Userinfoview extends RelativeLayout {
         time_= (TextView) findViewById(R.id.time);
         user_name= (TextView) findViewById(R.id.user_name);
         user_info= (RelativeLayout) findViewById(R.id.user_info);
-        user_head= (ImageView) findViewById(R.id.user_head);
+        user_head= (SimpleDraweeView) findViewById(R.id.user_head);
 
 
         //将从资源文件中加载的属性设置给子控件
@@ -67,8 +68,6 @@ public class Userinfoview extends RelativeLayout {
             setTime(time);
         if (!TextUtils.isEmpty(username))
             setUsername(username);
-        setUserhead(userhead);
-
     }
 
     /**
@@ -85,8 +84,8 @@ public class Userinfoview extends RelativeLayout {
     /**
      * 设置图片
      */
-    public void setUserhead(int src) {
-        user_head.setImageResource(src);
+    public void setUserhead(String uri) {
+        user_head.setImageURI(uri);
     }
 
     /**

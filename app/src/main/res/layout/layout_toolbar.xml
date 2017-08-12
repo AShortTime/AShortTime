@@ -12,9 +12,9 @@
         <com.ast.www.constom.CircleImageView
             android:id="@+id/home_circleView"
             android:layout_centerVertical="true"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:src="@mipmap/raw_1499936862"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/user_head"
             />
         <TextView
             android:id="@+id/home_title"
@@ -30,8 +30,8 @@
             android:layout_centerVertical="true"
             android:paddingRight="10dp"
             android:src="@mipmap/raw_1500034665"
-            android:layout_width="35dp"
-            android:layout_height="35dp" />
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
     </RelativeLayout>
 
 </android.support.v7.widget.Toolbar>

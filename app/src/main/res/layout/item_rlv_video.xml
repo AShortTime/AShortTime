@@ -66,7 +66,7 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/adapter_super_video_iv_cover"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="210dp"
                 android:background="#30000000"
                 android:scaleType="fitXY"
                 fresco:placeholderImage="@mipmap/ic_launcher" />
@@ -101,7 +101,8 @@
                 android:text="04:33"
                 android:textColor="@android:color/white"
                 android:textSize="10sp" />
-            <include   layout="@layout/item_top_foot2" android:id="@+id/aaa"/>
+            <include
+                layout="@layout/item_top_foot2" android:id="@+id/top_foot2"/>
         </RelativeLayout>
     </RelativeLayout>
 

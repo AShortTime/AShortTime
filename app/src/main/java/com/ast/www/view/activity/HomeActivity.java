@@ -4,11 +4,13 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
@@ -209,5 +211,24 @@ public class HomeActivity extends BaseAvtivity  implements View.OnClickListener,
                 startActivity(new Intent(this,SubmitActivity.class));
                 break;
         }
+    }
+    /***************** 双击退出程序 ************************************************/
+    private long exitTime = 0;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (KeyEvent.KEYCODE_BACK == keyCode) {
+            // 判断是否在两秒之内连续点击返回键，是则退出，否则不退出
+            if (System.currentTimeMillis() - exitTime > 2000) {
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                // 将系统当前的时间赋值给exitTime
+                exitTime = System.currentTimeMillis();
+            } else {
+                finishAll();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

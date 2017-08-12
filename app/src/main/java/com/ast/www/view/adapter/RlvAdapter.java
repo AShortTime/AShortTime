@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,9 +35,9 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     //图片类型
     public final static int TYPE_IMAGE = 3;
     //视频类型
-    public final static int TYPE_VIDEO = 2;
+    public final static int TYPE_VIDEO = 1;
 
-    public final static int TYPE_JOKE = 1;
+    public final static int TYPE_JOKE = 2;
 
     private OnItemClickListener onItemClickListener;
     private Context context;
@@ -95,31 +96,61 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        int itemViewType = getItemViewType(position);
+        Log.e("itemViewType", itemViewType+"11111" );
         switch (getItemViewType(position)) {
             case TYPE_IMAGE:
                 onItemEventClick(holder);
+
                 ImageHolder imageh = (ImageHolder) holder;
-//                imageh.userinfoview.setTime("段子");
-                RecommendHotBean.ResourceBean.UserBean user1 = list.get(position).getUser();
-                imageh.userinfoview.setUsername(user1.getUserName());
+//                设置用户信息
+                imageh.userinfoview.setUsername(list.get(position).getUser().getUserName());
+                imageh.userinfoview.setTime(list.get(position).getUptime());
+                if (!TextUtils.isEmpty(list.get(position).getUser().getUserHead())) {
+                    imageh.userinfoview.setUserhead(list.get(position).getUser().getUserHead());
+                }
+                //设置内容
+                imageh.itemtext.setText(list.get(position).getDescription());
                 imageh.image.setImageURI(list.get(position).getPictureSrc());
+
+
+
                 break;
             case TYPE_VIDEO:
                 onItemEventClick(holder);
                 VideoHolder vh = (VideoHolder) holder;
-//                vh.userinfoview.setTime("视频");
-                if (!list.get(position).getPictureSrc().equals("")) {
+
+                //设置用户信息
+                vh.userinfoview.setUsername(list.get(position).getUser().getUserName());
+                vh.userinfoview.setTime(list.get(position).getUptime());
+                if (!TextUtils.isEmpty(list.get(position).getUser().getUserHead())) {
+                    vh.userinfoview.setUserhead(list.get(position).getUser().getUserHead());
+                }
+
+                //设置内容
+                vh.itemtext.setText(list.get(position).getDescription());
+                if (!TextUtils.isEmpty(list.get(position).getPictureSrc())) {
                     SimpleDraweeView draweeView = (SimpleDraweeView) vh.rlayPlayerControl.findViewById(R.id.adapter_super_video_iv_cover);
                     draweeView.setImageURI(list.get(position).getPictureSrc());
                 }
-                vh.update(position, list.get(position).getSrc());
+                String src = list.get(position).getSrc();
+                vh.update(position,src);
                 vh.initListiner(position);
                 break;
             case TYPE_JOKE:
                 onItemEventClick(holder);
                 ImageHolder jokeh = (ImageHolder) holder;
-//                jokeh.userinfoview.setTime("段子");
+//                设置用户信息
+                jokeh.userinfoview.setUsername(list.get(position).getUser().getUserName());
+                jokeh.userinfoview.setTime(list.get(position).getUptime());
+                if (!TextUtils.isEmpty(list.get(position).getUser().getUserHead())) {
+                    jokeh.userinfoview.setUserhead(list.get(position).getUser().getUserHead());
+                }
+
+//                设置内容
                 jokeh.image.setVisibility(View.GONE);
+                jokeh.itemtext.setText(list.get(position).getContent());
+
                 break;
         }
     }
@@ -129,7 +160,8 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickListener.OnItemClick(v, position);
+                RecommendHotBean.ResourceBean resourceBean = list.get(position);
+                onItemClickListener.OnItemClick(v, position,resourceBean);
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
@@ -180,10 +212,13 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         FloatingActionButton mshare;
         FloatingActionButton mdelete;
 
+        View foot;
+
         public VideoHolder(View itemView) {
             super(itemView);
             this.mshare = (FloatingActionButton) itemView.findViewById(R.id.share);
             this.mdelete = (FloatingActionButton) itemView.findViewById(R.id.delete);
+            this.foot = itemView.findViewById(R.id.delete);
 
 
             this.userinfoview = (Userinfoview) itemView.findViewById(R.id.video_user_info);
@@ -239,7 +274,7 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 //条目监听
     public interface OnItemClickListener {
-        void OnItemClick(View view, int position);
+        void OnItemClick(View view, int position,RecommendHotBean.ResourceBean resourceBean);
 
         void OnItemLongClick(View view, int position);
     }
