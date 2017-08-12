@@ -67,7 +67,6 @@ public class SearchForAdapter extends BaseAdapter {
         viewHolder.it_searchfor_but_guanzhu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("TAH", "onClick: "+list.get(0).getUser().get(position).getUserId()+list.get(0).getUser().get(position).getUserName());
                  onattention.ok(list.get(0).getUser().get(position).getUserId());
             }
         });

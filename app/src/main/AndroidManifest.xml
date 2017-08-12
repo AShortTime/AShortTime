@@ -75,6 +75,8 @@
         <activity android:name=".view.activity.SetUpActivity"></activity>
         <!-- 我的文件页面 -->
         <activity android:name=".view.activity.MyFileActivity"></activity>
+        <!-- 个人页面 -->
+        <activity android:name=".view.activity.UserPageActivity"></activity>
 
 
         <activity

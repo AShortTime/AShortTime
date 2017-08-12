@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -105,7 +106,6 @@ public class DrawerFragment extends BaseFragment{
         String userSex = sharedPrefers.getString("userSex","男");
         String userSignature = sharedPrefers.getString("userSignature","编辑个性签名");
         String userHead = sharedPrefers.getString("userHead","");
-        Log.d("tag", "InItLogged: "+userName);
         if(!userName.equals("")&&userName!=null){
             drawer_not_logged_in_rela.setVisibility(View.GONE);
 
@@ -117,7 +117,15 @@ public class DrawerFragment extends BaseFragment{
             }
             user_name.setText(userName);
             if(userSex.equals("男")){
-              user_sex.setBackgroundResource(R.mipmap.sexnan);
+                DisplayMetrics dm = getResources().getDisplayMetrics();
+                int width = dm.widthPixels;
+                int height = dm.heightPixels;
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width,height);
+                params.width=80;
+                params.height=80;
+                params.setMargins(650,190,0,0);
+                user_sex.setLayoutParams(params);
+                user_sex.setBackgroundResource(R.mipmap.sexnan);
             }
             user_text.setText(userSignature);
             circleImageView.setVisibility(View.VISIBLE);
@@ -141,6 +149,10 @@ public class DrawerFragment extends BaseFragment{
 
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+    }
 
     /**
      * 控件的监听

@@ -1,5 +1,6 @@
 package com.ast.www.view.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -49,14 +50,23 @@ public class AttenTionActivity extends BaseAvtivity<TestPreseneter> {
                         JSONObject jsonObject=new JSONObject(s);
                         String code = jsonObject.getString("code");
                         if(code.equals("200")){
-                            Log.d("TAG", "onData: 200"+s);
                             AttenTionBean attenTionBean = Constant.GsonToBean(s, AttenTionBean.class);
                             list=new ArrayList<AttenTionBean>();
                             list.add(attenTionBean);
                             if(list!=null&&list.get(0).getUser()!=null&&list.get(0).getUser().size()>=1) {
                                 attention_text_tishi.setVisibility(View.GONE);
                                 recyclerView.setVisibility(View.VISIBLE);
-                                AttenTionAdapter attenTionAdapter = new AttenTionAdapter(list, AttenTionActivity.this);
+                                AttenTionAdapter attenTionAdapter = new AttenTionAdapter(list, AttenTionActivity.this, new AttenTionAdapter.OnItemClickLitener() {
+                                    @Override
+                                    public void onItemClick(View view, int position) {
+                                        Intent it=new Intent(AttenTionActivity.this,UserPageActivity.class);
+                                        startActivity(it);
+                                    }
+                                    @Override
+                                    public void onItemLongClick(View view, int position) {
+
+                                    }
+                                });
                                 recyclerView.setAdapter(attenTionAdapter);
                             }
                         }else{
@@ -75,6 +85,8 @@ public class AttenTionActivity extends BaseAvtivity<TestPreseneter> {
 
     }
 
+
+
     @Override
     protected void initUI() {
         attention_text_tishi = (TextView) findViewById(R.id.attention_text_tishi);
@@ -87,7 +99,6 @@ public class AttenTionActivity extends BaseAvtivity<TestPreseneter> {
     protected void initData() {
         Map<String,String> maps=new HashMap<String,String>();
         maps.put("Userid", Utils.getSharedPrefers(AttenTionActivity.this).getString("userId",""));
-        Log.d("TAG", "initData: "+Utils.getSharedPrefers(AttenTionActivity.this).getString("userId",""));
         mPresenter.get("user/myFollow",maps, AttenTionBean.class);
 
     }

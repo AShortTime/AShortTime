@@ -18,7 +18,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="35dp"
-            android:src="@mipmap/raw_1499936862"
+            android:src="@mipmap/user_head"
             android:visibility="gone"
             />
 
@@ -27,11 +27,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/user_text"
-            android:layout_toRightOf="@+id/user_text"
+            android:layout_toRightOf="@id/user_head"
+            android:layout_marginLeft="20dp"
             android:text="椰果奶茶"
             android:textSize="20sp"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            />
 
         <ImageView
             android:id="@+id/user_sex"
@@ -50,12 +51,14 @@
             android:layout_below="@+id/user_head"
             android:layout_marginTop="5dp"
             android:text="编辑个性签名"
-            android:visibility="gone"/>
+            android:visibility="gone"
+          />
        <RelativeLayout
            android:id="@+id/drawer_Not_logged_in_rela"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
-           android:layout_centerHorizontal="true">
+           android:layout_centerHorizontal="true"
+           >
            <ImageView
                android:id="@+id/drawer_Not_logged_in_image"
                android:layout_width="50dp"
@@ -82,7 +85,8 @@
         android:layout_height="wrap_content"
         app:left_image="@mipmap/user_look"
         app:right_image="@mipmap/into_icon"
-        app:text="我的关注"></com.ast.www.constom.UserDrawMoudle>
+        app:text="我的关注"
+        ></com.ast.www.constom.UserDrawMoudle>
 
     <!--<com.ast.www.constom.UserDrawMoudle-->
     <!--android:id="@+id/drawer_Collection"-->
