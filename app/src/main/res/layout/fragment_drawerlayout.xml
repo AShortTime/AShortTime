@@ -18,7 +18,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="35dp"
-            android:src="@mipmap/raw_1499936862"
+            android:src="@mipmap/user_head"
             android:visibility="gone"
             />
 

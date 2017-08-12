@@ -1,5 +1,6 @@
 package com.ast.www.view.activity;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -55,7 +56,17 @@ public class AttenTionActivity extends BaseAvtivity<TestPreseneter> {
                             if(list!=null&&list.get(0).getUser()!=null&&list.get(0).getUser().size()>=1) {
                                 attention_text_tishi.setVisibility(View.GONE);
                                 recyclerView.setVisibility(View.VISIBLE);
-                                AttenTionAdapter attenTionAdapter = new AttenTionAdapter(list, AttenTionActivity.this);
+                                AttenTionAdapter attenTionAdapter = new AttenTionAdapter(list, AttenTionActivity.this, new AttenTionAdapter.OnItemClickLitener() {
+                                    @Override
+                                    public void onItemClick(View view, int position) {
+                                        Intent it=new Intent(AttenTionActivity.this,UserPageActivity.class);
+                                        startActivity(it);
+                                    }
+                                    @Override
+                                    public void onItemLongClick(View view, int position) {
+
+                                    }
+                                });
                                 recyclerView.setAdapter(attenTionAdapter);
                             }
                         }else{
