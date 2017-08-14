@@ -9,7 +9,7 @@
         android:id="@+id/fmm"
         android:layout_width="wrap_content"
         android:layout_height="35dp"
-        android:layout_alignParentBottom="true"
+        android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         app:fmm_button_interval="5dp"
         app:fmm_floating_direction="left"
@@ -22,15 +22,15 @@
             app:backgroundTint="@color/appBlue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/share"
+            android:src="@mipmap/share_mall"
             app:fabSize="mini" />
 
         <android.support.design.widget.FloatingActionButton
-            android:id="@+id/delete"
+            android:id="@+id/favorite"
             app:backgroundTint="@color/appBlue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/delete"
+            android:src="@mipmap/favorite"
             app:fabSize="mini" />
 
     </com.cpacm.FloatingMusicMenu>

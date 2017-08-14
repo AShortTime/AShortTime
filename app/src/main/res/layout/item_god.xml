@@ -13,7 +13,6 @@
             android:id="@+id/god_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="厉害了我的666"
             android:textColor="@color/appBlue"
             />
         <TextView
@@ -28,10 +27,10 @@
             android:id="@+id/god_context"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="我被人杀害了,抛尸大海,三年没有被打捞起来,知道为什么么,因为我尸体都不浮,就服你"
             />
     </LinearLayout>
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">

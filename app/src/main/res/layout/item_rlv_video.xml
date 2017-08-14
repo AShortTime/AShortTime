@@ -4,20 +4,23 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="10dp">
+    android:layout_marginTop="16dp"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="10dp"
-        >
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
 
         <com.ast.www.constom.Userinfoview
             android:id="@+id/video_user_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             app:user_head="@mipmap/user_head"
             app:user_name="郭凯奇"></com.ast.www.constom.Userinfoview>
 
@@ -29,10 +32,12 @@
     </LinearLayout>
 
     <TextView
-        android:layout_marginBottom="10dp"
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_marginTop="5dp"
         android:text="天气美美的,适合郊游"
         android:textSize="16sp" />
@@ -40,7 +45,9 @@
     <RelativeLayout
         android:id="@+id/adapter_super_video_layout"
         android:layout_width="match_parent"
-        android:layout_height="210dp">
+        android:layout_height="200dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
 
         <FrameLayout
             android:id="@+id/adapter_super_video"
@@ -66,7 +73,7 @@
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/adapter_super_video_iv_cover"
                 android:layout_width="match_parent"
-                android:layout_height="210dp"
+                android:layout_height="200dp"
                 android:background="#30000000"
                 android:scaleType="fitXY"
                 fresco:placeholderImage="@mipmap/ic_launcher" />
@@ -101,15 +108,28 @@
                 android:text="04:33"
                 android:textColor="@android:color/white"
                 android:textSize="10sp" />
+
             <include
-                layout="@layout/item_top_foot2" android:id="@+id/top_foot2"/>
+                android:id="@+id/top_foot2"
+                layout="@layout/item_top_foot2"
+                android:visibility="gone" />
         </RelativeLayout>
     </RelativeLayout>
 
-    <include
-        android:visibility="gone"
-        android:id="@+id/tf"
-        layout="@layout/item_top_foot" />
-    <include layout="@layout/item_god"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <include
+            android:id="@+id/tf"
+            layout="@layout/item_top_foot" />
+
+        <include
+            android:id="@+id/item_god"
+            layout="@layout/item_god" />
+    </LinearLayout>
+
 
 </LinearLayout>

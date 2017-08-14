@@ -60,6 +60,24 @@ public class RecommendHotBean implements Serializable{
          * user : {"userHead":"http://169.254.1.100/ic_ss.jpg","userId":32,"userName":"baobao","userPassword":"123456","userPhone":"13484741060","userSex":"男"}
          * userId : 0
          */
+        private boolean isnice=false;
+        private boolean isbade=false;
+
+        public boolean isbade() {
+            return isbade;
+        }
+
+        public void setIsbade(boolean isbade) {
+            this.isbade = isbade;
+        }
+
+        public void setIsnice(boolean isnice) {
+            this.isnice = isnice;
+        }
+
+        public boolean isnice() {
+            return isnice;
+        }
 
         private String badKey;
         private int badNum;

@@ -17,6 +17,9 @@ import com.ast.www.model.bean.RecommendHotBean;
 import com.ast.www.presenter.HomePresenter;
 import com.ast.www.view.adapter.RlvAdapter;
 import com.ast.www.view.iview.IBaseView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.superplayer.library.SuperPlayer;
 import com.superplayer.library.SuperPlayerManage;
 import com.superplayer.library.mediaplayer.IjkVideoView;
@@ -33,11 +36,11 @@ import java.util.List;
 
 public class JokeFragment extends BaseFragment<HomePresenter> {
     private RecyclerView mrlv;
-    private SuperPlayer player;
     private int lastPostion = -1;
     private int postion = -1;
     private LinearLayoutManager llm;
     private RlvAdapter adapter;
+    private SmartRefreshLayout smartl;
 
     /**
      * 该抽象方法就是 onCreateView中需要的layoutID
@@ -65,11 +68,7 @@ public class JokeFragment extends BaseFragment<HomePresenter> {
 
     @Override
     protected void initView(View view, Bundle savedInstanceState) {
-        player = SuperPlayerManage.getSuperManage().initialize(getActivity());
-        player.setShowTopControl(false).setSupportGesture(false);
-        player.setShowTopControl(false);
-        player.setgkq(false);
-
+        smartl = (SmartRefreshLayout) view.findViewById(R.id.smartLayout);
         mrlv = (RecyclerView) view.findViewById(R.id.rlv);
         llm = new LinearLayoutManager(getActivity());
         mrlv.setLayoutManager(llm);
@@ -122,10 +121,15 @@ public class JokeFragment extends BaseFragment<HomePresenter> {
                     List<RecommendHotBean.ResourceBean> data = recommendHotBean.getResource();
                     adapter.setList(data);
                 }
+                if( smartl.isRefreshing()){
+                    smartl.finishRefresh();
+                }
             }
             @Override
             public void onError(Throwable throwable) {
-
+                if (smartl.isRefreshing()) {
+                    smartl.finishRefresh();
+                }
             }
         });
     }
@@ -137,35 +141,16 @@ public class JokeFragment extends BaseFragment<HomePresenter> {
     protected void initListener() {
         //设置条目监听
         setItemOnclick(adapter);
-    }
+        smartl.setOnRefreshListener(new OnRefreshLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                initData();
+            }
 
-    @Override
-    public void onPause() {
-        Log.e("11","onpause" );
-
-        if (player != null) {
-            player.onPause();
-        }
-        super.onPause();
-    }
-
-    @Override
-    public void onResume() {
-        if (player != null) {
-            player.onResume();
-        }
-
-        super.onResume();
-    }
-
-    @Override
-    public void onDestroy() {
-        if (player != null) {
-            player.onDestroy();
-        }
-        if (mPresenter != null) {
-            mPresenter.detach();
-        }
-        super.onDestroy();
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                initData();
+            }
+        });
     }
 }

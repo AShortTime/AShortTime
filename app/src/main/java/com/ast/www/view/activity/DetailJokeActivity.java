@@ -19,14 +19,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ast.www.R;
+import com.ast.www.model.bean.Codebean;
 import com.ast.www.model.bean.DetailCommentBean;
 import com.ast.www.model.bean.RecommendHotBean;
+import com.ast.www.model.util.Utils;
 import com.ast.www.presenter.HomePresenter;
 import com.ast.www.view.adapter.DetailRlvadapter;
 import com.ast.www.view.iview.IBaseView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.superplayer.library.SuperPlayer;
 import com.superplayer.library.SuperPlayerManage;
+
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 
@@ -37,7 +41,7 @@ import java.util.HashMap;
  * Text:
  */
 
-public class DetailActivity extends BaseAvtivity<HomePresenter> implements View.OnClickListener, SuperPlayer.OnNetChangeListener {
+public class DetailJokeActivity extends BaseAvtivity<HomePresenter> implements View.OnClickListener{
 
     private SuperPlayer player;
     private ImageView detailback;
@@ -60,6 +64,8 @@ public class DetailActivity extends BaseAvtivity<HomePresenter> implements View.
     private int i = 0;
     private FrameLayout frameLayout;
     private DetailRlvadapter adapter;
+    private SimpleDraweeView image;
+    private TextView joke;
 
     @Override
     protected void createmPresenter() {
@@ -70,14 +76,14 @@ public class DetailActivity extends BaseAvtivity<HomePresenter> implements View.
 
     @Override
     protected void initUI() {
-        //视频的相关控件
-//        player = (SuperPlayer) findViewById(R.id.super_player);\
-        detailpicture = (SimpleDraweeView) findViewById(R.id.detail_picture);
-        detailpicture.setImageURI(resourceBean.getPictureSrc());
-        rl = (RelativeLayout) findViewById(R.id.adapter_super_video_layout);
-        playercontrol = (RelativeLayout) findViewById(R.id.adapter_player_control);
 
-
+        joke = (TextView) findViewById(R.id.detail_joke);
+        image = (SimpleDraweeView) findViewById(R.id.detail_image);
+        if(resourceBean.getDictionaryValue().equals("2")){
+            image.setVisibility(View.GONE);
+        }
+        joke.setText(resourceBean.getContent());
+        image.setImageURI(resourceBean.getSrc());
         //toolbar 上的按钮们
 
         detailback = (ImageView) findViewById(R.id.item_detail_back);
@@ -102,8 +108,7 @@ public class DetailActivity extends BaseAvtivity<HomePresenter> implements View.
         detiallooknum.setText(resourceBean.getPlaytimes());
         detailtime = (TextView) findViewById(R.id.detail_time);
         detailtime.setText(resourceBean.getUptime());
-        frameLayout = (FrameLayout) findViewById(R.id.adapter_super_video);
-        frameLayout.removeAllViews();
+
         //评论
         detailrlv = (RecyclerView) findViewById(R.id.detail_rlv);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -132,31 +137,39 @@ public class DetailActivity extends BaseAvtivity<HomePresenter> implements View.
             break;
             //发表评论
             case R.id.detail_commit: {
-                if(!TextUtils.isEmpty(detailedit.getText())){
-                    HomePresenter commit = new HomePresenter();
-                    commit.attach(new IBaseView() {
-                        @Override
-                        public void onData(Object o) {
-                            showShort("评论成功");
-                            detailedit.setText("");
-                            closeInputMethod();
-                        }
 
-                        @Override
-                        public void onError(Throwable throwable) {
-                            showShort("评论失败,未知错误");
-                        }
-                    });
-                    HashMap<String, String> map = new HashMap<>();
-                    map.put("commentUserId", "1");
-                    map.put("commentContent", detailedit.getText().toString());
-                    map.put("commentDictionaryValue", resourceBean.getDictionaryValue());
-                    map.put("commentCharacterPictureMediaId", resourceBean.getId() + "");
-                    map.put("commentPid", "1");
-                    commit.post("comment/addComment", map, null);
-                    initData();
+                closeInputMethod();
+                if(!TextUtils.isEmpty(Utils.getSharedPrefers(this).getString("userId",""))) {
+                    if (!TextUtils.isEmpty(detailedit.getText())) {
+                        HomePresenter commit = new HomePresenter();
+                        commit.attach(new IBaseView() {
+                            @Override
+                            public void onData(Object o) {
+                                detailedit.setText(null);
+                                showShort("评论成功");
+                                closeInputMethod();
+                                initData();
+                            }
+
+                            @Override
+                            public void onError(Throwable throwable) {
+                                showShort("评论失败,未知错误");
+                            }
+                        });
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("commentUserId", "1");
+                        map.put("commentContent", detailedit.getText().toString());
+                        map.put("commentDictionaryValue", resourceBean.getDictionaryValue());
+                        map.put("commentCharacterPictureMediaId", resourceBean.getId() + "");
+                        map.put("commentPid", "1");
+                        commit.post("comment/addComment", map, Codebean.class);
+
+                    } else {
+                        showShort("评论为空");
+                    }
                 }else{
-                    showShort("评论为空");
+                    showShort("请先登录");
+                    openActivity(LogInActivity.class);
                 }
             }
             break;
@@ -192,32 +205,6 @@ public class DetailActivity extends BaseAvtivity<HomePresenter> implements View.
 
     @Override
     protected void initListener() {
-        player = SuperPlayerManage.getSuperManage().initialize(this);
-        player.setShowTopControl(false).setSupportGesture(false);
-        player.setgkq(true);
-        player.setScaleType(SuperPlayer.SCALETYPE_FITXY);
-        player.setPlayerWH(0, player.getMeasuredHeight());//设置竖屏的时候屏幕的高度，如果不设置会切换后按照16:9的高度重置
-        player.setNetChangeListener(true)//设置监听手机网络的变化
-                .setOnNetChangeListener(this)
-                .onPrepared(new SuperPlayer.OnPreparedListener() {
-                    @Override
-                    public void onPrepared() {
-                        playercontrol.setVisibility(View.GONE);
-                    }
-                });
-        rl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                playercontrol.setVisibility(View.GONE);
-                if (player.getParent() != null) {
-                    ((ViewGroup) player.getParent()).removeAllViews();
-                    frameLayout.removeAllViews();
-                }
-                frameLayout.removeAllViews();
-                frameLayout.addView(player);
-                player.play(resourceBean.getSrc());
-            }
-        });
 
         detailback.setOnClickListener(this);
         detailshare.setOnClickListener(this);
@@ -255,67 +242,7 @@ public class DetailActivity extends BaseAvtivity<HomePresenter> implements View.
     // 1视频 2文字 3图片
     @Override
     public int getLayout() {
-        return R.layout.activity_video_detail;
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (player != null) {
-            player.onPause();
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (player != null) {
-            player.onResume();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (player != null) {
-            player.onDestroy();
-        }
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if (player != null) {
-            player.onConfigurationChanged(newConfig);
-        }
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (player != null && player.onBackPressed()) {
-            return;
-        }
-        super.onBackPressed();
-    }
-
-    @Override
-    public void onWifi() {
-        Toast.makeText(this, "当前网络环境是WIFI", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onMobile() {
-        Toast.makeText(this, "当前网络环境是手机网络", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onDisConnect() {
-        Toast.makeText(this, "网络链接断开", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onNoAvailable() {
-        Toast.makeText(this, "无网络链接", Toast.LENGTH_SHORT).show();
+        return R.layout.activity_image_detail;
     }
 
 }

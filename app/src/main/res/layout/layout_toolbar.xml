@@ -29,7 +29,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:paddingRight="10dp"
-            android:src="@mipmap/raw_1500034665"
+            android:src="@mipmap/post"
             android:layout_width="32dp"
             android:layout_height="32dp" />
     </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.ast.www.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
@@ -14,9 +15,14 @@ import android.widget.Toast;
 
 import com.ast.www.R;
 import com.ast.www.model.bean.RecommendHotBean;
+import com.ast.www.model.util.Utils;
 import com.ast.www.presenter.HomePresenter;
+import com.ast.www.view.activity.DetailVideoActivity;
 import com.ast.www.view.adapter.RlvAdapter;
 import com.ast.www.view.iview.IBaseView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.superplayer.library.SuperPlayer;
 import com.superplayer.library.SuperPlayerManage;
 import com.superplayer.library.mediaplayer.IjkVideoView;
@@ -38,6 +44,7 @@ public class RecommendCollectFragment extends BaseFragment<HomePresenter> {
     private int postion = -1;
     private LinearLayoutManager llm;
     private RlvAdapter adapter;
+    SmartRefreshLayout smartl;
 
     /**
      * 该抽象方法就是 onCreateView中需要的layoutID
@@ -69,14 +76,14 @@ public class RecommendCollectFragment extends BaseFragment<HomePresenter> {
         player.setShowTopControl(false).setSupportGesture(false);
         player.setShowTopControl(false);
         player.setgkq(false);
-
+        smartl = (SmartRefreshLayout) view.findViewById(R.id.smartLayout);
         mrlv = (RecyclerView) view.findViewById(R.id.rlv);
         llm = new LinearLayoutManager(getActivity());
         mrlv.setLayoutManager(llm);
         adapter = new RlvAdapter(getActivity());
         mrlv.setAdapter(adapter);
 
-        mrlv.addItemDecoration( new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        mrlv.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
     }
 
@@ -86,7 +93,9 @@ public class RecommendCollectFragment extends BaseFragment<HomePresenter> {
 
             @Override
             public void OnItemClick(View view, int position, RecommendHotBean.ResourceBean resourceBean) {
-
+                Intent intent = new Intent(getActivity(), DetailVideoActivity.class);
+                intent.putExtra("detail", resourceBean);
+                startActivity(intent);
 
             }
 
@@ -240,9 +249,12 @@ public class RecommendCollectFragment extends BaseFragment<HomePresenter> {
      */
     @Override
     protected void initData() {
-//        http://169.254.1.100/quarter/user/findHot;
+//        http://192.168.1.100/quarter/collection/selectcollection?userId=3
         HashMap<String, String> map = new HashMap<>();
-        mPresenter.get("user/findHot",map,RecommendHotBean.class);
+        String id = Utils.getSharedPrefers(getActivity()).getString("userId", "3");
+        Log.e("idididi", id);
+        map.put("userId", id);
+        mPresenter.get("collection/selectcollection", map, RecommendHotBean.class);
 
     }
 
@@ -251,19 +263,24 @@ public class RecommendCollectFragment extends BaseFragment<HomePresenter> {
      */
     @Override
     protected void createmPresenter() {
-        mPresenter=new HomePresenter();
+        mPresenter = new HomePresenter();
         mPresenter.attach(new IBaseView<RecommendHotBean>() {
             @Override
             public void onData(RecommendHotBean recommendHotBean) {
                 boolean b = recommendHotBean.getCode().equals("200");
-                if(b){
+                if (b & recommendHotBean.getResource().size() != 0) {
                     List<RecommendHotBean.ResourceBean> data = recommendHotBean.getResource();
                     adapter.setList(data);
+
                 }
+                smartl.finishRefresh();
             }
+
             @Override
             public void onError(Throwable throwable) {
-
+                if (smartl.isRefreshing()) {
+                    smartl.finishRefresh();
+                }
             }
         });
     }
@@ -277,11 +294,22 @@ public class RecommendCollectFragment extends BaseFragment<HomePresenter> {
         setItemOnclick(adapter);
         //设置播放器播放
         setSuperplayer(adapter);
+        smartl.setOnRefreshListener(new OnRefreshLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                initData();
+            }
+
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                initData();
+            }
+        });
     }
 
     @Override
     public void onPause() {
-        Log.e("11","onpause" );
+        Log.e("11", "onpause");
 
         if (player != null) {
             player.onPause();

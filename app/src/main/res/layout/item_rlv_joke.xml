@@ -4,18 +4,20 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="8dp">
+    android:layout_marginTop="16dp"
+    android:background="@color/white"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginBottom="8dp"
-        >
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
 
         <com.ast.www.constom.Userinfoview
-
+            android:layout_marginTop="8dp"
             android:id="@+id/joke_user_info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -31,12 +33,16 @@
 
 
     <TextView
-        android:layout_marginBottom="8dp"
+
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="近日，山东德州一男子对理发师做的头型不满意，双方发生争吵。然后，该男子每天往理发店门口扔一坨大便。店老板忍无可忍选择报警。男子被行政拘留9天，并处500元罚款。"
-        android:textSize="14sp" />
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="5dp"
+        android:text="头型500元罚款。"
+        android:textSize="16sp" />
     <!--<GridView-->
     <!--android:visibility="visible"-->
     <!--android:numColumns="3"-->
@@ -44,15 +50,28 @@
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content" />-->
     <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/iamge_fffff"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:id="@+id/joke_image"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:background="#30000000"
         android:scaleType="fitXY"
-        />
+        fresco:placeholderImage="@mipmap/raw_1499936862" />
 
-    <include
-        android:id="@+id/tf"
-        layout="@layout/item_top_foot" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <include
+            android:id="@+id/tf"
+            layout="@layout/item_top_foot" />
+
+        <include
+            android:id="@+id/item_god"
+            layout="@layout/item_god" />
+    </LinearLayout>
+
 
 </LinearLayout>

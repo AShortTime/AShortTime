@@ -79,6 +79,7 @@ public class VideoFragment extends BaseFragment {
 
     }
 
+
     /**
      * 关联presenter
      */

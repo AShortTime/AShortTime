@@ -2,9 +2,7 @@ package com.ast.www.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,12 +11,17 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 import com.ast.www.R;
 import com.ast.www.model.bean.RecommendHotBean;
 import com.ast.www.presenter.HomePresenter;
-import com.ast.www.view.activity.DetailActivity;
+import com.ast.www.view.activity.DetailJokeActivity;
+import com.ast.www.view.activity.DetailVideoActivity;
 import com.ast.www.view.adapter.RlvAdapter;
 import com.ast.www.view.iview.IBaseView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.superplayer.library.SuperPlayer;
 import com.superplayer.library.SuperPlayerManage;
 import com.superplayer.library.mediaplayer.IjkVideoView;
@@ -34,7 +37,7 @@ import java.util.List;
  * Time by 2017/7/20 0020
  */
 
-public class RecommendHotFragment extends BaseFragment<HomePresenter>{
+public class RecommendHotFragment extends BaseFragment<HomePresenter> {
 
     private RecyclerView mrlv;
     private SuperPlayer player;
@@ -42,6 +45,7 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
     private int postion = -1;
     private LinearLayoutManager llm;
     private RlvAdapter adapter;
+    private SmartRefreshLayout smartl;
 
     /**
      * 该抽象方法就是 onCreateView中需要的layoutID
@@ -74,22 +78,36 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
         player.setgkq(false);
 
         mrlv = (RecyclerView) view.findViewById(R.id.rlv);
+        smartl = (SmartRefreshLayout) view.findViewById(R.id.smartLayout);
         llm = new LinearLayoutManager(getActivity());
         mrlv.setLayoutManager(llm);
         adapter = new RlvAdapter(getActivity());
         mrlv.setAdapter(adapter);
 
-        mrlv.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
+        //mrlv.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
 
     }
 
     private void setItemOnclick(RlvAdapter adapter) {
         adapter.setOnItemClickListener(new RlvAdapter.OnItemClickListener() {
             @Override
-            public void OnItemClick(View view, int position, RecommendHotBean.ResourceBean resourceBean) {
-                Intent intent=new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra("detail",resourceBean);
-                startActivity(intent);
+            public void OnItemClick(View view, int position, RecommendHotBean.ResourceBean resourceBean)
+            {
+                if(resourceBean.getDictionaryValue().equals("1")){
+                    Intent intent = new Intent(getActivity(), DetailVideoActivity.class);
+                    intent.putExtra("detail", resourceBean);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(getActivity(), DetailJokeActivity.class);
+                    intent.putExtra("detail", resourceBean);
+                    startActivity(intent);
+                }
+
+                if (player != null) {
+                    player.stop();
+                    player.release();
+                    player.showView(R.id.adapter_player_control);
+                }
             }
 
             @Override
@@ -104,7 +122,7 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
 //        player = SuperPlayerManage.getSuperManage().initialize(getActivity());
         //player.setShowTopControl(false).setSupportGesture(false);
 //        player.setShowTopControl(false);
-          player.setgkq(false);
+        player.setgkq(false);
 //        player.setFullScreenOnly(false);
         adapter.setPlayClick(new RlvAdapter.onPlayClick() {
             @Override
@@ -132,9 +150,9 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
                 player.showView(R.id.adapter_player_control);
                 //player.release();
                 frameLayout.addView(player);
-                Log.e("videosrc", videosrc +"11111");
+                Log.e("videosrc", videosrc + "11111");
 //                player.play(Environment.getExternalStorageDirectory().getPath() + "/oppo.mp4");
-                player.play(Environment.getExternalStorageDirectory().getPath() + "/oppo.mp4");
+                player.play(videosrc);
                 Toast.makeText(getActivity(), "position:" + position, Toast.LENGTH_SHORT).show();
                 lastPostion = position;
             }
@@ -201,7 +219,7 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
     protected void initData() {
 //        http://169.254.1.100/quarter/user/findHot;
         HashMap<String, String> map = new HashMap<>();
-        mPresenter.get("user/findHot",map,RecommendHotBean.class);
+        mPresenter.get("user/findHot", map, RecommendHotBean.class);
 
     }
 
@@ -210,20 +228,26 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
      */
     @Override
     protected void createmPresenter() {
-        mPresenter=new HomePresenter();
+        mPresenter = new HomePresenter();
         mPresenter.attach(new IBaseView<RecommendHotBean>() {
             @Override
             public void onData(RecommendHotBean recommendHotBean) {
+
                 boolean b = recommendHotBean.getCode().equals("200");
-                if(b){
+                if (b) {
                     List<RecommendHotBean.ResourceBean> data = recommendHotBean.getResource();
                     adapter.setList(data);
-
+                }
+                if (smartl.isRefreshing()) {
+                    smartl.finishRefresh();
                 }
             }
+
             @Override
             public void onError(Throwable throwable) {
-
+                if (smartl.isRefreshing()) {
+                    smartl.finishRefresh();
+                }
             }
         });
     }
@@ -237,11 +261,22 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
         setItemOnclick(adapter);
         //设置播放器播放
         setSuperplayer(adapter);
+        smartl.setOnRefreshListener(new OnRefreshLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                initData();
+            }
+
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                initData();
+            }
+        });
     }
 
     @Override
     public void onPause() {
-        Log.e("11","onpause" );
+        Log.e("11", "onpause");
 
         if (player != null) {
             player.onPause();
@@ -256,7 +291,7 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
         }
 
         super.onResume();
-}
+    }
 
     @Override
     public void onDestroy() {
@@ -267,5 +302,18 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter>{
             mPresenter.detach();
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        if (!isVisibleToUser) {
+            if (player != null) {
+                player.stop();
+                player.release();
+                player.showView(R.id.adapter_player_control);
+            }
+        }
+        super.setUserVisibleHint(isVisibleToUser);
+
     }
 }

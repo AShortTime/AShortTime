@@ -23,13 +23,13 @@ import okhttp3.MultipartBody;
 
 public class HomePresenter extends BasePresenter<IBaseView> {
 
-//get请求
-    public <T> void get(String url, Map<String, String> map, final Class<T> cla) {
+    //get请求
+    public <T> void get(final String url, Map<String, String> map, final Class<T> cla) {
         HttpUtil.get(url, map, new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-                Log.e("评论", s);
-                if(cla!=null){
+                Log.e("presenter_json", url+"=="+s);
+                if (cla != null) {
                     T t = Constant.GsonToBean(s, cla);
                     getiBaseView().onData(t);
                 }
@@ -38,45 +38,48 @@ public class HomePresenter extends BasePresenter<IBaseView> {
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                Log.e("评论错误", throwable.toString());
-                getiBaseView().onError(throwable);
+                Log.e("presenter_throwable",url+"=="+ throwable.toString());
+                if (cla != null) {
+                    getiBaseView().onError(throwable);
+                }
+
             }
         });
     }
 
 
-//post请求
+    //post请求
     public <T> void post(String url, Map<String, String> map, final Class<T> cla) {
         HttpUtil.post(url, map, new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-                    Log.e("postjson", s+"");
-                if(cla!=null){
+                Log.e("postjson", s + "");
+                if (cla != null) {
                     T t = Constant.GsonToBean(s, cla);
                     getiBaseView().onData(t);
-                }else{
-                    getiBaseView().onData(null);
                 }
 
             }
         }, new Consumer<Throwable>() {
             @Override
             public void accept(Throwable throwable) throws Exception {
-                    Log.e("throwable", throwable.toString());
+                Log.e("throwable", throwable.toString());
+                if (cla != null) {
                     getiBaseView().onError(throwable);
+                }
             }
         });
     }
 
 
-//文件上传
-    public <T> void filePost(String url, List<MultipartBody.Part> parts,final Class<T> cla) {
-        HttpUtil.filePost(url,parts, new Consumer<String>() {
+    //文件上传
+    public <T> void filePost(String url, List<MultipartBody.Part> parts, final Class<T> cla) {
+        HttpUtil.filePost(url, parts, new Consumer<String>() {
             @Override
             public void accept(String s) throws Exception {
-                JSONObject jsonObject=new JSONObject(s);
+                JSONObject jsonObject = new JSONObject(s);
                 String code = jsonObject.getString("code");
-                Log.e("postjson", s+code);
+                Log.e("postjson", s + code);
 //                T t = Constant.GsonToBean(s, cla);
 //                getiBaseView().onData(t);
             }
