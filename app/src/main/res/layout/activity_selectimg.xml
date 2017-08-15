@@ -30,7 +30,7 @@
         android:horizontalSpacing="3dp"
         android:gravity="center"
         android:layout_gravity="center"
-        android:numColumns="3"
+        android:numColumns="5"
         android:scrollbars="none"
         android:verticalSpacing="5dp" >
     </GridView>

@@ -40,18 +40,27 @@
         <!-- 文字上传页 -->
         <activity
             android:name=".submit.activity.PublishedActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden" />
 
         <!-- 图片ViewPager页面 -->
         <activity android:name=".submit.activity.PhotoActivity" />
 
         <!-- Submit上传页 -->
-        <activity android:name=".submit.activity.TestPicActivity" />
+        <activity
+            android:name=".submit.activity.TestPicActivity"
+            android:launchMode="singleTop" />
 
-        <activity android:name=".submit.activity.ImageGridActivity" />
+        <activity
+            android:name=".submit.activity.ImageGridActivity"
+            android:launchMode="singleTop"
+            />
 
         <!-- 文字上传成功 -->
-        <activity android:name=".submit.activity.SubmitSuccesActivity" />
+        <activity
+            android:name=".submit.activity.SubmitSuccesActivity"
+            android:launchMode="singleTop"
+            />
 
 
         <activity

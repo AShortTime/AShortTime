@@ -24,7 +24,8 @@ import com.ast.www.submit.utils.FileUtils;
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
- * Effect :
+ * Effect :提交前的 创作页面
+ * 获取动态权限
  * <p>
  * Created by Administrator
  * Time by 2017/7/31 0031

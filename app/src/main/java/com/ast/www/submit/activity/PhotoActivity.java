@@ -13,6 +13,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.ast.www.R;
 import com.ast.www.submit.utils.Bimp;
@@ -36,6 +37,8 @@ public class PhotoActivity extends Activity {
 	public int max;
 
 	RelativeLayout photo_relativeLayout;
+	private int imgTag;
+	private TextView tv_enter;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -55,16 +58,24 @@ public class PhotoActivity extends Activity {
 		}
 		max = Bimp.max;
 
+		/**
+		 * 取消按钮
+		 */
 		Button photo_bt_exit = (Button) findViewById(R.id.photo_bt_exit);
 		photo_bt_exit.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-
 				finish();
 			}
 		});
+		/**
+		 * 删除按钮
+		 */
+		imgTag = 0;
 		Button photo_bt_del = (Button) findViewById(R.id.photo_bt_del);
 		photo_bt_del.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				imgTag++;
+				tv_enter.setText("确定（"+imgTag+"）");
 				if (listViews.size() == 1) {
 					Bimp.bmp.clear();
 					Bimp.drr.clear();
@@ -72,30 +83,33 @@ public class PhotoActivity extends Activity {
 					FileUtils.deleteDir();
 					finish();
 				} else {
-					String newStr = drr.get(count).substring(
-							drr.get(count).lastIndexOf("/") + 1,
-							drr.get(count).lastIndexOf("."));
-					bmp.remove(count);
-					drr.remove(count);
+					String newStr = drr.get(PhotoActivity.this.count).substring(
+							drr.get(PhotoActivity.this.count).lastIndexOf("/") + 1,
+							drr.get(PhotoActivity.this.count).lastIndexOf("."));
+					bmp.remove(PhotoActivity.this.count);
+					drr.remove(PhotoActivity.this.count);
 					del.add(newStr);
 					max--;
 					pager.removeAllViews();
-					listViews.remove(count);
+					listViews.remove(PhotoActivity.this.count);
 					adapter.setListViews(listViews);
 					adapter.notifyDataSetChanged();
 				}
 			}
 		});
-		Button photo_bt_enter = (Button) findViewById(R.id.photo_bt_enter);
-		photo_bt_enter.setOnClickListener(new View.OnClickListener() {
 
-			public void onClick(View v) {
-
+		/**
+		 * 确定按钮
+		 */
+		tv_enter = (TextView) findViewById(R.id.photo_tv_enter);
+		tv_enter.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
 				Bimp.bmp = bmp;
 				Bimp.drr = drr;
 				Bimp.max = max;
-				for(int i=0;i<del.size();i++){				
-					FileUtils.delFile(del.get(i)+".JPEG"); 
+				for(int i=0;i<del.size();i++){
+					FileUtils.delFile(del.get(i)+".JPEG");
 				}
 				finish();
 			}
