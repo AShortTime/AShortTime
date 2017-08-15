@@ -54,6 +54,7 @@
                  android:background="@null"
                  android:hint="手机号"
                  android:inputType="number"
+                 android:textColor="@color/white"
                  android:textColorHint="#ABA9AB" />
 
              <View
@@ -72,6 +73,7 @@
                  android:layout_marginTop="10dp"
                  android:background="@null"
                  android:hint="密码"
+                 android:textColor="@color/white"
                  android:inputType="textPassword"
                  android:textColorHint="#ABA9AB" />
          </LinearLayout>
