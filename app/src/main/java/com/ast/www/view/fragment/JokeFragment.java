@@ -7,10 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.ast.www.R;
 import com.ast.www.model.bean.RecommendHotBean;
@@ -22,7 +18,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
 import com.superplayer.library.SuperPlayer;
 import com.superplayer.library.SuperPlayerManage;
-import com.superplayer.library.mediaplayer.IjkVideoView;
 
 import java.util.HashMap;
 import java.util.List;

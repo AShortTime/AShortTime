@@ -23,6 +23,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".view.activity.HomeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -76,6 +77,8 @@
         <activity android:name=".view.activity.MyFileActivity"></activity>
         <!--段子图片详情页-->
         <activity android:name=".view.activity.DetailJokeActivity"></activity>
+        <!-- 个人页面 -->
+        <activity android:name=".view.activity.UserPageActivity"></activity>
 
 
         <activity

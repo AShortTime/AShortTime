@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:adjustViewBounds="true"
+    android:background="@color/appgr"
+    >
+   <ImageView
+       android:layout_width="match_parent"
+       android:layout_height="260dp"
+       android:background="@mipmap/cc"
+       android:layout_marginTop="20dp"/>
+
+    <ImageView
+        android:id="@+id/it_userpage_back"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@mipmap/zuojiantou_bai"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="25dp"
+       />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="MC 跨足令"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        android:layout_marginTop="25dp"
+        android:layout_centerHorizontal="true"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/it_userpage_back"
+        android:background="@color/white"
+        android:layout_marginTop="130dp">
+    </LinearLayout>
+    <com.ast.www.constom.CircleImageView
+        android:id="@+id/it_userpage_Avatar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/user_head"
+        android:layout_below="@id/it_userpage_back"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="110dp"/>
+    <TextView
+        android:id="@+id/it_userpage_fans"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/it_userpage_Avatar"
+        android:layout_alignTop="@id/it_userpage_Avatar"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="20dp"
+        android:text="18888888  粉丝"/>
+    <TextView
+        android:id="@+id/it_userpage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/it_userpage_Avatar"
+        android:layout_alignTop="@id/it_userpage_Avatar"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="125dp"
+        android:text=" |"/>
+    <TextView
+        android:id="@+id/it_userpage_attention"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/it_userpage"
+        android:layout_alignTop="@id/it_userpage_Avatar"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="10dp"
+        android:text="17 关注"/>
+    <Button
+        android:layout_width="200dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/it_userpage_fans"
+        android:layout_marginLeft="100dp"
+        android:background="@drawable/shapefilesousuo"
+        android:layout_marginTop="10dp"
+        android:text="+关注"
+        android:textColor="@color/appBlue"
+        />
+
+
+
+
+    <RelativeLayout
+        android:layout_toRightOf="@id/it_userpage_attention"
+        android:layout_alignTop="@id/it_userpage_attention"
+        android:layout_width="50dp"
+        android:layout_height="55dp"
+        android:background="@drawable/shapefileguanzhu"
+        android:layout_marginLeft="45dp"
+        >
+        <ImageView
+            android:id="@+id/it_userpage_image_dian"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerHorizontal="true"
+            android:src="@mipmap/dianzhan"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="16"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/it_userpage_image_dian"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>

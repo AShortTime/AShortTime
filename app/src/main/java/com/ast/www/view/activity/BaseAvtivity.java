@@ -190,4 +190,7 @@ public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatAct
     }
 
 
+
+
+
 }
