@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +27,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -46,10 +48,14 @@ import android.widget.Toast;
 
 
 import com.ast.www.R;
+import com.ast.www.model.util.Utils;
 import com.ast.www.submit.persenter.PublishedPersenter;
 import com.ast.www.submit.bean.CodeBean;
 import com.ast.www.submit.utils.Bimp;
 import com.ast.www.submit.utils.FileUtils;
+import com.ast.www.view.activity.LogInActivity;
+
+import org.zackratos.ultimatebar.UltimateBar;
 
 import java.io.File;
 import java.io.IOException;
@@ -66,50 +72,52 @@ public class PublishedActivity extends Activity implements OnClickListener {
 	private GridView noScrollgridview;
 	private GridAdapter adapter;
 	private PublishedPersenter persenter;
+	/**
+	 * 拍照回调结果码
+	 */
 	private static final int TAKE_PICTURE = 0x000000;
-	//相机权限
-	private String[] permissions_camera= {android.Manifest.permission.CAMERA,android.Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 	private TextView toolbar_title,toolbar_titleLeft,toolbar_titleRight;
 
 	String path;
 	private EditText editContent;
+	private PopupWindows popupWindows;
+
+	/**
+	 * 获取焦点
+	 * 刷新GridView
+	 */
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (adapter!=null){
+			adapter.notifyDataSetChanged();
+		}
+	}
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_selectimg);
-		Init();
+		/**
+		 * 沉浸式
+		 */
+		UltimateBar ultimateBar = new UltimateBar(this);
+		ultimateBar.setColorBar(ContextCompat.getColor(this, R.color.appBlue));
+
+		initViews();
+
+		initDatas();
 	}
 
-	public void Init() {
-
-		persenter = new PublishedPersenter(this);
+	/**
+	 * 初始化控件
+	 */
+	private void initViews() {
 		editContent = (EditText) findViewById(R.id.selectimg_edit);
 		toolbar_title = (TextView) findViewById(R.id.item_title);
-		toolbar_title.setText("发表文章");
-		toolbar_titleLeft= (TextView) findViewById(R.id.item_title_left);
-		toolbar_titleLeft.setText("取消");
-		toolbar_titleRight= (TextView) findViewById(R.id.item_title_right);
-		toolbar_titleRight.setText("发表");
-
 		noScrollgridview = (GridView) findViewById(R.id.noScrollgridview);
-		noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
-		adapter = new GridAdapter(this);
-		adapter.update();
-		noScrollgridview.setAdapter(adapter);
-		noScrollgridview.setOnItemClickListener(new OnItemClickListener() {
-
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				if (arg2 == Bimp.bmp.size()) {
-					new PopupWindows(PublishedActivity.this, noScrollgridview);
-				} else {
-					Intent intent = new Intent(PublishedActivity.this, PhotoActivity.class);
-					intent.putExtra("ID", arg2);
-					startActivity(intent);
-				}
-			}
-		});
-
+		toolbar_titleLeft= (TextView) findViewById(R.id.item_title_left);
+		toolbar_titleRight= (TextView) findViewById(R.id.item_title_right);
 		/**
 		 * 取消编辑
 		 */
@@ -120,7 +128,44 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		toolbar_titleRight.setOnClickListener(this);
 	}
 
+	/**
+	 * 初始化数据
+	 */
+	public void initDatas() {
+		persenter = new PublishedPersenter(this);
 
+		toolbar_title.setText("发表文章");
+		toolbar_titleLeft.setText("取消");
+		toolbar_titleRight.setText("发表");
+
+		noScrollgridview.setSelector(new ColorDrawable(Color.TRANSPARENT));
+		adapter = new GridAdapter(this);
+		noScrollgridview.setAdapter(adapter);
+		/**
+		 * GridView 点击监听
+		 */
+		noScrollgridview.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+
+				if (arg2 == Bimp.bmp.size()) {
+					//展示popupWindows
+					popupWindows = new PopupWindows(PublishedActivity.this, noScrollgridview);
+				} else {
+					//跳转编辑页面
+					Intent intent = new Intent(PublishedActivity.this, PhotoActivity.class);
+					intent.putExtra("ID", arg2);
+					startActivity(intent);
+				}
+
+			}
+		});
+
+	}
+
+	/**
+	 * GridView 适配器
+	 */
 	@SuppressLint("HandlerLeak")
 	public class GridAdapter extends BaseAdapter {
 
@@ -139,9 +184,6 @@ public class PublishedActivity extends Activity implements OnClickListener {
 			inflater = LayoutInflater.from(context);
 		}
 
-		public void update() {
-			loading();
-		}
 
 		public int getCount() {
 			return (Bimp.bmp.size() + 1);
@@ -182,9 +224,8 @@ public class PublishedActivity extends Activity implements OnClickListener {
 			}
 
 			if (position == Bimp.bmp.size()) {
-				holder.image.setImageBitmap(BitmapFactory.decodeResource(
-						getResources(), R.mipmap.icon_addpic_unfocused));
-				if (position == 9) {
+				holder.image.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.icon_addpic_unfocused));
+				if (position == 10) {
 					holder.image.setVisibility(View.GONE);
 				}
 			} else {
@@ -198,57 +239,9 @@ public class PublishedActivity extends Activity implements OnClickListener {
 
 			public ImageView image;
 		}
-		Handler handler = new Handler() {
-			public void handleMessage(Message msg) {
-				switch (msg.what) {
-				case 1:
-					adapter.notifyDataSetChanged();
-					break;
-				}
-				super.handleMessage(msg);
-			}
-		};
-
-		public void loading() {
-			new Thread(new Runnable() {
-				public void run() {
-					while (true) {
-						/**
-						 * true：
-						 * 如果图片长度与集合长度相等，更新适配器
-						 * false：
-						 *
-						 */
-						if (Bimp.max == Bimp.drr.size()) {
-							Message message = new Message();
-							message.what = 1;
-							handler.sendMessage(message);
-							break;
-						} else {
-							try {
-								String path = Bimp.drr.get(Bimp.max);
-								System.out.println(path);
-								Bitmap bm = Bimp.revitionImageSize(path);
-								Bimp.bmp.add(bm);
-								String newStr = path.substring(
-										path.lastIndexOf("/") + 1,
-										path.lastIndexOf("."));
-								FileUtils.saveBitmap(bm, "" + newStr);
-								Bimp.max += 1;
-								Message message = new Message();
-								message.what = 1;
-								handler.sendMessage(message);
-							} catch (IOException e) {
-
-								e.printStackTrace();
-							}
-						}
-					}
-				}
-			}).start();
-		}
-
 	}
+
+
 	public String getString(String s) {
 		String path = null;
 		if (s == null)
@@ -259,23 +252,41 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		return path;
 	}
 
-	protected void onRestart() {
-		adapter.update();
-		super.onRestart();
+	/**
+	 * 更新图片
+	 */
+	public void updateIms(){
+		while (true) {
+			if (Bimp.max == Bimp.drr.size()) {
+				adapter.notifyDataSetChanged();
+				break;
+			} else {
+				try {
+					String path = Bimp.drr.get(Bimp.max);
+					Bitmap bm = Bimp.revitionImageSize(path);
+					Bimp.bmp.add(bm);
+					String newStr = path.substring(path.lastIndexOf("/") + 1, path.lastIndexOf("."));
+					FileUtils.saveBitmap(bm, "" + newStr);
+					Bimp.max += 1;
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
+
+	/**
+	 * PopupWindos 弹窗
+	 */
 	public class PopupWindows extends PopupWindow {
 
 		public PopupWindows(Context mContext, View parent) {
 
-			View view = View
-					.inflate(mContext, R.layout.item_popupwindows, null);
-			view.startAnimation(AnimationUtils.loadAnimation(mContext,
-					R.anim.fade_ins));
-			LinearLayout ll_popup = (LinearLayout) view
-					.findViewById(R.id.ll_popup);
-			ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext,
-					R.anim.push_bottom_in_2));
+			View view = View.inflate(mContext, R.layout.item_popupwindows, null);
+			view.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.fade_ins));
+			LinearLayout ll_popup = (LinearLayout) view.findViewById(R.id.ll_popup);
+			ll_popup.startAnimation(AnimationUtils.loadAnimation(mContext, R.anim.push_bottom_in_2));
 
 			setWidth(LayoutParams.FILL_PARENT);
 			setHeight(LayoutParams.FILL_PARENT);
@@ -286,10 +297,8 @@ public class PublishedActivity extends Activity implements OnClickListener {
 			showAtLocation(parent, Gravity.BOTTOM, 0, 0);
 			update();
 
-			Button bt1 = (Button) view
-					.findViewById(R.id.item_popupwindows_camera);
-			Button bt2 = (Button) view
-					.findViewById(R.id.item_popupwindows_Photo);
+			Button bt1 = (Button) view.findViewById(R.id.item_popupwindows_camera);
+			Button bt2 = (Button) view.findViewById(R.id.item_popupwindows_Photo);
 			Button bt3 = (Button) view.findViewById(R.id.item_popupwindows_cancel);
 
 			bt1.setOnClickListener(new OnClickListener() {
@@ -338,16 +347,6 @@ public class PublishedActivity extends Activity implements OnClickListener {
 	 * 拍照方法
 	 */
 	public void photo2() {
-		//判断 版本 当系统大于23时，申请动态权限
-		if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-			//判断是否授权
-			int i = ContextCompat.checkSelfPermission(this, permissions_camera[0]);
-			//GRANTED 授权 DINIED 拒绝
-			if (i== PackageManager.PERMISSION_DENIED){
-				showDialogTipUserRequestPermission();
-				return;
-			}
-		}
 
 		Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		File file1 = new File(Environment.getExternalStorageDirectory()
@@ -379,9 +378,17 @@ public class PublishedActivity extends Activity implements OnClickListener {
 			pathList.add(new File(FileUtils.SDPATH + Str + ".JPEG"));
 		}
 
+
 		MultipartBody.Builder setType = new MultipartBody.Builder().setType(MultipartBody.FORM);
 		//上传用户
-		setType.addFormDataPart("userId","1");
+        SharedPreferences users = Utils.getSharedPrefers(this);
+        String userId = users.getString("userId", "");
+        if (userId.equals("")){
+            toLogin();
+            return;
+        }
+
+        setType.addFormDataPart("userId",userId);
 		/**
 		 * 图片非Null 状态
 		 * 数据类型：图片 3
@@ -404,7 +411,7 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		 */
 		else {
 			String content = editContent.getText().toString().trim();
-			setType.addFormDataPart("description","图片描述");//图片描述
+			setType.addFormDataPart("description","");//图片描述
 			setType.addFormDataPart("dictionaryValue","2");//资源类型
 			if (!TextUtils.isEmpty(content)){
 				setType.addFormDataPart("content",content);//资源类型
@@ -421,7 +428,30 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		persenter.uploadData("picture/picchaUpload",parts);
 	}
 
-	/**
+    /**
+     * 提示用户进行登录
+     */
+    private void toLogin() {
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setTitle("发表失败");
+        builder.setMessage("很抱歉，您好像未登录，无法发表作品？让我带你去登录吧！~");
+        builder.setPositiveButton("前去登录", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(PublishedActivity.this, LogInActivity.class));
+            }
+        });
+        builder.setNegativeButton("拒绝，并取消发表", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create();
+        builder.show();
+    }
+
+    /**
 	 * 上传成功回调
 	 * @param uploadBean
 	 */
@@ -437,83 +467,7 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		finish();
 	}
 
-	/**
-	 * 用户申请授权回调
-	 */
-	@Override
-	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		if (requestCode==0){
-			if (Build.VERSION.SDK_INT>=Build.VERSION_CODES.M){
-				//如果授权失败
-				if (grantResults[0]!=PackageManager.PERMISSION_GRANTED){
-					//检测是否允许继续申请授权
-					//系统方法
-					boolean isP = shouldShowRequestPermissionRationale(permissions_camera[0]);
-					//是否被设置为不在申请
-					//false：继续要求用户自己手动申请
-					//true ：关闭页面
-					if (!isP){
-						//展示手动授权页面
-						showDialogToSettings();
-					}else {
 
-					}
-
-				}else {
-					Toast.makeText(this, "相机授权成功", Toast.LENGTH_SHORT).show();
-					photo2();
-				}
-			}
-		}
-	}
-
-	/**
-	 * 展示 设置相机权限Dialog
-	 */
-	private void showDialogTipUserRequestPermission() {
-		new AlertDialog.Builder(this)
-				.setTitle("相机权限不可用")
-				.setMessage("由于拍照需要获取摄像头，进行图片拍摄;\n否则，您将无法正常使用摄像头")
-				.setPositiveButton("立即开启", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						//请求权限 跳转到授权回调
-						ActivityCompat.requestPermissions(PublishedActivity.this,permissions_camera,0);
-					}
-				})
-				.setNegativeButton("取消授权", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				})
-				.setCancelable(false)
-				.show();
-	}
-
-	/**
-	 * 展示 Dialog 跳转至 设置
-	 */
-	private void showDialogToSettings() {
-		new AlertDialog.Builder(this)
-				.setTitle("自动授权失败")
-				.setMessage("请在设置-应用-权限 中，允许应用使用摄像头权限")
-				.setPositiveButton("前去设置", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				})
-				.setNegativeButton("不，算了", new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				})
-				.setCancelable(false)
-				.show();
-	}
 
 
 	/**
@@ -546,12 +500,12 @@ public class PublishedActivity extends Activity implements OnClickListener {
 
 	/**
 	 * 页面销毁回调
-	 * @param requestCode
-	 * @param resultCode
-	 * @param data
 	 */
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		switch (requestCode) {
+			/**
+			 * 拍照 销毁回调
+			 */
 			case TAKE_PICTURE:
 				if (Bimp.drr.size() < 9 && resultCode == -1) {
 					Bimp.drr.add(path);
@@ -560,4 +514,19 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		}
 	}
 
+	/**
+	 * 返回键点击监听
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (popupWindows!=null&&popupWindows.isShowing()){
+			popupWindows.dismiss();
+			return true;
+		}else {
+			cancleDialog();
+			return false;
+		}
+
+	}
 }

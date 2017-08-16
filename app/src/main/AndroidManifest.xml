@@ -11,7 +11,8 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
         android:name=".view.application.MyApplication"
@@ -39,18 +40,27 @@
         <!-- 文字上传页 -->
         <activity
             android:name=".submit.activity.PublishedActivity"
+            android:launchMode="singleTask"
             android:configChanges="orientation|keyboardHidden" />
 
         <!-- 图片ViewPager页面 -->
         <activity android:name=".submit.activity.PhotoActivity" />
 
         <!-- Submit上传页 -->
-        <activity android:name=".submit.activity.TestPicActivity" />
+        <activity
+            android:name=".submit.activity.TestPicActivity"
+            android:launchMode="singleTop" />
 
-        <activity android:name=".submit.activity.ImageGridActivity" />
+        <activity
+            android:name=".submit.activity.ImageGridActivity"
+            android:launchMode="singleTop"
+            />
 
         <!-- 文字上传成功 -->
-        <activity android:name=".submit.activity.SubmitSuccesActivity" />
+        <activity
+            android:name=".submit.activity.SubmitSuccesActivity"
+            android:launchMode="singleTop"
+            />
 
 
         <activity
@@ -100,6 +110,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <activity android:name=".view.activity.CameraActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

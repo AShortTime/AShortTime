@@ -18,6 +18,7 @@ import com.tencent.tauth.UiError;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.zackratos.ultimatebar.UltimateBar;
 
 import static com.ast.www.model.util.UtilsConstant.APP_ID;
 
@@ -43,6 +44,12 @@ public class LogInActivity extends BaseAvtivity {
 
     @Override
     protected void initUI() {
+        /**
+         * 沉浸式状态栏
+         */
+        UltimateBar ultimateBar = new UltimateBar(this);
+        ultimateBar.setImmersionBar();
+
         login_but_qq = (Button) findViewById(R.id.login_but_qq);
         login_text_qita = (TextView) findViewById(R.id.login_text_qita);
         register_back = (ImageView) findViewById(R.id.register_back);

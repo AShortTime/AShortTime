@@ -29,6 +29,9 @@ public class PublishedPersenter {
     }
 
 
+    /**
+     * 图片数据
+     */
     public void uploadData(String url, List<MultipartBody.Part> part) {
 
         Log.i(TAG, "uploadPic: ");
