@@ -25,7 +25,7 @@ import java.io.File;
 import static android.R.attr.bitmap;
 
 /**
- * Effect :
+ * Effect : 相机摄像页面
  * <p>
  * Created by Administrator
  * Time by 2017/8/8 0008
