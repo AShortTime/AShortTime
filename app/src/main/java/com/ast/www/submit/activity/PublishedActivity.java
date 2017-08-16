@@ -19,6 +19,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -48,6 +49,7 @@ import android.widget.Toast;
 
 
 import com.ast.www.R;
+import com.ast.www.folding.Util;
 import com.ast.www.model.util.Utils;
 import com.ast.www.submit.persenter.PublishedPersenter;
 import com.ast.www.submit.bean.CodeBean;
@@ -59,7 +61,9 @@ import org.zackratos.ultimatebar.UltimateBar;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -400,7 +404,7 @@ public class PublishedActivity extends Activity implements OnClickListener {
 
 			for (int i = 0; i < pathList.size(); i++) {
 				RequestBody imageBody = RequestBody.create(MediaType.parse("multipart/form-data"), pathList.get(i));
-				setType.addFormDataPart("file", "wodepic", imageBody);
+                setType.addFormDataPart("file",userId+"_"+getTime()+".jpg", imageBody);
 			}
 
 		}
@@ -427,6 +431,11 @@ public class PublishedActivity extends Activity implements OnClickListener {
 		 */
 		persenter.uploadData("picture/picchaUpload",parts);
 	}
+
+	public String getTime(){
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
+        return sdf.format(new Date(System.currentTimeMillis()));
+    }
 
     /**
      * 提示用户进行登录

@@ -62,6 +62,7 @@
         android:layout_marginRight="16dp">
 
         <FrameLayout
+            android:background="@color/appBlue"
             android:id="@+id/adapter_super_video"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

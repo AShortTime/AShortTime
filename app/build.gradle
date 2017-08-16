@@ -86,8 +86,9 @@ dependencies {
     //EventBus
     compile 'org.greenrobot:eventbus:3.0.0'
 
+
     //沉浸式状态栏
-    compile 'org.zackratos:ultimatebar:1.0.3'
+    compile 'org.zackratos:ultimatebar:1.0.3'                                              
 
     compile project(':camera')
 }
