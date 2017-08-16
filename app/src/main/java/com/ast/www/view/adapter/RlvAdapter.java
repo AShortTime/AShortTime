@@ -177,47 +177,6 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 });
             }
 
-            //废弃点赞
-//                if (imageh.topnum.isEnabled() | imageh.footnum.isEnabled()) {
-//                    imageh.topfootrg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//                        @Override
-//                        public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-//                            switch (checkedId) {
-//                                //赞
-//                                case R.id.top_num: {
-//                                    list.get(position).setIsnice(true);
-//                                    HomePresenter hp = new HomePresenter();
-//                                    HashMap<String, String> map = new HashMap<>();
-//                                    String niceKey = list.get(position).getNiceKey();
-//                                    Log.e("nincekey", niceKey);
-//                                    map.put("nicekey", niceKey);
-//                                    hp.get("picture/AddNice", map, null);
-//                                    list.get(position).setNiceNum(list.get(position).getNiceNum() + 1);
-//                                    imageh.topnum.setText(list.get(position).getNiceNum() + "");
-//                                    imageh.topnum.setEnabled(false);
-//                                    imageh.footnum.setEnabled(false);
-//                                    imageh.topfootrg.setOnCheckedChangeListener(null);
-//                                }
-//                                break;
-//                                //踩
-//                                case R.id.foot_num: {
-//                                    list.get(position).setIsbade(true);
-//                                    HomePresenter hp = new HomePresenter();
-//                                    HashMap<String, String> map = new HashMap<>();
-//                                    map.put("badkey", list.get(position).getBadKey());
-//                                    hp.get("picture/AddBad", map, null);
-//                                    list.get(position).setBadNum(list.get(position).getBadNum() + 1);
-//                                    imageh.footnum.setText(list.get(position).getBadNum() + "");
-//                                    imageh.topnum.setEnabled(false);
-//                                    imageh.footnum.setEnabled(false);
-//                                    imageh.topfootrg.setOnCheckedChangeListener(null);
-//                                }
-//                                break;
-//                            }
-//                        }
-//                    });
-//                }
-
             break;
             case TYPE_VIDEO: {
                 onItemEventClick(holder);
@@ -461,6 +420,9 @@ public class RlvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public VideoHolder(View itemView) {
             super(itemView);
+
+
+
             this.mshare = (FloatingActionButton) itemView.findViewById(R.id.share);
             this.mfavorite = (FloatingActionButton) itemView.findViewById(R.id.favorite);
 

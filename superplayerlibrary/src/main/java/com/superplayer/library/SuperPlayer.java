@@ -399,6 +399,7 @@ public class SuperPlayer extends RelativeLayout {
         $ = new Query(activity);
         contentView = View.inflate(context, R.layout.view_super_player, this);
         videoView = (IjkVideoView) contentView.findViewById(R.id.video_view);
+        videoView.setRender(IjkVideoView.RENDER_TEXTURE_VIEW);
         videoView
                 .setOnCompletionListener(new IMediaPlayer.OnCompletionListener() {
                     @Override

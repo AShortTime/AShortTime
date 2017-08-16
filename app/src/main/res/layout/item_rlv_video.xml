@@ -55,6 +55,7 @@
         android:textSize="16sp" />
 
     <RelativeLayout
+
         android:id="@+id/adapter_super_video_layout"
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -62,7 +63,7 @@
         android:layout_marginRight="16dp">
 
         <FrameLayout
-            android:background="@color/appBlue"
+            android:background="@color/black"
             android:id="@+id/adapter_super_video"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -97,6 +98,7 @@
                 android:background="#50000000"></FrameLayout>
 
             <ImageView
+                android:id="@+id/play_video"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"

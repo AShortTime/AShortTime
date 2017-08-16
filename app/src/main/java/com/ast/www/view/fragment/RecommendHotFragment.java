@@ -1,6 +1,7 @@
 package com.ast.www.view.fragment;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -46,6 +47,7 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter> {
     private LinearLayoutManager llm;
     private RlvAdapter adapter;
     private SmartRefreshLayout smartl;
+    private RelativeLayout fullScreen;
 
     /**
      * 该抽象方法就是 onCreateView中需要的layoutID
@@ -76,7 +78,7 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter> {
         player = SuperPlayerManage.getSuperManage().initialize(getActivity());
         player.setShowTopControl(false).setSupportGesture(false);
         player.setgkq(false);
-
+        fullScreen = (RelativeLayout) view.findViewById(R.id.full_screen);
         mrlv = (RecyclerView) view.findViewById(R.id.rlv);
         smartl = (SmartRefreshLayout) view.findViewById(R.id.smartLayout);
         llm = new LinearLayoutManager(getActivity());
@@ -123,11 +125,56 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter> {
         //player.setShowTopControl(false).setSupportGesture(false);
 //        player.setShowTopControl(false);
         player.setgkq(false);
+//        adapter.setPlayClick(new RlvAdapter.onPlayClick() {
+//            @Override
+//            public void onPlayclick(int position, RelativeLayout image,String videosrc) {
+//                image.setVisibility(View.GONE);
+//                if (player.isPlaying() && lastPostion == position){
+//                    return;
+//                }
+//
+//                postion = position;
+//                if (player.getVideoStatus() == IjkVideoView.STATE_PAUSED) {
+//                    if (position != lastPostion) {
+//                        player.stopPlayVideo();
+//                        player.release();
+//                    }
+//                }
+//                if (lastPostion != -1) {
+//                    player.showView(R.id.adapter_player_control);
+//                }
+//
+//                View view = mrlv.findViewHolderForAdapterPosition(position).itemView;
+//                FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.adapter_super_video);
+//                frameLayout.removeAllViews();
+//                player.showView(R.id.adapter_player_control);
+//                frameLayout.addView(player);
+//                player.play(videosrc);
+//                Toast.makeText(getActivity(), "position:"+position, Toast.LENGTH_SHORT).show();
+//                lastPostion = position;
+//            }
+//        });
+//        /**
+//         * 播放完设置还原播放界面
+//         */
+//        player.onComplete(new Runnable() {
+//            @Override
+//            public void run() {
+//                ViewGroup last = (ViewGroup) player.getParent();//找到videoitemview的父类，然后remove
+//                if (last != null && last.getChildCount() > 0) {
+//                    last.removeAllViews();
+//                    View itemView = (View) last.getParent();
+//                    if (itemView != null) {
+//                        itemView.findViewById(R.id.adapter_player_control).setVisibility(View.VISIBLE);
+//                    }
+//                }
+//            }
+//        });
 //        player.setFullScreenOnly(false);
         adapter.setPlayClick(new RlvAdapter.onPlayClick() {
             @Override
-            public void onPlayclick(int position, RelativeLayout image, String videosrc) {
-
+            public void onPlayclick(int position, final RelativeLayout image, String videosrc) {
+                View view = mrlv.findViewHolderForAdapterPosition(position).itemView;
                 image.setVisibility(View.GONE);
                 if (player.isPlaying() && lastPostion == position) {
                     return;
@@ -144,13 +191,13 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter> {
                     player.showView(R.id.adapter_player_control);
                 }
 
-                View view = mrlv.findViewHolderForAdapterPosition(position).itemView;
+
                 FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.adapter_super_video);
-                frameLayout.removeAllViews();
+                //frameLayout.removeAllViews();
                 player.showView(R.id.adapter_player_control);
                 //player.release();
                 frameLayout.addView(player);
-                Log.e("videosrc", videosrc + "11111");
+                Log.e("videosrc", videosrc);
 //                player.play(Environment.getExternalStorageDirectory().getPath() + "/oppo.mp4");
                 player.play(videosrc);
                 Toast.makeText(getActivity(), "position:" + position, Toast.LENGTH_SHORT).show();
@@ -170,6 +217,8 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter> {
                 }
             }
         });
+
+        //list滑动后停止播放
         mrlv.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
             @Override
             public void onChildViewAttachedToWindow(View view) {
@@ -184,6 +233,7 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter> {
                     frameLayout.removeAllViews();
                     if (player != null &&
                             ((player.isPlaying()) || player.getVideoStatus() == IjkVideoView.STATE_PAUSED)) {
+
                         view.findViewById(R.id.adapter_player_control).setVisibility(View.GONE);
                     }
                     if (player.getVideoStatus() == IjkVideoView.STATE_PAUSED) {
@@ -211,6 +261,52 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter> {
         });
     }
 
+    //横竖屏切换的优化
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (player != null) {
+            player.onConfigurationChanged(newConfig);
+            if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+                fullScreen.setVisibility(View.GONE);
+                fullScreen.removeAllViews();
+                mrlv.setVisibility(View.VISIBLE);
+                if (postion <= llm.findLastVisibleItemPosition()
+                        && postion >= llm.findFirstVisibleItemPosition()) {
+                    View view = mrlv.findViewHolderForAdapterPosition(postion).itemView;
+                    FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.adapter_super_video);
+                    frameLayout.removeAllViews();
+                    ViewGroup last = (ViewGroup) player.getParent();//找到videoitemview的父类，然后remove
+                    if (last != null) {
+                        last.removeAllViews();
+                    }
+                    frameLayout.addView(player);
+                }
+                int mShowFlags =
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+                fullScreen.setSystemUiVisibility(mShowFlags);
+            } else {
+                ViewGroup viewGroup = (ViewGroup) player.getParent();
+                if (viewGroup == null)
+                    return;
+                viewGroup.removeAllViews();
+                fullScreen.addView(player);
+                fullScreen.setVisibility(View.VISIBLE);
+                int mHideFlags =
+                        View.SYSTEM_UI_FLAG_LOW_PROFILE
+                                | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_FULLSCREEN
+                                | View.SYSTEM_UI_FLAG_IMMERSIVE
+                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
+                fullScreen.setSystemUiVisibility(mHideFlags);
+            }
+        } else {
+            fullScreen.setVisibility(View.GONE);
+        }
+    }
 
     /**
      * 执行数据的加载
