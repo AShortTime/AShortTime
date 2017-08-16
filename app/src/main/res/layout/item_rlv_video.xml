@@ -23,7 +23,19 @@
             android:layout_marginTop="8dp"
             app:user_head="@mipmap/user_head"
             app:user_name="郭凯奇"></com.ast.www.constom.Userinfoview>
-
+        <Button
+            android:visibility="gone"
+            android:id="@+id/pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="合格"
+            />
+        <Button
+            android:visibility="gone"
+            android:id="@+id/unpass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="不合格"/>
         <include
             layout="@layout/item_share"
             android:layout_width="wrap_content"

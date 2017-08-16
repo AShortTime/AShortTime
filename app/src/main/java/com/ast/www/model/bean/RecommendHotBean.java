@@ -32,6 +32,7 @@ public class RecommendHotBean implements Serializable{
         return resource;
     }
 
+
     public void setResource(List<ResourceBean> resource) {
         this.resource = resource;
     }
@@ -62,6 +63,16 @@ public class RecommendHotBean implements Serializable{
          */
         private boolean isnice=false;
         private boolean isbade=false;
+        private int  status;
+
+        public int getStatus() {
+            return status;
+        }
+
+        public void setStatus(int status) {
+
+            this.status = status;
+        }
 
         public boolean isbade() {
             return isbade;

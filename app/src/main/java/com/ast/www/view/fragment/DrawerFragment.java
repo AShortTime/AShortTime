@@ -18,6 +18,7 @@ import com.ast.www.constom.UserDrawMoudle;
 import com.ast.www.model.util.FirstEvent;
 import com.ast.www.model.util.Utils;
 import com.ast.www.view.activity.AttenTionActivity;
+import com.ast.www.view.activity.AuditActivity;
 import com.ast.www.view.activity.InformationActivity;
 import com.ast.www.view.activity.LogInActivity;
 import com.ast.www.view.activity.MyFileActivity;
@@ -45,7 +46,7 @@ public class DrawerFragment extends BaseFragment{
     private CircleImageView circleImageView;
     private LinearLayout drawer_folder;
     private LinearLayout drawer_setup;
-    private UserDrawMoudle drawer_attention,drawer_Collection,drawer_searchfor,drawer_information;
+    private UserDrawMoudle drawer_attention,drawer_audit,drawer_searchfor,drawer_information;
     private SwitchView drawer_swit;
     private RelativeLayout drawer_not_logged_in_rela;
     private TextView user_name;
@@ -78,11 +79,12 @@ public class DrawerFragment extends BaseFragment{
      */
     @Override
     protected void initData() {
+
         circleImageView = (CircleImageView) getActivity().findViewById(R.id.user_head);
         drawer_folder = (LinearLayout) getActivity().findViewById(R.id.drawer_folder);
         drawer_setup = (LinearLayout) getActivity().findViewById(R.id.drawer_setup);
         drawer_attention= (UserDrawMoudle) getActivity().findViewById(R.id.drawer_attention);
-//        drawer_Collection= (UserDrawMoudle) getActivity().findViewById(R.id.drawer_Collection);
+        drawer_audit= (UserDrawMoudle) getActivity().findViewById(R.id.drawer_audit);
         drawer_searchfor= (UserDrawMoudle) getActivity().findViewById(R.id.drawer_searchfor);
         drawer_information= (UserDrawMoudle) getActivity().findViewById(R.id.drawer_information);
         drawer_swit = (SwitchView) getActivity().findViewById(R.id.drawer_swit);
@@ -182,14 +184,14 @@ public class DrawerFragment extends BaseFragment{
                 getActivity().startActivity(it);
             }
         });
-//        //收藏
-//        drawer_Collection.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent it=new Intent(getActivity(), CollectionActivity.class);
-//                getActivity().startActivity(it);
-//            }
-//        });
+        //审核
+        drawer_audit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it=new Intent(getActivity(), AuditActivity.class);
+                getActivity().startActivity(it);
+            }
+        });
         //搜索
         drawer_searchfor.setOnClickListener(new View.OnClickListener() {
             @Override

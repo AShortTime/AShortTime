@@ -22,21 +22,28 @@ import java.util.Stack;
  * Text:
  */
 
-public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatActivity{
+public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatActivity {
 
-    /** 用来保存所有已打开的Activity */
+    /**
+     * 用来保存所有已打开的Activity
+     */
     private static Stack<Activity> listActivity = new Stack<Activity>();
 
-    /** 记录上次点击按钮的时间 **/
+    /**
+     * 记录上次点击按钮的时间
+     **/
     private long lastClickTime;
-    /** 按钮连续点击最低间隔时间 单位：毫秒 **/
+    /**
+     * 按钮连续点击最低间隔时间 单位：毫秒
+     **/
     public final static int CLICK_TIME = 500;
-    protected   T mPresenter;
+    protected T mPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayout());
-        if (Build.VERSION.SDK_INT >=Build.VERSION_CODES.KITKAT){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
 
@@ -55,13 +62,19 @@ public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatAct
 
     protected abstract void createmPresenter();
 
-    /** 初始化ui **/
+    /**
+     * 初始化ui
+     **/
     protected abstract void initUI();
 
-    /** 初始化数据 **/
+    /**
+     * 初始化数据
+     **/
     protected abstract void initData();
 
-    /** 初始化监听 **/
+    /**
+     * 初始化监听
+     **/
     protected abstract void initListener();
 
     @Override
@@ -70,7 +83,9 @@ public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatAct
         super.onSaveInstanceState(outState);
     }
 
-    /** 保存activity状态 **/
+    /**
+     * 保存activity状态
+     **/
     protected void saveInstanceState(Bundle outState) {
 
     }
@@ -98,6 +113,7 @@ public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatAct
             listActivity.remove(this);
         }
     }
+
     //展示布局
     public abstract int getLayout();
 
@@ -126,7 +142,9 @@ public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatAct
 
     /***************************************************************/
 
-    /** 验证上次点击按钮时间间隔，防止重复点击 */
+    /**
+     * 验证上次点击按钮时间间隔，防止重复点击
+     */
     public boolean verifyClickTime() {
         if (System.currentTimeMillis() - lastClickTime <= CLICK_TIME) {
             return false;
@@ -135,7 +153,9 @@ public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatAct
         return true;
     }
 
-    /** 收起键盘 */
+    /**
+     * 收起键盘
+     */
     public void closeInputMethod() {
         // 收起键盘
         View view = getWindow().peekDecorView();// 用于判断虚拟软键盘是否是显示的
@@ -177,8 +197,6 @@ public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatAct
     }
 
 
-
-
     // short吐司
     public void showShort(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
@@ -188,9 +206,6 @@ public abstract class BaseAvtivity<T extends BasePresenter> extends AppCompatAct
     public void showLong(String text) {
         Toast.makeText(this, text, Toast.LENGTH_LONG).show();
     }
-
-
-
 
 
 }

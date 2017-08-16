@@ -8,17 +8,18 @@ package com.ast.www.model.bean;
  */
 
 public class Codebean {
+
     /**
-     * code : 200
+     * code : 200!message:审核成功!!!!
      */
 
-    private int code;
+    private String code;
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 
-    public void setCode(int code) {
+    public void setCode(String code) {
         this.code = code;
     }
 }

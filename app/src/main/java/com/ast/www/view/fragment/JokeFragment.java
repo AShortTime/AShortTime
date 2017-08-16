@@ -1,5 +1,6 @@
 package com.ast.www.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.DividerItemDecoration;
@@ -11,6 +12,8 @@ import android.view.View;
 import com.ast.www.R;
 import com.ast.www.model.bean.RecommendHotBean;
 import com.ast.www.presenter.HomePresenter;
+import com.ast.www.view.activity.DetailJokeActivity;
+import com.ast.www.view.activity.DetailVideoActivity;
 import com.ast.www.view.adapter.RlvAdapter;
 import com.ast.www.view.iview.IBaseView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -80,7 +83,15 @@ public class JokeFragment extends BaseFragment<HomePresenter> {
 
             @Override
             public void OnItemClick(View view, int position, RecommendHotBean.ResourceBean resourceBean) {
-
+                if(resourceBean.getDictionaryValue().equals("1")){
+                    Intent intent = new Intent(getActivity(), DetailVideoActivity.class);
+                    intent.putExtra("detail", resourceBean);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(getActivity(), DetailJokeActivity.class);
+                    intent.putExtra("detail", resourceBean);
+                    startActivity(intent);
+                }
             }
 
             @Override

@@ -17,6 +17,7 @@ import com.ast.www.R;
 import com.ast.www.model.bean.RecommendHotBean;
 import com.ast.www.model.util.Utils;
 import com.ast.www.presenter.HomePresenter;
+import com.ast.www.view.activity.DetailJokeActivity;
 import com.ast.www.view.activity.DetailVideoActivity;
 import com.ast.www.view.adapter.RlvAdapter;
 import com.ast.www.view.iview.IBaseView;
@@ -93,10 +94,21 @@ public class RecommendCollectFragment extends BaseFragment<HomePresenter> {
 
             @Override
             public void OnItemClick(View view, int position, RecommendHotBean.ResourceBean resourceBean) {
-                Intent intent = new Intent(getActivity(), DetailVideoActivity.class);
-                intent.putExtra("detail", resourceBean);
-                startActivity(intent);
+                if(resourceBean.getDictionaryValue().equals("1")){
+                    Intent intent = new Intent(getActivity(), DetailVideoActivity.class);
+                    intent.putExtra("detail", resourceBean);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(getActivity(), DetailJokeActivity.class);
+                    intent.putExtra("detail", resourceBean);
+                    startActivity(intent);
+                }
 
+                if (player != null) {
+                    player.stop();
+                    player.release();
+                    player.showView(R.id.adapter_player_control);
+                }
             }
 
             @Override
@@ -107,12 +119,6 @@ public class RecommendCollectFragment extends BaseFragment<HomePresenter> {
     }
 
     private void setSuperplayer(RlvAdapter adapter) {
-//        player = SuperPlayerManage.getSuperManage().initialize(getActivity());
-//        player = SuperPlayerManage.getSuperManage().initialize(getActivity());
-        //player.setShowTopControl(false).setSupportGesture(false);
-//        player.setShowTopControl(false);
-//        player.setgkq(false);
-//        player.setFullScreenOnly(false);
         adapter.setPlayClick(new RlvAdapter.onPlayClick() {
             @Override
             public void onPlayclick(int position, RelativeLayout image, String videosrc) {
@@ -251,8 +257,7 @@ public class RecommendCollectFragment extends BaseFragment<HomePresenter> {
     protected void initData() {
 //        http://192.168.1.100/quarter/collection/selectcollection?userId=3
         HashMap<String, String> map = new HashMap<>();
-        String id = Utils.getSharedPrefers(getActivity()).getString("userId", "3");
-        Log.e("idididi", id);
+        String id = Utils.getSharedPrefers(getActivity()).getString("userId", "1");
         map.put("userId", id);
         mPresenter.get("collection/selectcollection", map, RecommendHotBean.class);
 

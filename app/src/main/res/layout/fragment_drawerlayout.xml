@@ -113,6 +113,14 @@
         app:right_image="@mipmap/into_icon"
         app:text="消息通知"></com.ast.www.constom.UserDrawMoudle>
 
+    <com.ast.www.constom.UserDrawMoudle
+        android:id="@+id/drawer_audit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:left_image="@mipmap/user_message"
+        app:right_image="@mipmap/into_icon"
+        app:text="内容审核"></com.ast.www.constom.UserDrawMoudle>
+
 
     <LinearLayout
         android:layout_width="wrap_content"

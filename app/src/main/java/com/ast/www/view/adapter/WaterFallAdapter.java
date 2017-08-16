@@ -51,12 +51,27 @@ public class WaterFallAdapter extends RecyclerView.Adapter<WaterFallAdapter.View
         View view = LayoutInflater.from(mContext)
                 .inflate(R.layout.item_video_image, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
-
         return viewHolder;
     }
-
+    protected void onItemEventClick(RecyclerView.ViewHolder holder) {
+        final int position = holder.getLayoutPosition();
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickListener.OnItemClick(v, position);
+            }
+        });
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                onItemClickListener.OnItemLongClick(v, position);
+                return true;
+            }
+        });
+    }
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        onItemEventClick(holder);
         ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
         layoutParams.height = mHeights.get(position);
         holder.itemView.setLayoutParams(layoutParams);

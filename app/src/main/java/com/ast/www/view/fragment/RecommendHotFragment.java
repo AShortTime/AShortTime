@@ -314,6 +314,5 @@ public class RecommendHotFragment extends BaseFragment<HomePresenter> {
             }
         }
         super.setUserVisibleHint(isVisibleToUser);
-
     }
 }

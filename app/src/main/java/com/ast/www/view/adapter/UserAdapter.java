@@ -83,7 +83,7 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             case TYPE_JOKE:
                 view = LayoutInflater.from(context).inflate(R.layout.item_rlv_joke, parent, false);
 //                view.findViewById(R.id.gv).setVisibility(View.GONE);
-                view.findViewById(R.id.iamge_fffff).setVisibility(View.GONE);
+                view.findViewById(R.id.joke_image).setVisibility(View.GONE);
                 holder = new ImageHolder(view);
                 break;
         }
@@ -177,7 +177,7 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     class ImageHolder extends RecyclerView.ViewHolder {
         public Userinfoview userinfoview;
         public TextView itemtext;
-        //        public GridView gridView;
+        ////public GridView gridView;
         public SimpleDraweeView image;
 
         //悬浮按钮
@@ -190,10 +190,10 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.userinfoview = (Userinfoview) itemView.findViewById(R.id.joke_user_info);
 //                this.gridView = (GridView) itemView.findViewById(R.id.gv);
             this.itemtext = (TextView) itemView.findViewById(R.id.content);
-            this.image = (SimpleDraweeView) itemView.findViewById(R.id.iamge_fffff);
+            this.image = (SimpleDraweeView) itemView.findViewById(R.id.joke_image);
 
             this.mshare = (FloatingActionButton) itemView.findViewById(R.id.share);
-            this.mdelete = (FloatingActionButton) itemView.findViewById(R.id.delete);
+            this.mdelete = (FloatingActionButton) itemView.findViewById(R.id.favorite);
         }
 
     }
@@ -213,8 +213,8 @@ public class UserAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public VideoHolder(View itemView) {
             super(itemView);
             this.mshare = (FloatingActionButton) itemView.findViewById(R.id.share);
-            this.mdelete = (FloatingActionButton) itemView.findViewById(R.id.delete);
-            this.foot = itemView.findViewById(R.id.delete);
+//            this.mdelete = (FloatingActionButton) itemView.findViewById(R.id.delete);
+//            this.foot = itemView.findViewById(R.id.delete);
 
 
             this.userinfoview = (Userinfoview) itemView.findViewById(R.id.video_user_info);
